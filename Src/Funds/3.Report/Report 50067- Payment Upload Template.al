@@ -1,7 +1,7 @@
 report 50067 "Payment Upload Template"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Payment Upload Template.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Payment Upload Template.rdlc';
     ApplicationArea = All;
 
     dataset

@@ -1,7 +1,7 @@
 report 50034 "Employee Statement"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Employee Statement.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Employee Statement.rdlc';
     ApplicationArea = All;
 
     dataset

@@ -1,7 +1,7 @@
 report 50008 "Withholding VAT Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Withholding VAT Report.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Withholding VAT Report.rdlc';
     ApplicationArea = All;
 
     dataset

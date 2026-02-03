@@ -1,7 +1,7 @@
 report 50025 "Cheque Print FT"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Cheque Print FT.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Cheque Print FT.rdlc';
     ApplicationArea = All;
 
     dataset
@@ -43,7 +43,7 @@ report 50025 "Cheque Print FT"
                 //CALCFIELDS("Funds Transfer Header"."Amount To Transfer");
 
                 CheckReport.InitTextVariable();
-                // CheckReport.FormatNoText(NumberText, "Amount To Transfer", "Funds Transfer Header"."Currency Code");
+                CheckReport.FormatNoText(NumberText, "Amount To Transfer", "Funds Transfer Header"."Currency Code");
             end;
         }
     }

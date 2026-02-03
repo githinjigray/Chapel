@@ -1,7 +1,7 @@
 report 50078 "Purchase Order Archive."
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Purchase Order Archive.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Purchase Order Archive.rdlc';
     ApplicationArea = All;
 
     dataset
@@ -275,8 +275,8 @@ report 50078 "Purchase Order Archive."
             begin
                 CompanyAddress := CompanyInfo.Address + ' ' + CompanyInfo."Address 2";
 
-                // CheckReport.InitTextVariable;
-                // CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
+                CheckReport.InitTextVariable;
+                CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
 
 
                 GeneralLedgerSetup.Get;

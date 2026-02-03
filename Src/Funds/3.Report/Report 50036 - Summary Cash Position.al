@@ -1,7 +1,7 @@
 report 50036 "Summary Cash Position"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Summary Cash Position.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Summary Cash Position.rdlc';
     ApplicationArea = All;
 
     dataset

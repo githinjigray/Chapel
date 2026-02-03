@@ -1,7 +1,7 @@
 report 50044 "Bank Ledger Buffer"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Bank Ledger Buffer.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Bank Ledger Buffer.rdlc';
     ApplicationArea = All;
 
     dataset

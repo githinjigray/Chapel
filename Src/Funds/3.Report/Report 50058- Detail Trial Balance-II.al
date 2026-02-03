@@ -1,7 +1,7 @@
 report 50058 "Detail Trial Balance-II"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Detail Trial Balance-II.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Detail Trial Balance-II.rdlc';
     AdditionalSearchTerms = 'payment due,order status';
     ApplicationArea = Basic, Suite;
     Caption = 'Detail Trial Balance-II';

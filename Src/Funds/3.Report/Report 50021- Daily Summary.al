@@ -1,7 +1,7 @@
 report 50021 "Daily Summary"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Daily Summary.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Daily Summary.rdlc';
     ApplicationArea = All;
 
     dataset

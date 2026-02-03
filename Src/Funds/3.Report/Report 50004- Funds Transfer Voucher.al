@@ -1,7 +1,7 @@
 report 50004 "Funds Transfer Voucher"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Funds Transfer Voucher.rdl';
+    RDLCLayout = 'src/Funds/12.layout/Funds Transfer Voucher.rdl';
     PreviewMode = PrintLayout;
     ApplicationArea = All;
 
@@ -146,8 +146,8 @@ report 50004 "Funds Transfer Voucher"
                 TotalAmount := 0;
 
                 TotalAmount := "Funds Transfer Header"."Amount To Transfer";
-                // CheckReport.InitTextVariable();
-                // CheckReport.FormatNoText(NumberText, (TotalAmount), "Funds Transfer Header"."Currency Code");
+                CheckReport.InitTextVariable();
+                CheckReport.FormatNoText(NumberText, (TotalAmount), "Funds Transfer Header"."Currency Code");
 
                 if Bank.Get("Funds Transfer Header"."Bank Account No.") then begin
                     BankName := Bank.Name;

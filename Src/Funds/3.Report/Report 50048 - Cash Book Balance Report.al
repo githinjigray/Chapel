@@ -1,7 +1,7 @@
 report 50048 "Cash Book Balance Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Cash Book Balance Report.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Cash Book Balance Report.rdlc';
     ApplicationArea = All;
 
     dataset

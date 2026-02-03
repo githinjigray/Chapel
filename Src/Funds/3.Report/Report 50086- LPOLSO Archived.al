@@ -1,7 +1,7 @@
 report 50086 "LPO/LSO Archived"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/LPOLSO Archived 2.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/LPOLSO Archived 2.rdlc';
     ApplicationArea = All;
 
     dataset
@@ -315,8 +315,8 @@ report 50086 "LPO/LSO Archived"
             begin
                 CompanyAddress := CompanyInfo.Address + ' ' + CompanyInfo."Address 2";
 
-                //CheckReport.InitTextVariable;
-                //  CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
+                CheckReport.InitTextVariable;
+                CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
 
 
                 GeneralLedgerSetup.Get;

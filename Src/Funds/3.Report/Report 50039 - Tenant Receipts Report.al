@@ -1,7 +1,7 @@
 report 50039 "Tenant Receipts Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Tenant Receipts Report.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Tenant Receipts Report.rdlc';
     ApplicationArea = All;
 
     dataset

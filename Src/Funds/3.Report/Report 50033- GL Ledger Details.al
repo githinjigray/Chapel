@@ -1,7 +1,7 @@
 report 50033 "GL Ledger Details"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/GL Ledger Details.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/GL Ledger Details.rdlc';
     ApplicationArea = All;
 
     dataset

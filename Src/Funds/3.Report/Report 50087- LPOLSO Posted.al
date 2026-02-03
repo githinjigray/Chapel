@@ -1,7 +1,7 @@
 report 50087 "LPO/LSO Posted"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/LPOLSO Posted.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/LPOLSO Posted.rdlc';
     ApplicationArea = All;
 
     dataset
@@ -189,7 +189,7 @@ report 50087 "LPO/LSO Posted"
             begin
                 CompanyAddress := CompanyInfo.Address + ' ' + CompanyInfo."Address 2";
 
-                // CheckReport.InitTextVariable;
+                CheckReport.InitTextVariable;
                 CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
 
 

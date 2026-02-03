@@ -1,7 +1,7 @@
 report 50102 "PRF Details Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/PRF Details Report.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/PRF Details Report.rdlc';
     ApplicationArea = All;
     //ApplicationArea=all;
     dataset

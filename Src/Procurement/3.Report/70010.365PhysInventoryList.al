@@ -1,6 +1,6 @@
 reportextension 70010 "365 Phys. Inventory List" extends "Phys. Inventory List"
 {
-    RDLCLayout = '.vscode/src/Funds/12.layout/PhysicalInventoryList.rdl';
+    RDLCLayout = 'src/Funds/12.layout/PhysicalInventoryList.rdl';
     dataset
     {
         add("Item Journal Line")

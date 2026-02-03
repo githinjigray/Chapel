@@ -1,7 +1,7 @@
 report 50088 "Supplier Details - Categories"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Supplier Details - Categories.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Supplier Details - Categories.rdlc';
     ApplicationArea = All;
 
     dataset

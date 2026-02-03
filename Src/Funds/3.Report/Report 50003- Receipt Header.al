@@ -1,7 +1,7 @@
 report 50003 "Receipt Header"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Receipt Header.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Receipt Header.rdlc';
     ApplicationArea = All;
 
     dataset
@@ -96,7 +96,7 @@ report 50003 "Receipt Header"
                 CalcFields("Receipt Header"."Total Line Amount");
                 EnglishLanguageCode := 1033;
                 CheckReport.InitTextVariable();
-                // CheckReport.FormatNoText(TotalAmountText, ("Receipt Header"."Total Line Amount"), "Receipt Header"."Currency Code");
+                CheckReport.FormatNoText(TotalAmountText, ("Receipt Header"."Total Line Amount"), "Receipt Header"."Currency Code");
 
                 if "Receipt Header".Posted = true then
                     Received := 'RECEIVED'

@@ -1,7 +1,7 @@
 report 50050 "Bank Statement Reconciliation"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Bank Statement Reconciliation.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Bank Statement Reconciliation.rdlc';
     Caption = 'Bank Account Statement';
     ApplicationArea = All;
 

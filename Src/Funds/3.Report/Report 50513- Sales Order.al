@@ -1,7 +1,7 @@
 report 50513 "Sales Order Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/SalesOrder.rdl';
+    RDLCLayout = 'src/Funds/12.layout/SalesOrder.rdl';
     ApplicationArea = All;
 
     dataset
@@ -325,7 +325,7 @@ report 50513 "Sales Order Report"
             begin
                 CompanyAddress := CompanyInfo.Address + ' ' + CompanyInfo."Address 2";
 
-                // CheckReport.InitTextVariable;
+                CheckReport.InitTextVariable;
                 CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
 
 

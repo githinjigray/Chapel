@@ -1,7 +1,7 @@
 report 50068 "New Purchase Order"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/New Purchase Order.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/New Purchase Order.rdlc';
     ApplicationArea = All;
 
     dataset
@@ -218,8 +218,8 @@ report 50068 "New Purchase Order"
                 PurchLines.CalcSums("Line Discount Amount");
                 CalcFields("Amount Including VAT");
                 //Amount into words
-                //CheckReport.InitTextVariable;
-                // CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
+                CheckReport.InitTextVariable;
+                CheckReport.FormatNoText(NumberText, "Amount Including VAT", '');
 
                 if "No. Printed" = 0 then
                     LPOText := 'Suppliers copy'

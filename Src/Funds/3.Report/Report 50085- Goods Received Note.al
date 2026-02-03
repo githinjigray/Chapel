@@ -1,7 +1,7 @@
 report 50085 "Goods Received Note"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Goods Received Note.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Goods Received Note.rdlc';
     ApplicationArea = All;
 
     dataset

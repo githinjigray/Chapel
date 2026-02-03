@@ -1,7 +1,7 @@
 report 50001 "Payment Voucher"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Payment Voucher.rdl';
+    RDLCLayout = 'src/Funds/12.layout/Payment Voucher.rdl';
     PreviewMode = PrintLayout;
     ApplicationArea = All;
 

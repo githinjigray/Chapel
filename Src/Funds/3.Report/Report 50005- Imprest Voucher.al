@@ -1,7 +1,7 @@
 report 50005 "Imprest Voucher"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Imprest Voucher.rdl';
+    RDLCLayout = 'src/Funds/12.layout/Imprest Voucher.rdl';
     PreviewMode = PrintLayout;
     ApplicationArea = All;
 
@@ -184,8 +184,8 @@ report 50005 "Imprest Voucher"
                 TotalAmount := 0;
                 "Imprest Header".CalcFields("Imprest Header".Amount);
                 TotalAmount := "Imprest Header".Amount;
-                // CheckReport.InitTextVariable();
-                // CheckReport.FormatNoText(NumberText, (TotalAmount), "Imprest Header"."Currency Code");
+                CheckReport.InitTextVariable();
+                CheckReport.FormatNoText(NumberText, (TotalAmount), "Imprest Header"."Currency Code");
 
                 if Bank.Get("Imprest Header"."Bank Account No.") then begin
                     BankName := Bank.Name;

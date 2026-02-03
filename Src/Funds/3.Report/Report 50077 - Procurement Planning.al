@@ -1,7 +1,7 @@
 report 50077 "Procurement Planning"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Procurement Planning.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Procurement Planning.rdlc';
     ApplicationArea = All;
 
     dataset

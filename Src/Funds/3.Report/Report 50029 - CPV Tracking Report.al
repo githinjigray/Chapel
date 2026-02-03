@@ -1,7 +1,7 @@
 report 50029 "CPV Tracking Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/CPV Tracking Report.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/CPV Tracking Report.rdlc';
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
 

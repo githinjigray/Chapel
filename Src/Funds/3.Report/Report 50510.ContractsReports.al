@@ -3,7 +3,7 @@ report 50510 "Contracts Reports"
     ApplicationArea = All;
     Caption = 'Contracts Reports';
     UsageCategory = ReportsAndAnalysis;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Contracts Reports.rdl';
+    RDLCLayout = 'src/Funds/12.layout/Contracts Reports.rdl';
     dataset
     {
         dataitem(ContractHeader2; "Contract Header2")

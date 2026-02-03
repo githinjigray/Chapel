@@ -1,7 +1,7 @@
 report 50041 "Bank Buffer Update"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Bank Buffer Update.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Bank Buffer Update.rdlc';
     ApplicationArea = All;
 
     dataset

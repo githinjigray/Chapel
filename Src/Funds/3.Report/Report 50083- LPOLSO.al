@@ -1,7 +1,7 @@
 report 50083 "LPO/LSO"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/LPOLSO.rdl';
+    RDLCLayout = 'src/Funds/12.layout/LPOLSO.rdl';
     ApplicationArea = All;
 
     dataset

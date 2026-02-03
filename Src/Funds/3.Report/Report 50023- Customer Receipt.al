@@ -1,7 +1,7 @@
 report 50023 "Customer Receipt"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Customer Receipt.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Customer Receipt.rdlc';
     ApplicationArea = All;
 
     dataset

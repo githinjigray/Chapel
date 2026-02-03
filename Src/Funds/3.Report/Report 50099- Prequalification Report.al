@@ -1,7 +1,7 @@
 report 50099 "Prequalification Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = '.vscode/src/Funds/12.layout/Prequalification Report.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Prequalification Report.rdlc';
     ApplicationArea = All;
 
     dataset
