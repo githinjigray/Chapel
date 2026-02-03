@@ -237,6 +237,10 @@ page 50078 "Funds Mgt. Role Center"
                     RunObject = Report "Dimensions - Total";
                     ToolTip = 'View how dimensions or dimension sets are used on entries based on total amounts over a specified period and for a specified analysis view.';
                 }
+                action("Funds Transaction Codes")
+                {
+                    RunObject = Page "Payment Codes";
+                }
             }
             group("Cash Flow")
             {
@@ -330,40 +334,206 @@ page 50078 "Funds Mgt. Role Center"
                     ToolTip = 'Calculate VAT amounts from sales, and submit the amounts to a tax authority.';
                 }
             }
-            group("Cost Accounting")
+            group("Funds Management")
             {
-                Caption = 'Cost Accounting';
-                action("Cost Accounting P/L Statement")
+                Caption = 'Funds Management';
+                Image = ReferenceData;
+                ToolTip = 'Monitor your cash flow and set up cash flow forecasts.';
+                action("Account Schedule Names")
                 {
-                    ApplicationArea = CostAccounting;
-                    Caption = 'Cost Accounting P/L Statement';
-                    Image = "Report";
-                    RunObject = Report "Cost Acctg. Statement";
-                    ToolTip = 'View the credit and debit balances per cost type, together with the chart of cost types.';
+                    RunObject = Page "Account Schedule Names";
                 }
-                action("CA P/L Statement per Period")
+                action("Payment Vouchers")
                 {
-                    ApplicationArea = CostAccounting;
-                    Caption = 'CA P/L Statement per Period';
-                    Image = "Report";
-                    RunObject = Report "Cost Acctg. Stmt. per Period";
-                    ToolTip = 'View profit and loss for cost types over two periods with the comparison as a percentage.';
+                    RunObject = Page "Payment List";
+                    RunPageView = WHERE(Status = FILTER(<> Approved));
                 }
-                action("CA P/L Statement with Budget")
+                action("Cash Vouchers")
                 {
-                    ApplicationArea = CostAccounting;
-                    Caption = 'CA P/L Statement with Budget';
-                    Image = "Report";
-                    RunObject = Report "Cost Acctg. Statement/Budget";
-                    ToolTip = 'View a comparison of the balance to the budget figures and calculates the variance and the percent variance in the current accounting period, the accumulated accounting period, and the fiscal year.';
+                    RunObject = Page "Cash Payment List";
+                    RunPageView = WHERE(Status = FILTER(<> Approved));
                 }
-                action("Cost Accounting Analysis")
+                action(Receipts)
                 {
-                    ApplicationArea = CostAccounting;
-                    Caption = 'Cost Accounting Analysis';
-                    Image = "Report";
-                    RunObject = Report "Cost Acctg. Analysis";
-                    ToolTip = 'View balances per cost type with columns for seven fields for cost centers and cost objects. It is used as the cost distribution sheet in Cost accounting. The structure of the lines is based on the chart of cost types. You define up to seven cost centers and cost objects that appear as columns in the report.';
+                    RunObject = Page "Receipt List";
+                }
+                action("Imprest List-Applied")
+                {
+                    RunObject = Page "Imprest List";
+                }
+                action("Imprest Surrender List")
+                {
+                    RunObject = Page "Imprest Surrender List";
+                }
+                action("Funds Transfer")
+                {
+                    RunObject = Page "Funds Transfer List";
+                }
+                // action("Funds Claim")
+                // {
+                //     RunObject = Page "Funds Claim List";
+                //     RunPageView = WHERE(Status = FILTER(<> Posted));
+                // }
+                // action("New Fixed Deposits")
+                // {
+                //     RunObject = Page "FD Transfer Term Amount List";
+                //     RunPageView = WHERE("Fixed Deposit Status" = FILTER("Open "));
+                // }
+                // action("Active Fixed Deposits")
+                // {
+                //     RunObject = Page "FD Transfer Term Amount List";
+                //     RunPageView = WHERE("Fixed Deposit Status" = FILTER(Active));
+                // }
+                // action("Matured Fixed Deposits")
+                // {
+                //     RunObject = Page "FD Transfer Term Amount List";
+                //     RunPageView = WHERE("Fixed Deposit Status" = FILTER(Matured));
+                // }
+
+            }
+            group("Approved Funds Transactions")
+            {
+                Caption = 'Approved Funds Transactions';
+                Image = ReferenceData;
+                ToolTip = 'Approved Funds Transactions';
+
+                action("Approved Payment Vouchers")
+                {
+                    RunObject = Page "Payment List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                }
+                action("Approved Cash Vouchers")
+                {
+                    RunObject = Page "Cash Payment List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                }
+                action("Approved Imprest List")
+                {
+                    RunObject = Page "Imprest List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                }
+                action("Approved Activity Requests")
+                {
+                    RunObject = Page "Travel Requests";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                }
+                action(" Approved Imprest Surrenders")
+                {
+                    RunObject = Page "Imprest Surrender List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                }
+                action("Approved Funds Transfer")
+                {
+                    RunObject = Page "Funds Transfer List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                }
+                action("Approved Funds Claim")
+                {
+                    RunObject = Page "Funds Claim List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                }
+
+            }
+            group("Posted Funds Documents")
+
+            {
+                Caption = 'Posted Funds Documents';
+                Image = FiledPosted;
+                ToolTip = 'View history for sales, shipments, and inventory.';
+
+                action("Posted Payment Vouchers")
+                {
+                    RunObject = Page "Posted Payment List";
+                }
+                action("Posted Cash Vouchers")
+                {
+                    RunObject = Page "Posted Cash Payment List";
+                }
+                action("Posted Receipts")
+                {
+                    RunObject = Page "Posted Receipt List";
+                }
+                action("Posted Staff Imprest")
+                {
+                    RunObject = Page "Posted Imprest List";
+                }
+                action("Posted Staff Imprest Surrender")
+                {
+                    RunObject = Page "Posted Imprest Surrender List";
+                }
+                action("Posted Funds Transfer")
+                {
+                    RunObject = Page "Posted Funds Transfer List";
+                }
+                action("Posted Funds Claim")
+                {
+                    RunObject = Page "Posted Fund Claim List";
+                }
+
+                action("Posted Sales Invoices.")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Sales Invoices';
+                    Image = PostedOrder;
+                    RunObject = Page "Posted Sales Invoices";
+                    ToolTip = 'Open the list of posted sales invoices.';
+                }
+                action("Posted Sales Credit Memos.")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Sales Credit Memos';
+                    Image = PostedOrder;
+                    RunObject = Page "Posted Sales Credit Memos";
+                    ToolTip = 'Open the list of posted sales credit memos.';
+                }
+                action("Posted Purchase Invoices.")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Purchase Invoices';
+                    RunObject = Page "Posted Purchase Invoices";
+                    ToolTip = 'Open the list of posted purchase invoices.';
+                }
+                action("Posted Purchase Credit Memos.")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Purchase Credit Memos';
+                    RunObject = Page "Posted Purchase Credit Memos";
+                    ToolTip = 'Open the list of posted purchase credit memos.';
+                }
+                action("G/L Registers.")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'G/L Registers';
+                    Image = GLRegisters;
+                    RunObject = Page "G/L Registers";
+                    ToolTip = 'View posted G/L entries.';
+                }
+            }
+            group("Procurement Management")
+            {
+                action("Purchase Requisitions")
+                {
+                    Caption = 'All Purchase Requisitions';
+                    RunObject = Page "Purchase Requisition List";
+                }
+                action("Pending Purchase Requisitions")
+                {
+                    Caption = 'Pending Purchase Requisitions';
+                    RunObject = Page "Purchase Req.List-Pending";
+                }
+                action("Approved Purchase Requisitions")
+                {
+                    Caption = 'Approved Purchase Requisitions';
+                    RunObject = Page "Approved Purchase Requisitions";
+                }
+                action("Closed Purchase Requisitions")
+                {
+                    Caption = 'Closed Purchase Requisitions';
+                    RunObject = Page "Closed Purchase Req. List";
+                }
+                action("All Purchase Requisition Lines")
+                {
+                    RunObject = Page "All Purchase Requisition Lines";
                 }
             }
         }
@@ -1287,4 +1457,10 @@ page 50078 "Funds Mgt. Role Center"
             }
         }
     }
+}
+profile "Funds Management Role Center"
+{
+    ProfileDescription = 'Funds Management Profile';
+    RoleCenter = "Funds Mgt. Role Center";
+    Caption = 'FUNDS MANAGEMENT ROLE CENTER';
 }
