@@ -7,6 +7,77 @@ codeunit 70000 "RFQ Approval Manager"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'FRQ';
+        EmpReqApprWorkflowDescTxt: Label 'RFQ Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        RFQHeader: Record "Request for Quotation Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Request for Quotation Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertRFQHeaderApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertRFQHeaderApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertRFQHeaderApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertRFQHeaderApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        RFQHeader: Record "Request for Quotation Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildRFQHeaderConditions(RFQHeader.Status::Open),
+          RunWorkflowOnSendRFQHeaderForApprovalCode(),
+          BuildRFQHeaderConditions(RFQHeader.Status::"Pending Approval"),
+          RunWorkflowOnCancelRFQHeaderApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildRFQHeaderConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        RFQHeader: Record "Request for Quotation Header";
+        RFQHeaderTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Request for Quotation Header">%1</DataItem><DataItem name="Request for Quotation Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        RFQHeader.SetRange(Status, Status);
+        exit(StrSubstNo(RFQHeaderTypeCondnTxt, WorkflowSetup.Encode(RFQHeader.GetView(false))));
+    end;
 
     procedure CheckRFQHeaderApprovalWorkflowEnabled(var RFQHeader: Record "Request for Quotation Header"): Boolean
     var

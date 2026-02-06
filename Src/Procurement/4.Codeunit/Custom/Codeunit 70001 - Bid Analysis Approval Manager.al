@@ -7,6 +7,77 @@ codeunit 70001 "Bid Analysis Approval Manager"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'Bids';
+        EmpReqApprWorkflowDescTxt: Label 'Bid Analysis Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        BidAnalysis: Record "Bid Analysis Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Bid Analysis Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertBidAnalysisApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertBidAnalysisApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertBidAnalysisApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertBidAnalysisApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        BidAnalysis: Record "Bid Analysis Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildBidAnalysisConditions(BidAnalysis.Status::Open),
+          RunWorkflowOnSendBidAnalysisForApprovalCode(),
+          BuildBidAnalysisConditions(BidAnalysis.Status::"Pending Approval"),
+          RunWorkflowOnCancelBidAnalysisApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildBidAnalysisConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        BidAnalysis: Record "Bid Analysis Header";
+        BidAnalysisTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Bid Analysis Header">%1</DataItem><DataItem name="Bid Analysis Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        BidAnalysis.SetRange(Status, Status);
+        exit(StrSubstNo(BidAnalysisTypeCondnTxt, WorkflowSetup.Encode(BidAnalysis.GetView(false))));
+    end;
 
     procedure CheckBidAnalysisApprovalWorkflowEnabled(var BidAnalysis: Record "Bid Analysis Header"): Boolean
     var

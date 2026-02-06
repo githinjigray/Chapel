@@ -1,7 +1,7 @@
 report 50006 "Imprest Surrender Voucher"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'src/Funds/12.layout/Imprest Surrender Voucher.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Imprest Surrender Voucher.rdl';
     PreviewMode = PrintLayout;
     ApplicationArea = All;
 

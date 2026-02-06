@@ -115,20 +115,20 @@ page 50022 "Receipt Line"
                     ToolTip = 'Specifies the value of the Shortcut Dimension 4 Code field.', Comment = '%';
                     ApplicationArea = All;
                 }
-                field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }   
-                field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
-                }               
+                // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }   
+                // field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
+                // }               
             }
         }
     }

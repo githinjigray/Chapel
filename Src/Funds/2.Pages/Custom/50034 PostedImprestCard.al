@@ -144,20 +144,20 @@ page 50034 "Posted Imprest Card"
                     ToolTip = 'Specifies the value of the Shortcut Dimension 4 Code field.', Comment = '%';
                     ApplicationArea = All;
                 }
-                field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }    
-                field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
-                }           
+                // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }    
+                // field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
+                // }           
                 field("Depature Time"; Rec."Depature Time")
                 {
                     ToolTip = 'Specifies the value of the Depature Time field.';
@@ -320,7 +320,7 @@ page 50034 "Posted Imprest Card"
                     UserSetup.RESET;
                     UserSetup.SETRANGE(UserSetup."User ID", USERID);
                     IF UserSetup.FINDFIRST THEN BEGIN
-                        IF UserSetup."Re-open Payments"THEN
+                        IF UserSetup."Re-open Payments" THEN
                             FundsManagement.ReopenImprestDocument(Rec);
                     END;
                 end;

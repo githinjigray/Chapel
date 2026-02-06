@@ -189,12 +189,12 @@ report 50066 "Purchase Requisition"
                 PreparedBy := '';
                 EmployeeTitle := '';
 
-                // Employees.Reset;
-                // Employees.SetRange(Employees."No.", "Purchase Requisitions"."Employee No.");
-                // if Employees.FindFirst then begin
-                //     PreparedBy := Employees."First Name" + ' ' + Employees."Last Name";
-                //     EmployeeTitle := Employees."HR Job Title";
-                // end;
+                Employees.Reset;
+                Employees.SetRange(Employees."No.", "Purchase Requisitions"."Employee No.");
+                if Employees.FindFirst then begin
+                    PreparedBy := Employees."First Name" + ' ' + Employees."Last Name";
+                    EmployeeTitle := Employees."Job Title";
+                end;
             end;
         }
     }

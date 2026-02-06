@@ -7,6 +7,77 @@ codeunit 50009 "Payments Approval Manager"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'PV';
+        EmpReqApprWorkflowDescTxt: Label 'Payment Voucher Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        PaymentCard: Record "Payment Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Payment Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertPaymentVoucherApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertPaymentVoucherApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertPaymentVoucherApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertPaymentVoucherApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        PaymentCard: Record "Payment Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildPaymentCardConditions(PaymentCard.Status::Open),
+          RunWorkflowOnSendPaymentCardForApprovalCode(),
+          BuildPaymentCardConditions(PaymentCard.Status::"Pending Approval"),
+          RunWorkflowOnCancelPaymentCardApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildPaymentCardConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        PaymentCard: Record "Payment Header";
+        PaymentCardTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Payment Header">%1</DataItem><DataItem name="Payment Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        PaymentCard.SetRange(Status, Status);
+        exit(StrSubstNo(PaymentCardTypeCondnTxt, WorkflowSetup.Encode(PaymentCard.GetView(false))));
+    end;
 
     procedure CheckPaymentCardApprovalWorkflowEnabled(var PaymentCard: Record "Payment Header"): Boolean
     var
@@ -287,6 +358,6 @@ codeunit 50009 "Payments Approval Manager"
                 EXIT(PAGE::"Cash Payment Card");
         END;
     end;
-    
+
 }
 

@@ -89,18 +89,18 @@ page 70008 "Request for Quotation Line"
                 {
                     ApplicationArea = All;
                 }
-                field("Shortcut Dimension 5 Code"; rec."Shortcut Dimension 5 Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 6 Code"; rec."Shortcut Dimension 6 Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
-                }
+                // field("Shortcut Dimension 5 Code"; rec."Shortcut Dimension 5 Code")
+                // {
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 6 Code"; rec."Shortcut Dimension 6 Code")
+                // {
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
+                // }
                 field("Purchase Requisition No."; rec."Purchase Requisition No.")
                 {
                 }

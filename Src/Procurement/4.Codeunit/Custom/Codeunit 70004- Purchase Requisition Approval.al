@@ -7,6 +7,77 @@ codeunit 70004 "Purchase Requisition Approval"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'preq';
+        EmpReqApprWorkflowDescTxt: Label 'Purchase Requisition Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        PurchaseRequisition: Record "Purchase Requisitions";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Purchase Requisitions", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertPurchaseRequisitionApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertPurchaseRequisitionApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertPurchaseRequisitionApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertPurchaseRequisitionApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        PurchaseRequisition: Record "Purchase Requisitions";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildPurchaseRequisitionConditions(PurchaseRequisition.Status::Open),
+          RunWorkflowOnSendPurchaseRequisitionForApprovalCode(),
+          BuildPurchaseRequisitionConditions(PurchaseRequisition.Status::"Pending Approval"),
+          RunWorkflowOnCancelPurchaseRequisitionApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildPurchaseRequisitionConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        PurchaseRequisition: Record "Purchase Requisitions";
+        PurchaseRequisitionTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Purchase Requisitions">%1</DataItem><DataItem name="Purchase Requisitions Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        PurchaseRequisition.SetRange(Status, Status);
+        exit(StrSubstNo(PurchaseRequisitionTypeCondnTxt, WorkflowSetup.Encode(PurchaseRequisition.GetView(false))));
+    end;
 
     procedure CheckPurchaseRequisitionApprovalWorkflowEnabled(var PurchaseRequisition: Record "Purchase Requisitions"): Boolean
     var

@@ -334,208 +334,7 @@ page 50078 "Funds Mgt. Role Center"
                     ToolTip = 'Calculate VAT amounts from sales, and submit the amounts to a tax authority.';
                 }
             }
-            group("Funds Management")
-            {
-                Caption = 'Funds Management';
-                Image = ReferenceData;
-                ToolTip = 'Monitor your cash flow and set up cash flow forecasts.';
-                action("Account Schedule Names")
-                {
-                    RunObject = Page "Account Schedule Names";
-                }
-                action("Payment Vouchers")
-                {
-                    RunObject = Page "Payment List";
-                    RunPageView = WHERE(Status = FILTER(<> Approved));
-                }
-                action("Cash Vouchers")
-                {
-                    RunObject = Page "Cash Payment List";
-                    RunPageView = WHERE(Status = FILTER(<> Approved));
-                }
-                action(Receipts)
-                {
-                    RunObject = Page "Receipt List";
-                }
-                action("Imprest List-Applied")
-                {
-                    RunObject = Page "Imprest List";
-                }
-                action("Imprest Surrender List")
-                {
-                    RunObject = Page "Imprest Surrender List";
-                }
-                action("Funds Transfer")
-                {
-                    RunObject = Page "Funds Transfer List";
-                }
-                // action("Funds Claim")
-                // {
-                //     RunObject = Page "Funds Claim List";
-                //     RunPageView = WHERE(Status = FILTER(<> Posted));
-                // }
-                // action("New Fixed Deposits")
-                // {
-                //     RunObject = Page "FD Transfer Term Amount List";
-                //     RunPageView = WHERE("Fixed Deposit Status" = FILTER("Open "));
-                // }
-                // action("Active Fixed Deposits")
-                // {
-                //     RunObject = Page "FD Transfer Term Amount List";
-                //     RunPageView = WHERE("Fixed Deposit Status" = FILTER(Active));
-                // }
-                // action("Matured Fixed Deposits")
-                // {
-                //     RunObject = Page "FD Transfer Term Amount List";
-                //     RunPageView = WHERE("Fixed Deposit Status" = FILTER(Matured));
-                // }
 
-            }
-            group("Approved Funds Transactions")
-            {
-                Caption = 'Approved Funds Transactions';
-                Image = ReferenceData;
-                ToolTip = 'Approved Funds Transactions';
-
-                action("Approved Payment Vouchers")
-                {
-                    RunObject = Page "Payment List";
-                    RunPageView = WHERE(Status = FILTER(Approved));
-                }
-                action("Approved Cash Vouchers")
-                {
-                    RunObject = Page "Cash Payment List";
-                    RunPageView = WHERE(Status = FILTER(Approved));
-                }
-                action("Approved Imprest List")
-                {
-                    RunObject = Page "Imprest List";
-                    RunPageView = WHERE(Status = FILTER(Approved));
-                }
-                action("Approved Activity Requests")
-                {
-                    RunObject = Page "Travel Requests";
-                    RunPageView = WHERE(Status = FILTER(Approved));
-                }
-                action(" Approved Imprest Surrenders")
-                {
-                    RunObject = Page "Imprest Surrender List";
-                    RunPageView = WHERE(Status = FILTER(Approved));
-                }
-                action("Approved Funds Transfer")
-                {
-                    RunObject = Page "Funds Transfer List";
-                    RunPageView = WHERE(Status = FILTER(Approved));
-                }
-                action("Approved Funds Claim")
-                {
-                    RunObject = Page "Funds Claim List";
-                    RunPageView = WHERE(Status = FILTER(Approved));
-                }
-
-            }
-            group("Posted Funds Documents")
-
-            {
-                Caption = 'Posted Funds Documents';
-                Image = FiledPosted;
-                ToolTip = 'View history for sales, shipments, and inventory.';
-
-                action("Posted Payment Vouchers")
-                {
-                    RunObject = Page "Posted Payment List";
-                }
-                action("Posted Cash Vouchers")
-                {
-                    RunObject = Page "Posted Cash Payment List";
-                }
-                action("Posted Receipts")
-                {
-                    RunObject = Page "Posted Receipt List";
-                }
-                action("Posted Staff Imprest")
-                {
-                    RunObject = Page "Posted Imprest List";
-                }
-                action("Posted Staff Imprest Surrender")
-                {
-                    RunObject = Page "Posted Imprest Surrender List";
-                }
-                action("Posted Funds Transfer")
-                {
-                    RunObject = Page "Posted Funds Transfer List";
-                }
-                action("Posted Funds Claim")
-                {
-                    RunObject = Page "Posted Fund Claim List";
-                }
-
-                action("Posted Sales Invoices.")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Posted Sales Invoices';
-                    Image = PostedOrder;
-                    RunObject = Page "Posted Sales Invoices";
-                    ToolTip = 'Open the list of posted sales invoices.';
-                }
-                action("Posted Sales Credit Memos.")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Posted Sales Credit Memos';
-                    Image = PostedOrder;
-                    RunObject = Page "Posted Sales Credit Memos";
-                    ToolTip = 'Open the list of posted sales credit memos.';
-                }
-                action("Posted Purchase Invoices.")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Posted Purchase Invoices';
-                    RunObject = Page "Posted Purchase Invoices";
-                    ToolTip = 'Open the list of posted purchase invoices.';
-                }
-                action("Posted Purchase Credit Memos.")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Posted Purchase Credit Memos';
-                    RunObject = Page "Posted Purchase Credit Memos";
-                    ToolTip = 'Open the list of posted purchase credit memos.';
-                }
-                action("G/L Registers.")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'G/L Registers';
-                    Image = GLRegisters;
-                    RunObject = Page "G/L Registers";
-                    ToolTip = 'View posted G/L entries.';
-                }
-            }
-            group("Procurement Management")
-            {
-                action("Purchase Requisitions")
-                {
-                    Caption = 'All Purchase Requisitions';
-                    RunObject = Page "Purchase Requisition List";
-                }
-                action("Pending Purchase Requisitions")
-                {
-                    Caption = 'Pending Purchase Requisitions';
-                    RunObject = Page "Purchase Req.List-Pending";
-                }
-                action("Approved Purchase Requisitions")
-                {
-                    Caption = 'Approved Purchase Requisitions';
-                    RunObject = Page "Approved Purchase Requisitions";
-                }
-                action("Closed Purchase Requisitions")
-                {
-                    Caption = 'Closed Purchase Requisitions';
-                    RunObject = Page "Closed Purchase Req. List";
-                }
-                action("All Purchase Requisition Lines")
-                {
-                    RunObject = Page "All Purchase Requisition Lines";
-                }
-            }
         }
         area(embedding)
         {
@@ -774,6 +573,239 @@ page 50078 "Funds Mgt. Role Center"
                     Caption = 'Bank Account Posting Groups';
                     RunObject = Page "Bank Account Posting Groups";
                     ToolTip = 'Set up posting groups, so that payments in and out of each bank account are posted to the specified general ledger account.';
+                }
+            }
+            group("Funds Management")
+            {
+                Caption = 'Funds Management';
+                Image = ReferenceData;
+                ToolTip = 'Monitor your cash flow and set up cash flow forecasts.';
+                action("Account Schedule Names")
+                {
+                    RunObject = Page "Account Schedule Names";
+                    ApplicationArea = All;
+                }
+                action("Payment Vouchers")
+                {
+                    RunObject = Page "Payment List";
+                    RunPageView = WHERE(Status = FILTER(<> Approved));
+                    ApplicationArea = All;
+                }
+                action("Cash Vouchers")
+                {
+                    RunObject = Page "Cash Payment List";
+                    RunPageView = WHERE(Status = FILTER(<> Approved));
+                    ApplicationArea = All;
+                }
+                action(Receipts)
+                {
+                    RunObject = Page "Receipt List";
+                    ApplicationArea = All;
+                }
+                action("Imprest List-Applied")
+                {
+                    RunObject = Page "Imprest List";
+                    ApplicationArea = All;
+                }
+                action("Imprest Surrender List")
+                {
+                    RunObject = Page "Imprest Surrender List";
+                    ApplicationArea = All;
+                }
+                action("Funds Transfer")
+                {
+                    RunObject = Page "Funds Transfer List";
+                    ApplicationArea = All;
+                }
+                // action("Funds Claim")
+                // {
+                //     RunObject = Page "Funds Claim List";
+                //     RunPageView = WHERE(Status = FILTER(<> Posted));
+                //ApplicationArea = All;
+                // }
+                action("New Fixed Deposits")
+                {
+                    RunObject = Page "FD Transfer Term Amount List";
+                    RunPageView = WHERE("Fixed Deposit Status" = FILTER("Open "));
+                    ApplicationArea = All;
+                }
+                action("Active Fixed Deposits")
+                {
+                    RunObject = Page "FD Transfer Term Amount List";
+                    RunPageView = WHERE("Fixed Deposit Status" = FILTER(Active));
+                    ApplicationArea = All;
+                }
+                action("Matured Fixed Deposits")
+                {
+                    RunObject = Page "FD Transfer Term Amount List";
+                    RunPageView = WHERE("Fixed Deposit Status" = FILTER(Matured));
+                    ApplicationArea = All;
+                }
+
+            }
+            group("Approved Funds Transactions")
+            {
+                Caption = 'Approved Funds Transactions';
+                Image = ReferenceData;
+                ToolTip = 'Approved Funds Transactions';
+
+                action("Approved Payment Vouchers")
+                {
+                    RunObject = Page "Payment List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                    ApplicationArea = All;
+                }
+                action("Approved Cash Vouchers")
+                {
+                    RunObject = Page "Cash Payment List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                    ApplicationArea = All;
+                }
+                action("Approved Imprest List")
+                {
+                    RunObject = Page "Imprest List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                    ApplicationArea = All;
+                }
+                action("Approved Activity Requests")
+                {
+                    RunObject = Page "Travel Requests";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                    ApplicationArea = All;
+                }
+                action(" Approved Imprest Surrenders")
+                {
+                    RunObject = Page "Imprest Surrender List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                    ApplicationArea = All;
+                }
+                action("Approved Funds Transfer")
+                {
+                    RunObject = Page "Funds Transfer List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                    ApplicationArea = All;
+                }
+                action("Approved Funds Claim")
+                {
+                    RunObject = Page "Funds Claim List";
+                    RunPageView = WHERE(Status = FILTER(Approved));
+                    ApplicationArea = All;
+                }
+
+            }
+            group("Posted Funds Documents")
+
+            {
+                Caption = 'Posted Funds Documents';
+                Image = FiledPosted;
+                ToolTip = 'View history for sales, shipments, and inventory.';
+
+                action("Posted Payment Vouchers")
+                {
+                    RunObject = Page "Posted Payment List";
+                    ApplicationArea = All;
+                }
+                action("Posted Cash Vouchers")
+                {
+                    RunObject = Page "Posted Cash Payment List";
+                    ApplicationArea = All;
+                }
+                action("Posted Receipts")
+                {
+                    RunObject = Page "Posted Receipt List";
+                    ApplicationArea = All;
+                }
+                action("Posted Staff Imprest")
+                {
+                    RunObject = Page "Posted Imprest List";
+                    ApplicationArea = All;
+                }
+                action("Posted Staff Imprest Surrender")
+                {
+                    RunObject = Page "Posted Imprest Surrender List";
+                    ApplicationArea = All;
+                }
+                action("Posted Funds Transfer")
+                {
+                    RunObject = Page "Posted Funds Transfer List";
+                    ApplicationArea = All;
+                }
+                // action("Posted Funds Claim")
+                // {
+                //     RunObject = Page "Posted Fund Claim List";
+                //     ApplicationArea = All;
+                // }
+
+                action("Posted Sales Invoices.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Posted Sales Invoices';
+                    Image = PostedOrder;
+                    RunObject = Page "Posted Sales Invoices";
+                    ToolTip = 'Open the list of posted sales invoices.';
+
+                }
+                action("Posted Sales Credit Memos.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Posted Sales Credit Memos';
+                    Image = PostedOrder;
+                    RunObject = Page "Posted Sales Credit Memos";
+                    ToolTip = 'Open the list of posted sales credit memos.';
+                }
+                action("Posted Purchase Invoices.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Posted Purchase Invoices';
+                    RunObject = Page "Posted Purchase Invoices";
+                    ToolTip = 'Open the list of posted purchase invoices.';
+                }
+                action("Posted Purchase Credit Memos.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Posted Purchase Credit Memos';
+                    RunObject = Page "Posted Purchase Credit Memos";
+                    ToolTip = 'Open the list of posted purchase credit memos.';
+                }
+                action("G/L Registers.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'G/L Registers';
+                    Image = GLRegisters;
+                    RunObject = Page "G/L Registers";
+                    ToolTip = 'View posted G/L entries.';
+                }
+            }
+            group("Procurement Management")
+            {
+                action("Purchase Requisitions")
+                {
+                    Caption = 'All Purchase Requisitions';
+                    RunObject = Page "Purchase Requisition List";
+                    ApplicationArea = All;
+                }
+                action("Pending Purchase Requisitions")
+                {
+                    Caption = 'Pending Purchase Requisitions';
+                    RunObject = Page "Purchase Req.List-Pending";
+                    ApplicationArea = All;
+                }
+                action("Approved Purchase Requisitions")
+                {
+                    Caption = 'Approved Purchase Requisitions';
+                    RunObject = Page "Approved Purchase Requisitions";
+                    ApplicationArea = All;
+                }
+                action("Closed Purchase Requisitions")
+                {
+                    Caption = 'Closed Purchase Requisitions';
+                    RunObject = Page "Closed Purchase Req. List";
+                    ApplicationArea = All;
+                }
+                action("All Purchase Requisition Lines")
+                {
+                    RunObject = Page "All Purchase Requisition Lines";
+                    ApplicationArea = All;
                 }
             }
             group(Journals)

@@ -91,20 +91,20 @@ page 50031 "Imprest Card"
                     ToolTip = 'Specifies the value of the Shortcut Dimension 4 Code field.', Comment = '%';
                     ApplicationArea = All;
                 }
-                field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }    
-                field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
-                }           
+                // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
+                // }
                 field("Depature Time"; Rec."Depature Time")
                 {
                     ToolTip = 'Specifies the value of the Depature Time field.';
@@ -322,13 +322,13 @@ page 50031 "Imprest Card"
 
     trigger OnAfterGetCurrRecord()
     begin
-        // if (Rec.Status <> rec.Status::Open) or (Rec.Status <> rec.Status::) then
-        //  CurrPage.Editable := false;
+        if (Rec.Status <> rec.Status::Open) or (Rec.Status <> rec.Status::approved) then
+            CurrPage.Editable := false;
     end;
 
     trigger OnOpenPage()
     begin
-        //if Rec.Status <> rec.Status::Open then
-        //  CurrPage.Editable := false;
+        if Rec.Status <> rec.Status::Open then
+            CurrPage.Editable := false;
     end;
 }

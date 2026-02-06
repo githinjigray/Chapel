@@ -7,6 +7,77 @@ codeunit 70003 "Procurement Planning Approval"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'p-plan';
+        EmpReqApprWorkflowDescTxt: Label 'Procurement Planning Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        ProcurementPlan: Record "Procurement Planning Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Procurement Planning Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertProcurementPlanApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertProcurementPlanApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertProcurementPlanApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertProcurementPlanApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        ProcurementPlan: Record "Procurement Planning Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildProcurementPlanConditions(ProcurementPlan.Status::Open),
+          RunWorkflowOnSendProcurementPlanForApprovalCode(),
+          BuildProcurementPlanConditions(ProcurementPlan.Status::"Pending Approval"),
+          RunWorkflowOnCancelProcurementPlanApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildProcurementPlanConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        ProcurementPlan: Record "Procurement Planning Header";
+        ProcurementPlanTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Procurement Planning Header">%1</DataItem><DataItem name="Procurement Planning Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        ProcurementPlan.SetRange(Status, Status);
+        exit(StrSubstNo(ProcurementPlanTypeCondnTxt, WorkflowSetup.Encode(ProcurementPlan.GetView(false))));
+    end;
 
     procedure CheckProcurementPlanApprovalWorkflowEnabled(var ProcurementPlan: Record "Procurement Planning Header"): Boolean
     var

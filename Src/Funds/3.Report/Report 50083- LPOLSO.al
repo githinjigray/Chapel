@@ -345,12 +345,12 @@ report 50083 "LPO/LSO"
                 PreparedBy := '';
                 EmployeeTitle := '';
 
-                // Employees.Reset;
-                // Employees.SetRange(Employees."User ID", "Purchase Header"."User ID");
-                // if Employees.FindFirst then begin
-                //     PreparedBy := Employees."First Name" + ' ' + Employees."Last Name";
-                //   //  EmployeeTitle := Employees."HR Job Title";
-                // end;
+                Employees.Reset;
+                Employees.SetRange(Employees."Employee User ID", "Purchase Header"."User ID");
+                if Employees.FindFirst then begin
+                    PreparedBy := Employees."First Name" + ' ' + Employees."Last Name";
+                    EmployeeTitle := Employees."Job Title";
+                end;
 
 
                 PhoneNumber := '';

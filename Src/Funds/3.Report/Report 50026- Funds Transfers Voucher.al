@@ -45,6 +45,13 @@ report 50026 "Funds Transfers Voucher"
             column(Payments_Header__Shortcut_Dimension_2_Code_; "Global Dimension 2 Code")
             {
             }
+            column(ShortcutDimension3Code_FundsTransferHeader; "Shortcut Dimension 3 Code")
+            {
+            }
+            column(ShortcutDimension4Code_FundsTransferHeader; "Shortcut Dimension 4 Code")
+            {
+            }
+
             column(USERID; UserId)
             {
             }
@@ -395,7 +402,7 @@ report 50026 "Funds Transfers Voucher"
                     CurrCode := GLSetup."LCY Code";
 
                 EmployeeList.Reset();
-                //EmployeeList.setrange("User ID", "Funds Transfer Header"."User ID");
+                EmployeeList.setrange("Employee User ID", "Funds Transfer Header"."User ID");
                 if EmployeeList.FindFirst() then
                     PreparedBy := EmployeeList."First Name" + ' ' + EmployeeList."Last Name";
             end;

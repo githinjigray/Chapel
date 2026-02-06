@@ -131,20 +131,20 @@ page 50037 "Imprest Surrender Line"
                     ToolTip = 'Specifies the value of the Global Dimension 4 Code field.';
                     ApplicationArea = All;
                 }
-                field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
-                {
-                    ToolTip = 'Specifies the value of the Global Dimension 5 Codefield.';
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
-                {
-                    ToolTip = 'Specifies the value of the Global Dimension 6 Codefield.';
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
-                }
+                // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Global Dimension 5 Codefield.';
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Global Dimension 6 Codefield.';
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
+                // }
             }
         }
     }

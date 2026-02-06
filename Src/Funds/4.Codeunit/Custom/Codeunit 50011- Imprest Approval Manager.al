@@ -7,6 +7,77 @@ codeunit 50011 "Imprest Approval Manager"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'Imprest';
+        EmpReqApprWorkflowDescTxt: Label 'Imprest Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        ImprestHeader: Record "Imprest Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Imprest Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertImprestHeaderApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertImprestHeaderApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertImprestHeaderApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertImprestHeaderApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        ImprestHeader: Record "Imprest Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildImprestHeaderConditions(ImprestHeader.Status::Open),
+          RunWorkflowOnSendImprestHeaderForApprovalCode(),
+          BuildImprestHeaderConditions(ImprestHeader.Status::"Pending Approval"),
+          RunWorkflowOnCancelImprestHeaderApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildImprestHeaderConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        ImprestHeader: Record "Imprest Header";
+        ImprestHeaderTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Imprest Header">%1</DataItem><DataItem name="Imprest Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        ImprestHeader.SetRange(Status, Status);
+        exit(StrSubstNo(ImprestHeaderTypeCondnTxt, WorkflowSetup.Encode(ImprestHeader.GetView(false))));
+    end;
 
     procedure CheckImprestHeaderApprovalWorkflowEnabled(var ImprestHeader: Record "Imprest Header"): Boolean
     var

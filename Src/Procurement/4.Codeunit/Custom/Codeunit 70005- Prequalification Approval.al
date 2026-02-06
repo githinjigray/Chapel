@@ -7,6 +7,77 @@ codeunit 70005 "Prequalification Approval"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'pqualify';
+        EmpReqApprWorkflowDescTxt: Label 'Prequalification Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        VendorPrequalification: Record "Prequlification Application";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Prequlification Application", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertVendorPrequalificationApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertVendorPrequalificationApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertVendorPrequalificationApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertVendorPrequalificationApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        VendorPrequalification: Record "Prequlification Application";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildVendorPrequalificationConditions(VendorPrequalification.Status::Open),
+          RunWorkflowOnSendVendorPrequalificationForApprovalCode(),
+          BuildVendorPrequalificationConditions(VendorPrequalification.Status::"Pending Approval"),
+          RunWorkflowOnCancelVendorPrequalificationApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildVendorPrequalificationConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        VendorPrequalification: Record "Prequlification Application";
+        VendorPrequalificationTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Prequlification Application">%1</DataItem><DataItem name="Prequlification Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        VendorPrequalification.SetRange(Status, Status);
+        exit(StrSubstNo(VendorPrequalificationTypeCondnTxt, WorkflowSetup.Encode(VendorPrequalification.GetView(false))));
+    end;
 
     procedure CheckVendorPrequalificationApprovalWorkflowEnabled(var VendorPrequalification: Record "Prequlification Application"): Boolean
     var

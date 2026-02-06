@@ -7,6 +7,77 @@ codeunit 70002 "Store Requisition Approval"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'sreq';
+        EmpReqApprWorkflowDescTxt: Label 'Store Requisition Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        StoreRequisition: Record "Store Requisition Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Store Requisition Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertStoreRequisitionApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertStoreRequisitionApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertStoreRequisitionApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertStoreRequisitionApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        StoreRequisition: Record "Store Requisition Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildStoreRequisitionConditions(StoreRequisition.Status::Open),
+          RunWorkflowOnSendStoreRequisitionForApprovalCode(),
+          BuildStoreRequisitionConditions(StoreRequisition.Status::"Pending Approval"),
+          RunWorkflowOnCancelStoreRequisitionApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildStoreRequisitionConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        StoreRequisition: Record "Store Requisition Header";
+        StoreRequisitionTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Store Requisition Header">%1</DataItem><DataItem name="Store Requisition Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        StoreRequisition.SetRange(Status, Status);
+        exit(StrSubstNo(StoreRequisitionTypeCondnTxt, WorkflowSetup.Encode(StoreRequisition.GetView(false))));
+    end;
 
     procedure CheckStoreRequisitionApprovalWorkflowEnabled(var StoreRequisition: Record "Store Requisition Header"): Boolean
     var

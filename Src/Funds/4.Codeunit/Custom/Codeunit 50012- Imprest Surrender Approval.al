@@ -7,6 +7,77 @@ codeunit 50012 "Imprest Surrender Approval"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'Surrender';
+        EmpReqApprWorkflowDescTxt: Label 'Imprest Surrender Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        Imprestsurrender: Record "Imprest Surrender Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Imprest Surrender Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertImprestsurrenderApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertImprestsurrenderApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertImprestsurrenderApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertImprestsurrenderApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        Imprestsurrender: Record "Imprest Surrender Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildImprestsurrenderConditions(Imprestsurrender.Status::Open),
+          RunWorkflowOnSendImprestsurrenderForApprovalCode(),
+          BuildImprestsurrenderConditions(Imprestsurrender.Status::"Pending Approval"),
+          RunWorkflowOnCancelImprestsurrenderApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildImprestsurrenderConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        Imprestsurrender: Record "Imprest Surrender Header";
+        ImprestsurrenderTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Imprest Surrender Header">%1</DataItem><DataItem name="Imprest Surrender Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        Imprestsurrender.SetRange(Status, Status);
+        exit(StrSubstNo(ImprestsurrenderTypeCondnTxt, WorkflowSetup.Encode(Imprestsurrender.GetView(false))));
+    end;
 
     procedure CheckImprestsurrenderApprovalWorkflowEnabled(var Imprestsurrender: Record "Imprest Surrender Header"): Boolean
     var

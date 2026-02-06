@@ -139,20 +139,20 @@ page 70004 "Released Purchase Req. Line"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the code for Shortcut Dimension 4, which is one of six shortcut dimension codes that you set up in the General Ledger Setup window.';
                 }
-                field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the code for Shortcut Dimension 5, which is one of six shortcut dimension codes that you set up in the General Ledger Setup window.';
-                }
-                field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the code for Shortcut Dimension 6, which is one of six shortcut dimension codes that you set up in the General Ledger Setup window.';
-                }
-                field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
-                }
+                // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
+                // {
+                //     ApplicationArea = All;
+                //     ToolTip = 'Specifies the code for Shortcut Dimension 5, which is one of six shortcut dimension codes that you set up in the General Ledger Setup window.';
+                // }
+                // field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
+                // {
+                //     ApplicationArea = All;
+                //     ToolTip = 'Specifies the code for Shortcut Dimension 6, which is one of six shortcut dimension codes that you set up in the General Ledger Setup window.';
+                // }
+                // field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
+                // }
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;

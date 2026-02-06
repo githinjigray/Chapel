@@ -12,12 +12,12 @@ table 50012 "Receipt Header"
             DataClassification = ToBeClassified;
             trigger OnValidate()
             begin
-                FundsGeneralSetup.get;
-                FundsGeneralSetup.TESTFIELD(FundsGeneralSetup."Receipt Nos.");
-                "No. Series" := FundsGeneralSetup."Receipt Nos.";
-                if NoSeriesMgt.AreRelated(FundsGeneralSetup."Receipt Nos.", xRec."No. Series") then
-                    "No. Series" := xRec."No. Series";
-                "No." := NoSeriesMgt.GetNextNo("No. Series");
+                // FundsGeneralSetup.get;
+                // FundsGeneralSetup.TESTFIELD(FundsGeneralSetup."Receipt Nos.");
+                // "No. Series" := FundsGeneralSetup."Receipt Nos.";
+                // if NoSeriesMgt.AreRelated(FundsGeneralSetup."Receipt Nos.", xRec."No. Series") then
+                //     "No. Series" := xRec."No. Series";
+                // "No." := NoSeriesMgt.GetNextNo("No. Series");
             end;
         }
         field(2; "Document Type"; Option)
@@ -393,6 +393,22 @@ table 50012 "Receipt Header"
             Clustered = true;
         }
     }
+    trigger OnInsert()
+    begin
+        if "No." = '' then begin
+            FundsGeneralSetup.get;
+            FundsGeneralSetup.TESTFIELD(FundsGeneralSetup."Receipt Nos.");
+            "No. Series" := FundsGeneralSetup."Receipt Nos.";
+            if NoSeriesMgt.AreRelated(FundsGeneralSetup."Receipt Nos.", xRec."No. Series") then
+                "No. Series" := xRec."No. Series";
+            "No." := NoSeriesMgt.GetNextNo("No. Series");
+
+            "Document Date" := Today;
+            "User ID" := UserId;
+            Status := Status::Open;
+        end;
+    end;
+
     var
         FundsGeneralSetup: Record "Funds General Setup";
         NoSeriesMgt: Codeunit "No. Series";
@@ -403,13 +419,6 @@ table 50012 "Receipt Header"
         CurrExchRate: Record "Currency Exchange Rate";
         ReceiptsHeader: Record "Receipt Header";
         Text002: Label 'cannot be specified without %1';
-
-    trigger OnInsert()
-    begin
-        "Document Date" := Today;
-        "User ID" := UserId;
-        Status := Status::Open;
-    end;
 
     procedure InitInsert()
     var

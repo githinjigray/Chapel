@@ -113,7 +113,7 @@ page 50021 "Receipt Card"
                     ToolTip = 'Specifies the value of the Description field.';
                     ApplicationArea = All;
                 }
-               field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+                field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
                 {
                     ToolTip = 'Specifies the value of the Global Dimension 1 Code field.';
                     ApplicationArea = All;
@@ -133,20 +133,20 @@ page 50021 "Receipt Card"
                     ToolTip = 'Specifies the value of the Shortcut Dimension 4 Code field.', Comment = '%';
                     ApplicationArea = All;
                 }
-                field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }
-                field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
-                    ApplicationArea = All;
-                }    
-                field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
-                }             
+                // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }
+                // field("Shortcut Dimension 6 Code"; Rec."Shortcut Dimension 6 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
+                //     ApplicationArea = All;
+                // }    
+                // field("Shortcut Dimension 7 Code"; Rec."Shortcut Dimension 7 Code")
+                // {
+                //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
+                // }             
                 field(Status; Rec.Status)
                 {
                     ToolTip = 'Specifies the value of the Status field.';

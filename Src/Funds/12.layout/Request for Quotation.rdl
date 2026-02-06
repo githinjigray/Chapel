@@ -1,21 +1,192 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>2fcd4100-cd38-4057-89d0-93d10cad66d6</rd:ReportID>
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>PBIRB</am:Name>
+      <am:Version>15.7.1813.16</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>PBIRB</am:Name>
+      <am:Version>15.7.1813.16</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2026-02-06T07:37:29.0794202Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="DataSource">
+      <rd:SecurityType>None</rd:SecurityType>
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
         <ConnectString />
       </ConnectionProperties>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>6d65463a-ba8b-42fd-be82-120593df4183</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="No_RequestforQuotationHeader">
+          <DataField>No_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="DocumentDate_RequestforQuotationHeader">
+          <DataField>DocumentDate_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="IssueDate_RequestforQuotationHeader">
+          <DataField>IssueDate_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="User_ID">
+          <DataField>User_ID</DataField>
+        </Field>
+        <Field Name="ClosingDate_RequestforQuotationHeader">
+          <DataField>ClosingDate_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="CurrencyCode_RequestforQuotationHeader">
+          <DataField>CurrencyCode_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="CurrencyFactor_RequestforQuotationHeader">
+          <DataField>CurrencyFactor_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="CurrencyFactor_RequestforQuotationHeaderFormat">
+          <DataField>CurrencyFactor_RequestforQuotationHeaderFormat</DataField>
+        </Field>
+        <Field Name="Amount_RequestforQuotationHeader">
+          <DataField>Amount_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="Amount_RequestforQuotationHeaderFormat">
+          <DataField>Amount_RequestforQuotationHeaderFormat</DataField>
+        </Field>
+        <Field Name="AmountLCY_RequestforQuotationHeader">
+          <DataField>AmountLCY_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="AmountLCY_RequestforQuotationHeaderFormat">
+          <DataField>AmountLCY_RequestforQuotationHeaderFormat</DataField>
+        </Field>
+        <Field Name="Description_RequestforQuotationHeader">
+          <DataField>Description_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="EditinOutlookClient_RequestforQuotationHeader">
+          <DataField>EditinOutlookClient_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="AGPOCertificate">
+          <DataField>AGPOCertificate</DataField>
+        </Field>
+        <Field Name="BusinessRegistrationCert">
+          <DataField>BusinessRegistrationCert</DataField>
+        </Field>
+        <Field Name="TaxComplianceCert">
+          <DataField>TaxComplianceCert</DataField>
+        </Field>
+        <Field Name="ConfidentialBusQuestionnaire">
+          <DataField>ConfidentialBusQuestionnaire</DataField>
+        </Field>
+        <Field Name="Time_RequestforQuotationHeader">
+          <DataField>Time_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="GlobalDimension2Code_RequestforQuotationHeader">
+          <DataField>GlobalDimension2Code_RequestforQuotationHeader</DataField>
+        </Field>
+        <Field Name="LNo2">
+          <DataField>LNo2</DataField>
+        </Field>
+        <Field Name="RFQ_Enquiries_Email">
+          <DataField>RFQ_Enquiries_Email</DataField>
+        </Field>
+        <Field Name="No_RequestforQuotationLine">
+          <DataField>No_RequestforQuotationLine</DataField>
+        </Field>
+        <Field Name="Name_RequestforQuotationLine">
+          <DataField>Name_RequestforQuotationLine</DataField>
+        </Field>
+        <Field Name="Location_RequestforQuotationLine">
+          <DataField>Location_RequestforQuotationLine</DataField>
+        </Field>
+        <Field Name="Type_RequestforQuotationLine">
+          <DataField>Type_RequestforQuotationLine</DataField>
+        </Field>
+        <Field Name="Quantity_RequestforQuotationLine">
+          <DataField>Quantity_RequestforQuotationLine</DataField>
+        </Field>
+        <Field Name="Description_RequestforQuotationLine">
+          <DataField>Description_RequestforQuotationLine</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Name">
+          <DataField>CompanyInfo_Name</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Address">
+          <DataField>CompanyInfo_Address</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Address2">
+          <DataField>CompanyInfo_Address2</DataField>
+        </Field>
+        <Field Name="pic">
+          <DataField>pic</DataField>
+        </Field>
+        <Field Name="CompanyInfo_City">
+          <DataField>CompanyInfo_City</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Phone">
+          <DataField>CompanyInfo_Phone</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Fax">
+          <DataField>CompanyInfo_Fax</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Picture">
+          <DataField>CompanyInfo_Picture</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Email">
+          <DataField>CompanyInfo_Email</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Web">
+          <DataField>CompanyInfo_Web</DataField>
+        </Field>
+        <Field Name="UnitofMeasureCode_RequestforQuotationLine">
+          <DataField>UnitofMeasureCode_RequestforQuotationLine</DataField>
+        </Field>
+        <Field Name="Part_No_">
+          <DataField>Part_No_</DataField>
+        </Field>
+        <Field Name="LNO">
+          <DataField>LNO</DataField>
+        </Field>
+        <Field Name="Specification_RFQSpecificationTable">
+          <DataField>Specification_RFQSpecificationTable</DataField>
+        </Field>
+        <Field Name="Requirement_RFQSpecificationTable">
+          <DataField>Requirement_RFQSpecificationTable</DataField>
+        </Field>
+        <Field Name="LineNo_RFQSpecificationTable">
+          <DataField>LineNo_RFQSpecificationTable</DataField>
+        </Field>
+        <Field Name="RFQNo_RFQSpecificationTable">
+          <DataField>RFQNo_RFQSpecificationTable</DataField>
+        </Field>
+        <Field Name="DocumentNo_ProcurementRequirements">
+          <DataField>DocumentNo_ProcurementRequirements</DataField>
+        </Field>
+        <Field Name="LineNo_ProcurementRequirements">
+          <DataField>LineNo_ProcurementRequirements</DataField>
+        </Field>
+        <Field Name="Description_ProcurementRequirements">
+          <DataField>Description_ProcurementRequirements</DataField>
+        </Field>
+        <Field Name="LNo3">
+          <DataField>LNo3</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
         <ReportItems>
           <Textbox Name="Textbox21">
+            <rd:DefaultName>Textbox21</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -41,7 +212,6 @@
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox21</rd:DefaultName>
             <Top>0.90137cm</Top>
             <Left>0.65596cm</Left>
             <Height>0.47806cm</Height>
@@ -57,6 +227,7 @@
             </Style>
           </Textbox>
           <Textbox Name="Textbox25">
+            <rd:DefaultName>Textbox25</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -150,7 +321,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 </Style>
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox25</rd:DefaultName>
             <Top>1.96332cm</Top>
             <Left>0.57654cm</Left>
             <Height>1.52278cm</Height>
@@ -167,6 +337,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
             </Style>
           </Textbox>
           <Textbox Name="Textbox4">
+            <rd:DefaultName>Textbox4</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -190,7 +361,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox4</rd:DefaultName>
             <Left>0.72695cm</Left>
             <Height>0.74111cm</Height>
             <Width>6.02391cm</Width>
@@ -207,6 +377,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
             </Style>
           </Textbox>
           <Textbox Name="Textbox7">
+            <rd:DefaultName>Textbox7</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -234,7 +405,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox7</rd:DefaultName>
             <Top>0.17639cm</Top>
             <Left>10.62704cm</Left>
             <Height>0.6cm</Height>
@@ -251,6 +421,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
             </Style>
           </Textbox>
           <Textbox Name="Textbox23">
+            <rd:DefaultName>Textbox7</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -278,7 +449,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox7</rd:DefaultName>
             <Top>0.17639cm</Top>
             <Left>15.08905cm</Left>
             <Height>0.6cm</Height>
@@ -297,6 +467,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
           <Rectangle Name="Rectangle4">
             <ReportItems>
               <Textbox Name="Textbox26">
+                <rd:DefaultName>Textbox9</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
@@ -319,7 +490,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox9</rd:DefaultName>
                 <Top>0.14714cm</Top>
                 <Left>0.53904cm</Left>
                 <Height>0.73229cm</Height>
@@ -335,6 +505,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 </Style>
               </Textbox>
               <Textbox Name="Textbox32">
+                <rd:DefaultName>Textbox10</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
@@ -365,7 +536,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox10</rd:DefaultName>
                 <Top>1.05582cm</Top>
                 <Left>0.52519cm</Left>
                 <Height>7.59355cm</Height>
@@ -382,6 +552,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 </Style>
               </Textbox>
               <Textbox Name="Textbox34">
+                <rd:DefaultName>Textbox10</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
@@ -411,7 +582,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox10</rd:DefaultName>
                 <Top>9.73443cm</Top>
                 <Left>0.53904cm</Left>
                 <Height>4.56598cm</Height>
@@ -428,6 +598,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 </Style>
               </Textbox>
               <Textbox Name="Textbox37">
+                <rd:DefaultName>Textbox37</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
@@ -447,7 +618,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox37</rd:DefaultName>
                 <Top>8.82576cm</Top>
                 <Left>0.51134cm</Left>
                 <Height>0.73228cm</Height>
@@ -480,13 +650,14 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
             </Style>
           </Rectangle>
           <Textbox Name="Textbox22">
+            <rd:DefaultName>Textbox21</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>User Department : </Value>
+                    <Value>Church: </Value>
                     <Style>
                       <FontFamily>Segoe UI</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -494,7 +665,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=First(Fields!GlobalDimension2Code_RequestforQuotationHeader.Value, "DataSet_Result")</Value>
+                    <Value>=First(Fields!GlobalDimension1Code_RequestforQuotationHeader.Value, "DataSet_Result")</Value>
                     <Style>
                       <FontFamily>Segoe UI</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -505,7 +676,6 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox21</rd:DefaultName>
             <Top>0.84695cm</Top>
             <Left>10.62704cm</Left>
             <Height>0.47806cm</Height>
@@ -522,6 +692,7 @@ This quotation should be submitted in a plain sealed envelope marked “Quotatio
             </Style>
           </Textbox>
           <Textbox Name="Textbox19">
+            <rd:DefaultName>Textbox2</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -644,7 +815,6 @@ Opened by:
                 </Style>
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>12.18772cm</Top>
             <Left>1.8322cm</Left>
             <Height>5.2963cm</Height>
@@ -661,6 +831,7 @@ Opened by:
             </Style>
           </Textbox>
           <Textbox Name="Textbox24">
+            <rd:DefaultName>Textbox21</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -678,7 +849,6 @@ Opened by:
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox21</rd:DefaultName>
             <Top>1.48526cm</Top>
             <Left>0.65596cm</Left>
             <Height>0.47806cm</Height>
@@ -729,6 +899,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox41">
+                          <rd:DefaultName>Textbox41</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -748,7 +919,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox41</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -784,6 +954,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox55">
+                          <rd:DefaultName>Textbox55</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -803,7 +974,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox55</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -839,6 +1009,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox63">
+                          <rd:DefaultName>Textbox63</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -858,7 +1029,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox63</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -894,6 +1064,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox33">
+                          <rd:DefaultName>Textbox33</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -913,7 +1084,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox33</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -949,6 +1119,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox65">
+                          <rd:DefaultName>Textbox65</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -968,7 +1139,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox65</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1004,6 +1174,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox86">
+                          <rd:DefaultName>Textbox86</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1023,7 +1194,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox86</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1059,6 +1229,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox68">
+                          <rd:DefaultName>Textbox68</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1078,7 +1249,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox68</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1114,6 +1284,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox70">
+                          <rd:DefaultName>Textbox70</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1133,7 +1304,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox70</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1174,6 +1344,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="LNo2">
+                          <rd:DefaultName>LNo2</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1192,7 +1363,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>LNo2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1228,6 +1398,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Description_RequestforQuotationLine">
+                          <rd:DefaultName>Description_RequestforQuotationLine</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1244,7 +1415,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Description_RequestforQuotationLine</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1280,6 +1450,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Quantity_RequestforQuotationLine">
+                          <rd:DefaultName>Quantity_RequestforQuotationLine</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1298,7 +1469,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Quantity_RequestforQuotationLine</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1334,6 +1504,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="UnitofMeasureCode_RequestforQuotationLine">
+                          <rd:DefaultName>UnitofMeasureCode_RequestforQuotationLine</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1352,7 +1523,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>UnitofMeasureCode_RequestforQuotationLine</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1388,6 +1558,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox67">
+                          <rd:DefaultName>Textbox67</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1406,7 +1577,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox67</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1442,6 +1612,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox87">
+                          <rd:DefaultName>Textbox87</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1460,7 +1631,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox87</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1496,6 +1666,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox69">
+                          <rd:DefaultName>Textbox69</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1512,7 +1683,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox69</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1548,6 +1718,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox71">
+                          <rd:DefaultName>Textbox71</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1564,7 +1735,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox71</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1604,7 +1774,9 @@ Opened by:
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
+                        <rd:Selected>true</rd:Selected>
                         <Textbox Name="Textbox2">
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1624,7 +1796,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1710,6 +1881,7 @@ Opened by:
             </Style>
           </Tablix>
           <Textbox Name="Textbox10">
+            <rd:DefaultName>Textbox2</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -1726,7 +1898,6 @@ Opened by:
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>9.07004cm</Top>
             <Left>0.41374cm</Left>
             <Height>0.56472cm</Height>
@@ -1743,6 +1914,7 @@ Opened by:
             </Style>
           </Textbox>
           <Textbox Name="Textbox13">
+            <rd:DefaultName>Textbox2</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -1759,7 +1931,6 @@ Opened by:
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>9.74061cm</Top>
             <Left>0.45296cm</Left>
             <Height>0.6cm</Height>
@@ -1795,6 +1966,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox30">
+                          <rd:DefaultName>Textbox30</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1811,7 +1983,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox30</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1847,6 +2018,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox14">
+                          <rd:DefaultName>Textbox14</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1863,7 +2035,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox14</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1899,6 +2070,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox27">
+                          <rd:DefaultName>Textbox27</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1915,7 +2087,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox27</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1956,6 +2127,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="LNO">
+                          <rd:DefaultName>LNO</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1971,7 +2143,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>LNO</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2007,6 +2178,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Specification_RFQSpecificationTable">
+                          <rd:DefaultName>Specification_RFQSpecificationTable</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2022,7 +2194,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Specification_RFQSpecificationTable</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2058,6 +2229,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Requirement_RFQSpecificationTable">
+                          <rd:DefaultName>Requirement_RFQSpecificationTable</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2073,7 +2245,6 @@ Opened by:
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Requirement_RFQSpecificationTable</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2155,6 +2326,7 @@ Opened by:
             </Style>
           </Line>
           <Textbox Name="Textbox15">
+            <rd:DefaultName>Textbox2</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -2172,7 +2344,6 @@ Opened by:
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>11.44661cm</Top>
             <Left>0.43566cm</Left>
             <Height>0.6cm</Height>
@@ -2189,6 +2360,7 @@ Opened by:
             </Style>
           </Textbox>
           <Textbox Name="Textbox17">
+            <rd:DefaultName>Textbox2</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -2205,7 +2377,6 @@ Opened by:
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>9.74061cm</Top>
             <Left>12.86929cm</Left>
             <Height>0.6cm</Height>
@@ -2234,6 +2405,7 @@ Opened by:
             </Style>
           </Line>
           <Textbox Name="Textbox18">
+            <rd:DefaultName>Textbox2</rd:DefaultName>
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
@@ -2251,7 +2423,6 @@ Opened by:
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>11.44661cm</Top>
             <Left>13.00337cm</Left>
             <Height>0.6cm</Height>
@@ -2284,6 +2455,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox6">
+                          <rd:DefaultName>Textbox6</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2304,7 +2476,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox6</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2348,6 +2519,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="LNo3">
+                          <rd:DefaultName>LNo3</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2366,7 +2538,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>LNo3</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2403,6 +2574,7 @@ Opened by:
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Description_ProcurementRequirements">
+                          <rd:DefaultName>Description_ProcurementRequirements</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2421,7 +2593,6 @@ Opened by:
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Description_ProcurementRequirements</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2523,6 +2694,7 @@ Opened by:
               </Style>
             </Image>
             <Textbox Name="Textbox1">
+              <rd:DefaultName>Textbox1</rd:DefaultName>
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -2543,7 +2715,6 @@ Opened by:
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>2.73431cm</Top>
               <Left>0.41374cm</Left>
               <Height>0.6cm</Height>
@@ -2560,6 +2731,7 @@ Opened by:
               </Style>
             </Textbox>
             <Textbox Name="Textbox16">
+              <rd:DefaultName>Textbox16</rd:DefaultName>
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -2627,7 +2799,6 @@ Opened by:
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <rd:DefaultName>Textbox16</rd:DefaultName>
               <Top>0.21125cm</Top>
               <Left>8.27696cm</Left>
               <Height>2.34667cm</Height>
@@ -2786,163 +2957,4 @@ FFABRRRQAUUUUAf/2Q==</ImageData>
   </EmbeddedImages>
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>2fcd4100-cd38-4057-89d0-93d10cad66d6</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="No_RequestforQuotationHeader">
-          <DataField>No_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="DocumentDate_RequestforQuotationHeader">
-          <DataField>DocumentDate_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="IssueDate_RequestforQuotationHeader">
-          <DataField>IssueDate_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="User_ID">
-          <DataField>User_ID</DataField>
-        </Field>
-        <Field Name="ClosingDate_RequestforQuotationHeader">
-          <DataField>ClosingDate_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="CurrencyCode_RequestforQuotationHeader">
-          <DataField>CurrencyCode_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="CurrencyFactor_RequestforQuotationHeader">
-          <DataField>CurrencyFactor_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="CurrencyFactor_RequestforQuotationHeaderFormat">
-          <DataField>CurrencyFactor_RequestforQuotationHeaderFormat</DataField>
-        </Field>
-        <Field Name="Amount_RequestforQuotationHeader">
-          <DataField>Amount_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="Amount_RequestforQuotationHeaderFormat">
-          <DataField>Amount_RequestforQuotationHeaderFormat</DataField>
-        </Field>
-        <Field Name="AmountLCY_RequestforQuotationHeader">
-          <DataField>AmountLCY_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="AmountLCY_RequestforQuotationHeaderFormat">
-          <DataField>AmountLCY_RequestforQuotationHeaderFormat</DataField>
-        </Field>
-        <Field Name="Description_RequestforQuotationHeader">
-          <DataField>Description_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="EditinOutlookClient_RequestforQuotationHeader">
-          <DataField>EditinOutlookClient_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="AGPOCertificate">
-          <DataField>AGPOCertificate</DataField>
-        </Field>
-        <Field Name="BusinessRegistrationCert">
-          <DataField>BusinessRegistrationCert</DataField>
-        </Field>
-        <Field Name="TaxComplianceCert">
-          <DataField>TaxComplianceCert</DataField>
-        </Field>
-        <Field Name="ConfidentialBusQuestionnaire">
-          <DataField>ConfidentialBusQuestionnaire</DataField>
-        </Field>
-        <Field Name="Time_RequestforQuotationHeader">
-          <DataField>Time_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="GlobalDimension2Code_RequestforQuotationHeader">
-          <DataField>GlobalDimension2Code_RequestforQuotationHeader</DataField>
-        </Field>
-        <Field Name="LNo2">
-          <DataField>LNo2</DataField>
-        </Field>
-        <Field Name="RFQ_Enquiries_Email">
-          <DataField>RFQ_Enquiries_Email</DataField>
-        </Field>
-        <Field Name="No_RequestforQuotationLine">
-          <DataField>No_RequestforQuotationLine</DataField>
-        </Field>
-        <Field Name="Name_RequestforQuotationLine">
-          <DataField>Name_RequestforQuotationLine</DataField>
-        </Field>
-        <Field Name="Location_RequestforQuotationLine">
-          <DataField>Location_RequestforQuotationLine</DataField>
-        </Field>
-        <Field Name="Type_RequestforQuotationLine">
-          <DataField>Type_RequestforQuotationLine</DataField>
-        </Field>
-        <Field Name="Quantity_RequestforQuotationLine">
-          <DataField>Quantity_RequestforQuotationLine</DataField>
-        </Field>
-        <Field Name="Description_RequestforQuotationLine">
-          <DataField>Description_RequestforQuotationLine</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Name">
-          <DataField>CompanyInfo_Name</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Address">
-          <DataField>CompanyInfo_Address</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Address2">
-          <DataField>CompanyInfo_Address2</DataField>
-        </Field>
-        <Field Name="pic">
-          <DataField>pic</DataField>
-        </Field>
-        <Field Name="CompanyInfo_City">
-          <DataField>CompanyInfo_City</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Phone">
-          <DataField>CompanyInfo_Phone</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Fax">
-          <DataField>CompanyInfo_Fax</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Picture">
-          <DataField>CompanyInfo_Picture</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Email">
-          <DataField>CompanyInfo_Email</DataField>
-        </Field>
-        <Field Name="CompanyInfo_Web">
-          <DataField>CompanyInfo_Web</DataField>
-        </Field>
-        <Field Name="UnitofMeasureCode_RequestforQuotationLine">
-          <DataField>UnitofMeasureCode_RequestforQuotationLine</DataField>
-        </Field>
-        <Field Name="Part_No_">
-          <DataField>Part_No_</DataField>
-        </Field>
-        <Field Name="LNO">
-          <DataField>LNO</DataField>
-        </Field>
-        <Field Name="Specification_RFQSpecificationTable">
-          <DataField>Specification_RFQSpecificationTable</DataField>
-        </Field>
-        <Field Name="Requirement_RFQSpecificationTable">
-          <DataField>Requirement_RFQSpecificationTable</DataField>
-        </Field>
-        <Field Name="LineNo_RFQSpecificationTable">
-          <DataField>LineNo_RFQSpecificationTable</DataField>
-        </Field>
-        <Field Name="RFQNo_RFQSpecificationTable">
-          <DataField>RFQNo_RFQSpecificationTable</DataField>
-        </Field>
-        <Field Name="DocumentNo_ProcurementRequirements">
-          <DataField>DocumentNo_ProcurementRequirements</DataField>
-        </Field>
-        <Field Name="LineNo_ProcurementRequirements">
-          <DataField>LineNo_ProcurementRequirements</DataField>
-        </Field>
-        <Field Name="Description_ProcurementRequirements">
-          <DataField>Description_ProcurementRequirements</DataField>
-        </Field>
-        <Field Name="LNo3">
-          <DataField>LNo3</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>

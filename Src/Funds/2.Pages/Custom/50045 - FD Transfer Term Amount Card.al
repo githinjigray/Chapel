@@ -45,6 +45,15 @@ page 50045 "FD Transfer Term Amount Card"
                     Editable = false;
                     ApplicationArea = All;
                 }
+                field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+                {
+                    ToolTip = 'Specifies the value of the Global Dimension 1 Code field.', Comment = '%';
+                }
+                field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
+                {
+                    ToolTip = 'Specifies the value of the Global Dimension 2 Code field.', Comment = '%';
+                }
+                
             }
             group("Term Deposit Details")
             {

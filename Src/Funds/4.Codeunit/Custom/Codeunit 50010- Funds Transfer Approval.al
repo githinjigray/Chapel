@@ -7,6 +7,77 @@ codeunit 50010 "Funds Transfer Approval"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'Ftrans';
+        EmpReqApprWorkflowDescTxt: Label 'Funds Transfer Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        FundsTransfer: Record "Funds Transfer Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Funds Transfer Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertFundsTransferApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertFundsTransferApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertFundsTransferApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertFundsTransferApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        FundsTransfer: Record "Funds Transfer Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildFundsTransferConditions(FundsTransfer.Status::Open),
+          RunWorkflowOnSendFundsTransferForApprovalCode(),
+          BuildFundsTransferConditions(FundsTransfer.Status::"Pending Approval"),
+          RunWorkflowOnCancelFundsTransferApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildFundsTransferConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        FundsTransfer: Record "Funds Transfer Header";
+        FundsTransferTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Funds Transfer Header">%1</DataItem><DataItem name="Funds Transfer Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        FundsTransfer.SetRange(Status, Status);
+        exit(StrSubstNo(FundsTransferTypeCondnTxt, WorkflowSetup.Encode(FundsTransfer.GetView(false))));
+    end;
 
     procedure CheckFundsTransferApprovalWorkflowEnabled(var FundsTransfer: Record "Funds Transfer Header"): Boolean
     var
