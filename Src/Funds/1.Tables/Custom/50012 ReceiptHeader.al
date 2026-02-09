@@ -10,6 +10,7 @@ table 50012 "Receipt Header"
         {
             Caption = 'No.';
             DataClassification = ToBeClassified;
+            Editable = false;
             trigger OnValidate()
             begin
                 // FundsGeneralSetup.get;

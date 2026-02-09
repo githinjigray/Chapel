@@ -89,23 +89,23 @@ table 50011 "Payment Line"
                     END;
                 END;
 
-                // IF "Account Type" = "Account Type"::Customer THEN BEGIN
-                //     IF CustomerAccount.GET("Account No.") THEN BEGIN
-                //         "Account Name" := CustomerAccount.Name;
-                //         Employee.Reset();
-                //         Employee.SetRange("No.", "Account No.");
-                //         if Employee.FindFirst() THEN BEGIN
-                //             "Account Name" := Employee."First Name" + ' ' + Employee."Middle Name" + ' ' + Employee."Last Name";
-                //             "Payee Bank Code" := Employee."Bank Code";
-                //             "Payee Bank Name" := Employee."Bank Name";
-                //             "Payee Bank Branch Code" := Employee."Bank Branch Code";
-                //             "Payee Bank Branch Name" := Employee."Bank Branch Name";
-                //             "Payee Bank Account No." := Employee."Bank Account No.";
-                //             "Mobile Payment Account No." := Employee."Mobile Phone No.";
-                //             "Phone No." := Employee."Mobile Phone No.";
-                //         end;
-                //     END;
-                // END;
+                IF "Account Type" = "Account Type"::Customer THEN BEGIN
+                    IF CustomerAccount.GET("Account No.") THEN BEGIN
+                        "Account Name" := CustomerAccount.Name;
+                        Employee.Reset();
+                        Employee.SetRange("No.", "Account No.");
+                        if Employee.FindFirst() THEN BEGIN
+                            "Account Name" := Employee."First Name" + ' ' + Employee."Middle Name" + ' ' + Employee."Last Name";
+                            // "Payee Bank Code" := Employee."Bank Code";
+                            // "Payee Bank Name" := Employee."Bank Name";
+                            // "Payee Bank Branch Code" := Employee."Bank Branch Code";
+                            // "Payee Bank Branch Name" := Employee."Bank Branch Name";
+                            // "Payee Bank Account No." := Employee."Bank Account No.";
+                            "Mobile Payment Account No." := Employee."Mobile Phone No.";
+                            "Phone No." := Employee."Mobile Phone No.";
+                        end;
+                    END;
+                END;
 
                 IF "Account Type" = "Account Type"::"Bank Account" THEN BEGIN
                     IF BankAccount.GET("Account No.") THEN BEGIN
@@ -629,7 +629,7 @@ table 50011 "Payment Line"
                         IF PaymentHeader.FINDFIRST THEN BEGIN
                             IF PaymentHeader."Payee Name" = '' THEN BEGIN
                                 PaymentHeader."Payee Name" := ImprestHeader."Employee Name";
-                                //  PaymentHeader."Phone No." := ImprestHeader."Phone No.";
+                                PaymentHeader."Payee No." := ImprestHeader."Employee No.";
                             END;
                             PaymentHeader."Global Dimension 1 Code" := ImprestHeader."Global Dimension 1 Code";
                             PaymentHeader."Global Dimension 2 Code" := ImprestHeader."Global Dimension 2 Code";
