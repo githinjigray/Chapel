@@ -54,9 +54,10 @@ table 50018 "Imprest Surrender Header"
             DataClassification = ToBeClassified;
             TableRelation = "Imprest Header"."No."
             WHERE("Employee No." = FIELD("Employee No."),
-            Posted = CONST(true), Reversed = CONST(false), "Surrender status" = FILTER("Not Surrendered"));
+            Posted = CONST(true), Reversed = CONST(false), "Surrender status" = FILTER("Not Surrendered" | "Partially Surrendered"));
 
             trigger OnValidate()
+
             begin
                 TESTFIELD("Employee No.");
                 //Reset Imprest Surrender
@@ -130,6 +131,9 @@ table 50018 "Imprest Surrender Header"
                                 ImprestSurrenderLine."FA Depreciation Book" := ImprestLine."FA Depreciation Book";
                                 ImprestSurrenderLine."Employee No." := ImprestHeader."Employee No.";
                                 ImprestSurrenderLine."Employee Name" := ImprestHeader."Employee Name";
+                                ImprestSurrenderLine."Expense Account Type" := ImprestLine."Account Type";
+                                ImprestSurrenderLine."Expense Account No." := ImprestLine."Account No.";
+                                ImprestSurrenderLine."Expense Acc. Name" := ImprestLine."Account Name";
                                 ImprestSurrenderLine.INSERT;
                             UNTIL ImprestLine.NEXT = 0;
                         END;

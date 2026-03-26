@@ -404,6 +404,7 @@ page 70000 "Purchase Requisition Card"
                         Caption = 'View Budget Commitment';
                         Image = LedgerBudget;
                         RunObject = page "Budget Committment Lines";
+                        RunPageLink = "Document No." = FIELD("No.");
                         Promoted = true;
                         PromotedCategory = Category5;
                         PromotedIsBig = true;

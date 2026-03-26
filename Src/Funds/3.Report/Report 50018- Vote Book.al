@@ -1,14 +1,15 @@
 report 50018 "Vote Book"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'src/Funds/12.layout/Vote Book.rdlc';
+    RDLCLayout = 'src/Funds/12.layout/Vote Book.rdl';
     ApplicationArea = All;
-
+    UsageCategory = ReportsAndAnalysis;
     dataset
     {
         dataitem("G/L Account"; "G/L Account")
         {
             DataItemTableView = WHERE("Account Type" = CONST(Posting));
+            RequestFilterFields = "No.", "Income/Balance", "Account Type";
             column(AccNo; "G/L Account"."No.")
             {
             }
@@ -80,16 +81,17 @@ report 50018 "Vote Book"
                 end;
 
 
-                BudgetControl.Get();
-                GLEntry.Reset;
-                GLEntry.SetRange(GLEntry."G/L Account No.", "G/L Account"."No.");
-                GLEntry.SetRange("Posting Date", BudgetControl."Current Budget Start Date", BudgetControl."Current Budget End Date");
-                if GLEntry.FindSet then begin
-                    repeat
-                        ActualExpenditure := ActualExpenditure + GLEntry.Amount;
-                    until GLEntry.Next = 0;
+                BudgetControl.reset;
+                if BudgetControl.FindFirst() then begin
+                    GLEntry.Reset;
+                    GLEntry.SetRange(GLEntry."G/L Account No.", "G/L Account"."No.");
+                    GLEntry.SetRange("Posting Date", BudgetControl."Current Budget Start Date", BudgetControl."Current Budget End Date");
+                    if GLEntry.FindSet then begin
+                        repeat
+                            ActualExpenditure := ActualExpenditure + GLEntry.Amount;
+                        until GLEntry.Next = 0;
+                    end;
                 end;
-
 
                 TotalCommAct := TotalCommitment + ActualExpenditure;
 

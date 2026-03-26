@@ -7,6 +7,77 @@ codeunit 50015 "Funds Claim Approval"
 
     var
         ApprovalEntry: Record "Approval Entry";
+        FundsCategoryTxt: Label 'Funds Management';
+        FundsCategoryDescriptionTxt: Label 'Funds Management Workflows';
+        WorkflowSetup: Codeunit "Workflow Setup";
+        EmpReqApprWorkflowCodeTxt: Label 'Fclaim';
+        EmpReqApprWorkflowDescTxt: Label 'Funds Claim Approval Workflow';
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAddWorkflowCategoriesToLibrary', '', false, false)]
+    local procedure C1502_WorkflowSetup_OnAddWorkflowCategoriesToLibrary()
+    begin
+        WorkflowSetup.InsertWorkflowCategory(FundsCategoryTxt, FundsCategoryDescriptionTxt);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnAfterInitWorkflowTemplates', '', false, false)]
+    local procedure C1502_OnAfterInitWorkflowTemplates()
+    var
+        WorkflowSetup: Codeunit "Workflow Setup";
+        FundsClaim: Record "Funds Claim Header";
+        ApprovalEntry: Record "Approval Entry";
+        WorkflowTemplate: Record Workflow;
+    begin
+
+        WorkflowSetup.InsertTableRelation(DATABASE::"Funds Claim Header", 0,
+          DATABASE::"Approval Entry", ApprovalEntry.FieldNo("Record ID to Approve"));
+
+        InsertFundsClaimApprovalWorkflowTemplate();
+    end;
+
+    local procedure InsertFundsClaimApprovalWorkflowTemplate()
+    var
+        WorkflowTemplates: Record Workflow;
+        Workflow: Record Workflow;
+    begin
+
+        WorkflowTemplates.Reset();
+        WorkflowTemplates.SetRange(Code, 'MS-' + EmpReqApprWorkflowCodeTxt);
+        WorkflowTemplates.SetRange(Template, true);
+        if not WorkflowTemplates.FindFirst() then begin
+            WorkflowSetup.InsertWorkflowTemplate(Workflow, EmpReqApprWorkflowCodeTxt,
+                      EmpReqApprWorkflowDescTxt, FundsCategoryTxt);
+            InsertFundsClaimApprovalWorkflowDetails(Workflow);
+            WorkflowSetup.MarkWorkflowAsTemplate(Workflow);
+        end;
+    end;
+
+    local procedure InsertFundsClaimApprovalWorkflowDetails(var Workflow: Record Workflow)
+    var
+        FundsClaim: Record "Imprest Header";
+        WorkflowStepArgument: Record "Workflow Step Argument";
+        BlankDateFormula: DateFormula;
+    begin
+        WorkflowSetup.InitWorkflowStepArgument(WorkflowStepArgument,
+          WorkflowStepArgument."Approver Type"::"Salesperson/Purchaser", WorkflowStepArgument."Approver Limit Type"::"Direct Approver",
+          0, '', BlankDateFormula, true);
+
+        WorkflowSetup.InsertDocApprovalWorkflowSteps(Workflow,
+          BuildFundsClaimConditions(FundsClaim.Status::Open),
+          RunWorkflowOnSendFundsClaimForApprovalCode(),
+          BuildFundsClaimConditions(FundsClaim.Status::"Pending Approval"),
+          RunWorkflowOnCancelFundsClaimApprovalRequestCode(),
+          WorkflowStepArgument, true);
+    end;
+
+    procedure BuildFundsClaimConditions(Status: Option Open,"Pending Approval",Approved): Text
+    var
+        FundsClaim: Record "Funds Claim Header";
+        FundsClaimTypeCondnTxt: Label '<?xml version="1.0" encoding="utf-8" standalone="yes"?><ReportParameters><DataItems><DataItem name="Funds Claim Header">%1</DataItem><DataItem name="Funds Claim Line">%2</DataItem></DataItems></ReportParameters>';
+    begin
+        FundsClaim.SetRange(Status, Status);
+        exit(StrSubstNo(FundsClaimTypeCondnTxt, WorkflowSetup.Encode(FundsClaim.GetView(false))));
+    end;
 
     procedure CheckFundsClaimApprovalWorkflowEnabled(var FundsClaimHeader: Record "Funds Claim Header"): Boolean
     var

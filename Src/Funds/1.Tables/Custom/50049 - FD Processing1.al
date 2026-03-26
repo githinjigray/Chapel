@@ -12,9 +12,9 @@ table 50049 "FD Processing1"
             begin
                 IF "Document No." <> xRec."Document No." THEN BEGIN
 
-                    FundsManage.GET;
-                    NoSeriesMgt.TestManual(FundsManage."FD Account Nos.");
-                    "Fixed Deposit Nos" := '';
+                    FundsGeneralSetup.GET;
+                    NoSeriesMgt.TestManual(FundsGeneralSetup."FD Account Nos.");
+                    "No. Series" := FundsGeneralSetup."FD Account Nos.";
                 END;
             end;
         }
@@ -91,7 +91,7 @@ table 50049 "FD Processing1"
         {
             CaptionClass = '1,1,2';
             Caption = 'Global Dimension 2 Code';
-            Editable = false;
+           // Editable = false;
             TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
 
             trigger OnValidate()
@@ -540,6 +540,11 @@ table 50049 "FD Processing1"
             DataClassification = ToBeClassified;
             TableRelation = "Funds Tax Code"."Tax Code" WHERE(Type = CONST(2));
         }
+        field(69210; "No. Series"; Code[20])
+        {
+            Caption = 'No. Series';
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -556,9 +561,12 @@ table 50049 "FD Processing1"
     trigger OnInsert()
     begin
         IF "Document No." = '' THEN BEGIN
-            FundsManage.GET;
-            FundsManage.TESTFIELD(FundsManage."FD Account Nos.");
-            NoSeriesMgt.GetNextNo(FundsManage."FD Account Nos.", Today, false);
+            FundsGeneralSetup.Get();
+            FundsGeneralSetup.TESTFIELD(FundsGeneralSetup."FD Account Nos.");
+            "No. Series" := FundsGeneralSetup."FD Account Nos.";
+            if NoSeriesMgt.AreRelated(FundsGeneralSetup."FD Account Nos.", xRec."No. Series") then
+                "No. Series" := xRec."No. Series";
+            "Document No." := NoSeriesMgt.GetNextNo("No. Series");
         END;
     end;
 
@@ -624,6 +632,7 @@ table 50049 "FD Processing1"
     //       VendBlockedErrorMessage(Vend2,Transaction);
     // end; 
     var
+        FundsGeneralSetup: Record "Funds General Setup";
         PurchSetup: Record "Purchases & Payables Setup";
         CommentLine: Record "Comment Line";
         PurchOrderLine: Record "Purchase Line";

@@ -292,6 +292,7 @@ report 50083 "LPO/LSO"
 
                     trigger OnAfterGetRecord()
                     begin
+
                         ApprovalType := '';
                         ApprovalEntry2.Reset();
                         ApprovalEntry2.SetRange("Document No.", "Approval Entry"."Document No.");
@@ -330,6 +331,10 @@ report 50083 "LPO/LSO"
                 InStream: InStream;
                 TempText: Text[1024];
             begin
+
+                if Status <> Status::Released then
+                    ERROR('Only Approved Purchase Order can be Printed.');
+
                 CompanyAddress := CompanyInfo.Address + ' ' + CompanyInfo."Address 2";
 
                 CheckReport.InitTextVariable;
@@ -412,12 +417,12 @@ report 50083 "LPO/LSO"
                     ApproverID := ApprovalEntry2."Approver ID";
                     ApprovalDate := ApprovalEntry2."Last Date-Time Modified";
 
-                    // Employees.Reset;
-                    // Employees.SetRange(Employees."User ID", ApprovalEntry2."Approver ID");
-                    // if Employees.FindFirst then begin
-                    //     ApprovedBy := Employees."First Name" + ' ' + Employees."Last Name";
-                    //     ApproverTitle := Employees."HR Job Title";
-                    // end;
+                    Employees.Reset;
+                    Employees.SetRange(Employees."Employee User ID", ApprovalEntry2."Approver ID");
+                    if Employees.FindFirst then begin
+                        ApprovedBy := Employees."First Name" + ' ' + Employees."Last Name";
+                        ApproverTitle := Employees."Job Title";
+                    end;
                 END;
                 TermsConditionText := '';
                 ShowPOTermsContents();

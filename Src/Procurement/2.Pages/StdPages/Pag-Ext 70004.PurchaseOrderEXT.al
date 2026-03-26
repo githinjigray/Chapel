@@ -14,11 +14,11 @@ pageextension 70004 "Purchase Order EXT" extends "Purchase Order"
                 ApplicationArea = all;
                 ToolTip = 'Purchase Type';
             }
-            field("Order From"; Rec."Order From")
-            {
-                ApplicationArea = all;
-                ToolTip = 'Purchase Type';
-            }
+            // field("Order From"; Rec."Order From")
+            // {
+            //     ApplicationArea = all;
+            //     ToolTip = 'Purchase Type';
+            // }
             field("Expense Period"; rec."Expense Period")
             {
                 ApplicationArea = all;
@@ -216,6 +216,18 @@ pageextension 70004 "Purchase Order EXT" extends "Purchase Order"
                     //end update
                 end;
             }
+            action("Budget Commitment")
+            {
+                Caption = 'View Budget Commitment';
+                Image = LedgerBudget;
+                RunObject = page "Budget Committment Lines";
+                RunPageLink = "Document No." = FIELD("No.");
+                Promoted = true;
+                PromotedCategory = Category5;
+                PromotedIsBig = true;
+                Visible = true;
+                ApplicationArea = All;
+            }
         }
         addbefore(Dimensions)
         {
@@ -337,7 +349,7 @@ pageextension 70004 "Purchase Order EXT" extends "Purchase Order"
     var
         PurchaseLine2: Record "Purchase Line";
         "LineNo.": Integer;
-        RequisitionLines: page "Submitted Requisition Lines";
+        RequisitionLines: page "Released Purchase Req. Line";
         Counter: Integer;
         PurchaseLine: Record "Purchase Line";
         SelectedPurchaseRequisitionLine: Record "Purchase Requisition Line";

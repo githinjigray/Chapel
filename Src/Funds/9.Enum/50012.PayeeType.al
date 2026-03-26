@@ -6,9 +6,9 @@ enum 50012 "Payee Type"
     {
         Caption = 'Vendor';
     }
-    value(1; Employee)
+    value(1; Medical)
     {
-        Caption = 'Employee';
+        Caption = 'Medical Claim';
     }
     value(2; Imprest)
     {
@@ -17,7 +17,7 @@ enum 50012 "Payee Type"
     value(3; Customer)
     {
         Caption = 'Customer';
-    } 
+    }
     value(4; GL)
     {
         Caption = 'GL';

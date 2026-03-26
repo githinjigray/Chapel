@@ -16,6 +16,7 @@ using Microsoft.CostAccounting.Budget;
 using Microsoft.CostAccounting.Ledger;
 using Microsoft.CostAccounting.Reports;
 using Microsoft.EServices.EDocument;
+using Chapel.Chapel;
 using Microsoft.Finance.Analysis;
 using Microsoft.Finance.Consolidation;
 using Microsoft.Finance.Currency;
@@ -70,6 +71,7 @@ page 50078 "Funds Mgt. Role Center"
 {
     Caption = 'Funds Management', Comment = 'Use same translation as ''Profile Description'' (if applicable)';
     PageType = RoleCenter;
+    ApplicationArea = All;
 
     layout
     {
@@ -617,12 +619,12 @@ page 50078 "Funds Mgt. Role Center"
                     RunObject = Page "Funds Transfer List";
                     ApplicationArea = All;
                 }
-                // action("Funds Claim")
-                // {
-                //     RunObject = Page "Funds Claim List";
-                //     RunPageView = WHERE(Status = FILTER(<> Posted));
-                //ApplicationArea = All;
-                // }
+                action("Funds Claim")
+                {
+                    RunObject = Page "Funds Claim List";
+                    RunPageView = WHERE(Status = FILTER(<> Posted));
+                    ApplicationArea = All;
+                }
                 action("New Fixed Deposits")
                 {
                     RunObject = Page "FD Transfer Term Amount List";
@@ -639,6 +641,26 @@ page 50078 "Funds Mgt. Role Center"
                 {
                     RunObject = Page "FD Transfer Term Amount List";
                     RunPageView = WHERE("Fixed Deposit Status" = FILTER(Matured));
+                    ApplicationArea = All;
+                }
+                action("Beneficiaries List")
+                {
+                    RunObject = Page "365 Beneficiaries List";
+                    ApplicationArea = All;
+                }
+                action("Sponsors List")
+                {
+                    RunObject = Page "365 Sponsors List.";
+                    ApplicationArea = All;
+                }
+                action("Guardians List")
+                {
+                    RunObject = Page "365 Guardians List";
+                    ApplicationArea = All;
+                }
+                action("Scholarships List")
+                {
+                    RunObject = Page "365 Shcolarships";
                     ApplicationArea = All;
                 }
 

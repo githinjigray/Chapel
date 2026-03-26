@@ -186,6 +186,7 @@ tableextension 70000 "Purchase Header EXT" extends "Purchase Header"
     trigger OnInsert()
     begin
         "User ID" := UserId;
+        "Order From" := "Order From"::Procurement;
     end;
 
     trigger OnDelete()

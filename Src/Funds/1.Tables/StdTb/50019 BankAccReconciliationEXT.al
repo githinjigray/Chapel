@@ -92,6 +92,7 @@ tableextension 50019 "Bank Acc. Reconciliation EXT" extends "Bank Acc. Reconcili
             CaptionClass = '1,2,6';
             TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(6), "Dimension Value Type" = const(Standard), Blocked = const(false));
         }
+        
         modify("Bank Account No.")
         {
             trigger OnAfterValidate()

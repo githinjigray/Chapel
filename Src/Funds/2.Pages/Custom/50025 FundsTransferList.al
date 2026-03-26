@@ -396,7 +396,7 @@ page 50025 "Funds Transfer List"
                     FundsTransferHeader.RESET;
                     FundsTransferHeader.SETRANGE(FundsTransferHeader."No.", Rec."No.");
                     IF FundsTransferHeader.FINDFIRST THEN BEGIN
-                        REPORT.RUNMODAL(REPORT::"Funds Transfers Voucher", TRUE, FALSE, FundsTransferHeader);
+                        REPORT.RUNMODAL(REPORT::"Cheque Print FT", TRUE, FALSE, FundsTransferHeader);
                     END;
                 end;
             }

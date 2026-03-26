@@ -11,7 +11,7 @@
       <am:Name>PBIRB</am:Name>
       <am:Version>15.7.1813.16</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2026-02-06T07:36:03.2465460Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2026-02-16T21:25:01.4076189Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -1060,6 +1060,7 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
+                        <rd:Selected>true</rd:Selected>
                         <Textbox Name="Textbox3">
                           <rd:DefaultName>Textbox3</rd:DefaultName>
                           <CanGrow>true</CanGrow>
@@ -1125,7 +1126,7 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value>=First(Fields!ShortcutDimension4Code_PurchaseHeaders.Value, "DataSet_Result")</Value>
+                                  <Value>=First(Fields!ShortcutDimension4Code_PurchaseHeader.Value, "DataSet_Result")</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>

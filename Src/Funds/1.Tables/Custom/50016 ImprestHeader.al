@@ -18,9 +18,10 @@ table 50016 "Imprest Header"
             OptionCaption = ' , ,Payment,Invoice,Credit Memo,Finance Charge Memo,Reminder,Refund,Receipt,Funds Transfer,Imprest,Imprest Surrender';
         }
         field(3; "Document Date"; Date)
-        {
+        { 
             Caption = 'Document Date';
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(4; "Posting Date"; Date)
         {
@@ -153,19 +154,19 @@ table 50016 "Imprest Header"
                 Customer.Reset();
                 Customer.SetRange(Customer."No.", "Employee No.");
                 if Customer.FindFirst() then begin
-                    // "Employee Name" := Customer."First Name" + ' ' + Customer."Middle Name" + ' ' + Customer."Last Name";
-                    // "HR Employee No." := Customer."No.";
+                    "Employee Name" := Customer."First Name" + ' ' + Customer."Middle Name" + ' ' + Customer."Last Name";
+                    "HR Employee No." := Customer."No.";
                     // Customer.TESTFIELD(Customer."Imprest Posting Group");
                     // "Employee Posting Group" := Customer."Imprest Posting Group";
                     // "HR Job Grade" := Employee."Job Grade";
-                    // "Phone No." := Employee."Phone No.";
-                    // "Global Dimension 1 Code" := Employee."Global Dimension 1 Code";
-                    // "Global Dimension 2 Code" := Employee."Global Dimension 2 Code";
-                    // "Shortcut Dimension 3 Code" := Employee."Shortcut Dimension 3 Code";
-                    // "Shortcut Dimension 4 Code" := Employee."Shortcut Dimension 4 Code";
-                    // "Shortcut Dimension 5 Code" := Employee."Shortcut Dimension 5 Code";
-                    // "Shortcut Dimension 6 Code" := Employee."Shortcut Dimension 6 Code";
-                    // "Responsibility Center" := Employee."Responsibility Center";
+                    "Phone No." := Customer."Phone No.";
+                    "Global Dimension 1 Code" := Customer."Global Dimension 1 Code";
+                    "Global Dimension 2 Code" := Customer."Global Dimension 2 Code";
+                    // "Shortcut Dimension 3 Code" := Customer."Shortcut Dimension 3 Code";
+                    // "Shortcut Dimension 4 Code" := Customer."Shortcut Dimension 4 Code";
+                    // "Shortcut Dimension 5 Code" := Customer."Shortcut Dimension 5 Code";
+                    // "Shortcut Dimension 6 Code" := Customer."Shortcut Dimension 6 Code";
+                    // "Responsibility Center" := Customer."Responsibility Center";
                 end;
             end;
         }

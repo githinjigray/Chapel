@@ -325,7 +325,7 @@ page 50013 "Posted Payment List"
                     PaymentHeader.RESET;
                     PaymentHeader.SETRANGE(PaymentHeader."No.", Rec."No.");
                     IF PaymentHeader.FINDFIRST THEN BEGIN
-                        REPORT.RUNMODAL(REPORT::"Payment Voucher", TRUE, FALSE, PaymentHeader);
+                        REPORT.RUNMODAL(REPORT::"Cheque Print", TRUE, FALSE, PaymentHeader);
                     END;
                 end;
             }

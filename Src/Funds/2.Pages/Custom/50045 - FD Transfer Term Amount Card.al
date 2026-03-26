@@ -15,11 +15,11 @@ page 50045 "FD Transfer Term Amount Card"
                 {
                     Caption = 'Document No.';
                 }
-                field("Reference No."; Rec."Reference No.")
-                {
-                    Caption = 'Reference No.';
-                    ShowMandatory = true;
-                }
+                // field("Reference No."; Rec."Reference No.")
+                // {
+                //     Caption = 'Reference No.';
+                //     ShowMandatory = true;
+                // }
                 field("FD Type"; rec."FD Type")
                 {
                     ShowMandatory = true;

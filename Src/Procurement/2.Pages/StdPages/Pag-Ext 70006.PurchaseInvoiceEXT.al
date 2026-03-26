@@ -72,7 +72,7 @@ pageextension 70006 "Purchase Invoice EXT" extends "Purchase Invoice"
     var
         PurchaseLine2: Record "Purchase Line";
         "LineNo.": Integer;
-        RequisitionLines: page "Submitted Requisition Lines";
+        RequisitionLines: page "Released Purchase Req. Line";
         Counter: Integer;
         PurchaseLine: Record "Purchase Line";
         SelectedPurchaseRequisitionLine: Record "Purchase Requisition Line";

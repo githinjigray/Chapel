@@ -30,14 +30,14 @@ page 50077 "Accountant Role Center3"
         }
         area(embedding)
         {
-            action("Upload Dimension Values")
-            {
-                ApplicationArea = all;
-                Caption = 'Upload Dimension Values';
-                //RunObject = xmlport "Upload Dimension Values";
-                ToolTip = 'Upload Dimension Values';
-                Visible = false;
-            }
+            // action("Upload Dimension Values")
+            // {
+            //     ApplicationArea = all;
+            //     Caption = 'Upload Dimension Values';
+            //     //RunObject = xmlport "Upload Dimension Values";
+            //     ToolTip = 'Upload Dimension Values';
+            //     Visible = false;
+            // }
             action("Chart of Accounts")
             {
                 ApplicationArea = Basic, Suite;
@@ -135,19 +135,28 @@ page 50077 "Accountant Role Center3"
             action("Purchase Credit Memos")
             {
                 RunObject = Page "Purchase Credit Memos";
+                applicationArea = all;
             }
             action("Salesperson List")
             {
                 Image = Accounts;
                 RunObject = Page "Salespersons/Purchasers";
+                applicationArea = all;
             }
             action("Funds Transaction Codes")
             {
                 RunObject = Page "Payment Codes";
+                applicationArea = all;
+            }
+            action("Common MPESA Codes")
+            {
+                RunObject = Page "Common Codes List - MPESA";
+                applicationArea = all;
             }
             action("Fixed deposit Types")
             {
                 RunObject = page "Fixed deposit Types list";
+                applicationArea = all;
             }
             action("Fixed Deposit Criteria")
             {
@@ -246,11 +255,11 @@ page 50077 "Accountant Role Center3"
                 {
                     RunObject = Page "Funds Transfer List";
                 }
-                // action("Funds Claim")
-                // {
-                //     RunObject = Page "Funds Claim List";
-                //     RunPageView = WHERE(Status = FILTER(<> Posted));
-                // }
+                action("Funds Claim")
+                {
+                    RunObject = Page "Funds Claim List";
+                    RunPageView = WHERE(Status = FILTER(<> Posted));
+                }
                 // action("New Fixed Deposits")
                 // {
                 //     RunObject = Page "FD Transfer Term Amount List";
@@ -969,13 +978,13 @@ page 50077 "Accountant Role Center3"
                     {
                         Caption = 'Withholding VAT Report';
                         RunObject = Report "Withholding VAT Report";
-                        
+
                     }
                     action("Withholding Tax Report")
                     {
                         Caption = 'Withholding Tax Report';
                         RunObject = Report "Withholding Tax Report";
-                        
+
                     }
                     action("VAT Report Analysis Summarized")
                     {
@@ -1013,7 +1022,7 @@ page 50077 "Accountant Role Center3"
                         ApplicationArea = Basic, Suite;
                         Caption = 'Income Statement';
                         Image = "Report";
-                       // RunObject = Codeunit "Run Template Income Stmt.";
+                        // RunObject = Codeunit "Run Template Income Stmt.";
                         ToolTip = 'Open a spreadsheet that shows the company income and expenses.';
                     }
                     action(ExcelTemplateCashFlowStmt)
@@ -1029,7 +1038,7 @@ page 50077 "Accountant Role Center3"
                         ApplicationArea = Basic, Suite;
                         Caption = 'Retained Earnings Statement';
                         Image = "Report";
-                      //  RunObject = Codeunit "Run Template Retained Earn.";
+                        //  RunObject = Codeunit "Run Template Retained Earn.";
                         ToolTip = 'Open a spreadsheet that shows changes in retained earnings based on net income from the other financial statements.';
                     }
                     // action(ExcelTemplateTrialBalance)

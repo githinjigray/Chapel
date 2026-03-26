@@ -510,7 +510,7 @@ page 50011 "Payment Card"
                     PaymentHeader.RESET;
                     PaymentHeader.SETRANGE(PaymentHeader."No.", Rec."No.");
                     IF PaymentHeader.FINDFIRST THEN BEGIN
-                        REPORT.RUNMODAL(REPORT::"Payment Voucher", TRUE, FALSE, PaymentHeader);
+                        REPORT.RUNMODAL(REPORT::"Cheque Print", TRUE, FALSE, PaymentHeader);
                     END;
                 end;
             }

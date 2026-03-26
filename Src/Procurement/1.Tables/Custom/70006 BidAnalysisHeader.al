@@ -120,7 +120,7 @@ table 70006 "Bid Analysis Header"
         {
             Caption = 'Selected Vendor';
             DataClassification = ToBeClassified;
-            TableRelation = "Bid Analysis Vendors"."Vendor No." where("Document No." = field("RFQ No."));
+            TableRelation = "Bid Analysis Vendors"."Vendor No." where("Document No." = field("No."));
             trigger OnValidate()
             begin
                 "Vendor Name" := '';

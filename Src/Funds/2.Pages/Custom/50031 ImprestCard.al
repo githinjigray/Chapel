@@ -105,21 +105,7 @@ page 50031 "Imprest Card"
                 // {
                 //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
                 // }
-                field("Depature Time"; Rec."Depature Time")
-                {
-                    ToolTip = 'Specifies the value of the Depature Time field.';
-                    ApplicationArea = All;
-                }
-                field("Return Time"; Rec."Return Time")
-                {
-                    ToolTip = 'Specifies the value of the Return Time field.';
-                    ApplicationArea = All;
-                }
-                field(Destination; Rec.Destination)
-                {
-                    ToolTip = 'Specifies the value of the Destination field.';
-                    ApplicationArea = All;
-                }
+                // s
                 field(Status; Rec.Status)
                 {
                     ToolTip = 'Specifies the value of the Status field.';
@@ -322,13 +308,13 @@ page 50031 "Imprest Card"
 
     trigger OnAfterGetCurrRecord()
     begin
-        if (Rec.Status <> rec.Status::Open) or (Rec.Status <> rec.Status::approved) then
-            CurrPage.Editable := false;
+        // if (Rec.Status <> rec.Status::Open) or (Rec.Status <> rec.Status::approved) then
+        // CurrPage.Editable := false;
     end;
 
     trigger OnOpenPage()
     begin
-        if Rec.Status <> rec.Status::Open then
-            CurrPage.Editable := false;
+        // if Rec.Status <> rec.Status::Open then
+        //     CurrPage.Editable := false;
     end;
 }

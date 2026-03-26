@@ -2,7 +2,7 @@ pageextension 50041 "365 Bank Acc. Reconciliation" extends "Bank Acc. Reconcilia
 {
     layout
     {
-
+      
     }
     actions
     {

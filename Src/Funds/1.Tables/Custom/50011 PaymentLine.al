@@ -581,7 +581,7 @@ table 50011 "Payment Line"
             DataClassification = ToBeClassified;
             TableRelation = IF ("Payee Type" = CONST(Vendor)) Vendor."No." WHERE(Balance = FILTER(<> 0))
             ELSE
-            IF ("Payee Type" = CONST(Employee)) Employee."No."
+            IF ("Payee Type" = CONST(Medical)) "Funds Claim Header"."No." WHERE(Posted = CONST(false), Status = CONST(Approved))
             ELSE
             IF ("Payee Type" = CONST(Imprest)) "Imprest Header"."No." WHERE(Posted = CONST(false), Status = CONST(Approved))
             ELSE
@@ -656,10 +656,55 @@ table 50011 "Payment Line"
                     VALIDATE("Account No.");
                 END;
 
-                IF "Payee Type" = "Payee Type"::Employee THEN BEGIN
-                    "Account Type" := "Account Type"::Employee;
-                    "Account No." := "Payee No.";
-                    VALIDATE("Account No.");
+                IF "Payee Type" = "Payee Type"::Medical THEN BEGIN
+                    FundsClaimHeader.RESET;
+                    FundsClaimHeader.SETRANGE(FundsClaimHeader."No.", "Payee No.");
+                    IF FundsClaimHeader.FINDFIRST THEN BEGIN
+                        PaymentLine.RESET;
+                        PaymentLine.SETRANGE(PaymentLine."Payee No.", "Payee No.");
+                        IF PaymentLine.FINDFIRST THEN BEGIN
+                            IF PaymentLine."Document No." <> "Document No." THEN
+                                ERROR(Text005, PaymentLine."Document No.");
+                        END;
+
+                        FundsClaimHeader.CALCFIELDS(FundsClaimHeader.Amount);
+                        FundsClaimHeader.CALCFIELDS(FundsClaimHeader."Amount(LCY)");
+                        "Account Type" := "Account Type"::Customer;
+                        "Account No." := FundsClaimHeader."Payee No.";
+                        VALIDATE("Account No.");
+                        Description := FundsClaimHeader.Description;
+                        if FundsClaimHeader."Currency Code" = 'KSH SHS' then
+                            "Currency Code" := ''
+                        else
+                            "Currency Code" := FundsClaimHeader."Currency Code";
+                        "Total Amount" := FundsClaimHeader.Amount;
+                        VALIDATE("Total Amount");
+                        "Global Dimension 1 Code" := FundsClaimHeader."Global Dimension 1 Code";
+                        "Global Dimension 2 Code" := FundsClaimHeader."Global Dimension 2 Code";
+                        "Shortcut Dimension 3 Code" := FundsClaimHeader."Shortcut Dimension 3 Code";
+                        "Shortcut Dimension 4 Code" := FundsClaimHeader."Shortcut Dimension 4 Code";
+                        "Shortcut Dimension 5 Code" := FundsClaimHeader."Shortcut Dimension 5 Code";
+                        "Shortcut Dimension 6 Code" := FundsClaimHeader."Shortcut Dimension 6 Code";
+                        "Shortcut Dimension 7 Code" := FundsClaimHeader."Shortcut Dimension 7 Code";
+                        "Shortcut Dimension 8 Code" := FundsClaimHeader."Shortcut Dimension 8 Code";
+                        PaymentHeader.RESET;
+                        PaymentHeader.SETRANGE(PaymentHeader."No.", "Document No.");
+                        IF PaymentHeader.FINDFIRST THEN BEGIN
+                            IF PaymentHeader."Payee Name" = '' THEN BEGIN
+                                PaymentHeader."Payee Name" := FundsClaimHeader."Payee Name";
+                                PaymentHeader."Payee No." := FundsClaimHeader."Payee No.";
+                            END;
+                            PaymentHeader."Global Dimension 1 Code" := FundsClaimHeader."Global Dimension 1 Code";
+                            PaymentHeader."Global Dimension 2 Code" := FundsClaimHeader."Global Dimension 2 Code";
+                            PaymentHeader."Shortcut Dimension 3 Code" := FundsClaimHeader."Shortcut Dimension 3 Code";
+                            PaymentHeader."Shortcut Dimension 4 Code" := FundsClaimHeader."Shortcut Dimension 4 Code";
+                            PaymentHeader."Shortcut Dimension 5 Code" := FundsClaimHeader."Shortcut Dimension 5 Code";
+                            PaymentHeader."Shortcut Dimension 6 Code" := FundsClaimHeader."Shortcut Dimension 6 Code";
+                            PaymentHeader."Shortcut Dimension 7 Code" := FundsClaimHeader."Shortcut Dimension 7 Code";
+                            PaymentHeader."Shortcut Dimension 8 Code" := FundsClaimHeader."Shortcut Dimension 8 Code";
+                            PaymentHeader.MODIFY;
+                        END;
+                    END;
                 END;
 
                 IF "Payee Type" = "Payee Type"::GL THEN BEGIN
