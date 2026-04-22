@@ -50,6 +50,11 @@ page 58003 "365 Beneficiaries List"
                     ToolTip = 'Specifies the value of the Email field.', Comment = '%';
                     ApplicationArea = all;
                 }
+                field("Amount Received"; Rec."Amount Received")
+                {
+                    ToolTip = 'Specifies the value of the Amount Received field.', Comment = '%';
+                    DrillDownPageId = "365 Scholarship Ledger Entry";
+                }
             }
         }
     }

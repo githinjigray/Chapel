@@ -192,7 +192,10 @@ page 50011 "Payment Card"
                     ToolTip = 'User ID';
                     Editable = false;
                 }
-
+                field("Scholarship Payment"; Rec."Scholarship Payment")
+                {
+                    ToolTip = 'Specifies the value of the Scholarship Payment field.', Comment = '%';
+                }
             }
             part(PaymentLIne; "Payment Line")
             {
@@ -278,7 +281,8 @@ page 50011 "Payment Card"
                             error('Document is already posted');
                         rec.CalcFields("Net Amount");
                         rec.TestField("Net Amount");
-
+                        if Rec."Scholarship Payment" then
+                            Error('Use post payment line by line for this Action');
                         PostPayment.CheckPaymentsMandatoryFields(Rec."No.", true);
                         IF FundsUserSetup.GET(USERID) THEN BEGIN
                             FundsUserSetup.TESTFIELD(FundsUserSetup."Payment Journal Template");
@@ -308,7 +312,8 @@ page 50011 "Payment Card"
                             error('Document is already posted');
                         rec.CalcFields("Net Amount");
                         rec.TestField("Net Amount");
-
+                        if Rec."Scholarship Payment" then
+                            Error('Use post payment line by line for this Action');
                         PostPayment.CheckPaymentsMandatoryFields(Rec."No.", true);
                         IF FundsUserSetup.GET(USERID) THEN BEGIN
                             FundsUserSetup.TESTFIELD(FundsUserSetup."Payment Journal Template");

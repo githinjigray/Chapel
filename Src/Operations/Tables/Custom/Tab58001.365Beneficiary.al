@@ -44,6 +44,14 @@ table 58001 "365  Beneficiary"
         {
             Caption = 'No. Series';
         }
+        field(9; "Amount Received"; Decimal)
+        {
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = sum("365 Scholarship Ledger Entry".Amount where("Beneficiary No." = field("No.")));
+            Caption = 'Amount Received';
+
+        }
     }
     keys
     {

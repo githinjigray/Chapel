@@ -330,6 +330,7 @@ codeunit 50000 PaymentPost
                         MarkImprestAsPosted(PaymentHeader."No.");
                     MarkFundsClaimAsPosted(PaymentHeader."No.");
                     MarkActivityRequestAsPosted(PaymentHeader."No.");
+                    InsertBeneficiaryLedger(PaymentHeader."No.");
                     // IF PaymentHeader."Payee Type" = PaymentHeader."Payee Type": THEN;
                     // MarkBoardMeetingAsPosted(PaymentHeader."No.",PaymentHeader."Payee No.");
                 END;
@@ -641,6 +642,7 @@ codeunit 50000 PaymentPost
                         MarkImprestAsPosted(PaymentHeader."No.");
                         MarkFundsClaimAsPosted(PaymentHeader."No.");
                         MarkActivityRequestAsPosted(PaymentHeader."No.");
+                        InsertBeneficiaryledger(PaymentHeader."No.");
                     end;
                 END;
             END;
@@ -684,11 +686,14 @@ codeunit 50000 PaymentPost
             REPEAT
                 PaymentLine.TESTFIELD(PaymentLine."Account No.");
                 PaymentLine.TESTFIELD(PaymentLine.Description);
-            // PaymentLine.TESTFIELD(PaymentLine."Global Dimension 1 Code");
-            //  PaymentLine.TESTFIELD(PaymentLine."Global Dimension 2 Code");
-            // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 3 Code");
-            // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 4 Code");
-            // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 5 Code");
+                // PaymentLine.TESTFIELD(PaymentLine."Global Dimension 1 Code");
+                //  PaymentLine.TESTFIELD(PaymentLine."Global Dimension 2 Code");
+                // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 3 Code");
+                // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 4 Code");
+                // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 5 Code");
+
+                if PaymentHeader."Scholarship Payment" then
+                    PaymentLine.TestField("Cheque No.");
             UNTIL PaymentLine.NEXT = 0;
         END ELSE BEGIN
             // ERROR('One or more payment lines are empty');
@@ -748,6 +753,26 @@ codeunit 50000 PaymentPost
                     ActivityRequest."Posting Date" := TODAY;
                     ActivityRequest.MODIFY;
                 END;
+            UNTIL PaymentLine.NEXT = 0;
+        END;
+    end;
+
+    local procedure InsertBeneficiaryledger(DocumentNo: Code[20])
+    var
+        ScholarshipLedgerEntry: Record "365 Scholarship Ledger Entry";
+    begin
+        PaymentLine.RESET;
+        PaymentLine.SETRANGE(PaymentLine."Document No.", DocumentNo);
+        PaymentLine.SetRange("Payee Type", PaymentLine."Payee Type"::Beneficiary);
+        IF PaymentLine.FindSet() THEN BEGIN
+            REPEAT
+                ScholarshipLedgerEntry.Init();
+                ScholarshipLedgerEntry."Line No" := 0;
+                ScholarshipLedgerEntry."PV No." := PaymentLine."Document No.";
+                ScholarshipLedgerEntry."Beneficiary No." := PaymentLine."Payee No.";
+                ScholarshipLedgerEntry.Amount := PaymentLine."Total Amount";
+                ScholarshipLedgerEntry."Posting Date" := PaymentLine."Posting Date";
+                ScholarshipLedgerEntry.Insert();
             UNTIL PaymentLine.NEXT = 0;
         END;
     end;

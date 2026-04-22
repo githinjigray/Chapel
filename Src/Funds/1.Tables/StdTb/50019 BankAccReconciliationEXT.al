@@ -76,7 +76,7 @@ tableextension 50019 "Bank Acc. Reconciliation EXT" extends "Bank Acc. Reconcili
             Caption = 'Shortcut Dimension 4 Code';
             DataClassification = ToBeClassified;
             CaptionClass = '1,2,4';
-            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false));
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false), "Dimension Value 3" = field("Shortcut Dimension 3 Code"));
         }
         field(70015; "Shortcut Dimension 5 Code"; Code[20])
         {
@@ -92,7 +92,7 @@ tableextension 50019 "Bank Acc. Reconciliation EXT" extends "Bank Acc. Reconcili
             CaptionClass = '1,2,6';
             TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(6), "Dimension Value Type" = const(Standard), Blocked = const(false));
         }
-        
+
         modify("Bank Account No.")
         {
             trigger OnAfterValidate()

@@ -589,7 +589,9 @@ table 50011 "Payment Line"
             ELSE
             IF ("Payee Type" = CONST(GL)) "G/L Account"."No."
             ELSE
-            IF ("Payee Type" = CONST("Pre-Payment")) Vendor."No.";
+            IF ("Payee Type" = CONST("Pre-Payment")) Vendor."No."
+            ELSE
+            IF ("Payee Type" = CONST("Beneficiary")) "365  Beneficiary"."No.";
 
             trigger OnValidate()
             begin
@@ -648,6 +650,21 @@ table 50011 "Payment Line"
                     "Account Type" := "Account Type"::Customer;
                     "Account No." := "Payee No.";
                     VALIDATE("Account No.");
+                END;
+                IF "Payee Type" = "Payee Type"::Beneficiary THEN BEGIN
+                    "Account Type" := "Account Type"::"G/L Account";
+                    EndowmentGeneralSetup.Reset();
+                    if EndowmentGeneralSetup.findfirst then begin
+                        EndowmentGeneralSetup.TestField("Endowment Beneficiary Account");
+                        "Account No." := EndowmentGeneralSetup."Endowment Beneficiary Account";
+                    end;
+                    VALIDATE("Account No.");
+                    Beneficiaries.Reset;
+                    Beneficiaries.SetRange("No.", "Payee No.");
+                    if Beneficiaries.FindFirst() then begin
+                        Description := Beneficiaries.Name;
+                    end;
+
                 END;
 
                 IF ("Payee Type" = "Payee Type"::Vendor) OR ("Payee Type" = "Payee Type"::"Pre-Payment") THEN BEGIN
@@ -797,7 +814,7 @@ table 50011 "Payment Line"
         {
             Caption = 'Shortcut Dimension 4 Code';
             CaptionClass = '1,2,4';
-            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false));
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false), "Dimension Value 3" = field("Shortcut Dimension 3 Code"));
             DataClassification = ToBeClassified;
         }
         field(43; "Shortcut Dimension 5 Code"; Code[20])
@@ -937,6 +954,11 @@ table 50011 "Payment Line"
             DataClassification = ToBeClassified;
             Caption = 'Invoice Amount';
         }
+        field(80; "Cheque No."; Code[20])
+        {
+            Caption = 'Cheque No.';
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {
@@ -946,6 +968,7 @@ table 50011 "Payment Line"
         }
     }
     var
+        Beneficiaries: Record "365  Beneficiary";
         FundsGeneralSetup: Record "Funds General Setup";
         FundsTransactionCodes: Record "Funds Transaction Code";
         FundsTaxCodes: Record "Funds Tax Code";
@@ -973,6 +996,7 @@ table 50011 "Payment Line"
         PaymentLine: Record "Payment Line";
         FundsClaimHeader: Record "Funds Claim Header";
         FundsClaimLine: Record "Funds Claim Line";
+        EndowmentGeneralSetup: Record "Endowment General Setup";
         Text001: TextConst ENU = 'You Cannot Delete line when status is Released';
         Text005: TextConst ENU = 'The Imprest has already been assigned to Payment Voucher no. %1';
         Text006: TextConst ENU = 'The request has already been assigned to Payment Voucher no. %1';

@@ -28,10 +28,14 @@ table 58006 "365 Beneficiary Line"
             Caption = 'Guardian Name';
             Editable = false;
         }
+        field(4; "Beneficiary No."; Code[50])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {
-        key(PK; "Line No.")
+        key(PK; "Line No.", "Beneficiary No.")
         {
             Clustered = true;
         }

@@ -176,6 +176,11 @@ page 50012 "Payment Line"
                     ToolTip = 'Specifies the value of the Shortcut Dimension 4 Code field.', Comment = '%';
                     ApplicationArea = All;
                 }
+                field("Cheque No."; Rec."Cheque No.")
+                {
+                    ToolTip = 'Specifies the value of the Cheque No. field.', Comment = '%';
+                }
+
                 // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
                 // {
                 //     ToolTip = 'Specifies the value of the Shortcut Dimension 5 Code field.', Comment = '%';
@@ -190,11 +195,8 @@ page 50012 "Payment Line"
                 // {
                 //     ToolTip = 'Specifies the value of the Shortcut Dimension 7 Code field.', Comment = '%';
                 // }
-                field("Phone No."; rec."Phone No.")
-                {
-                    ToolTip = 'Specifies the employee  Phone number ';
-                    ApplicationArea = All;
-                }
+
+
             }
         }
     }

@@ -29,6 +29,11 @@ pageextension 50044 "365 Sales & Receivables Setup" extends "Sales & Receivables
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Sponsor No. field.', Comment = '%';
             }
+            field("Activity No."; Rec."Activity No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Activity No. field.', Comment = '%';
+            }
         }
 
     }

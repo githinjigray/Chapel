@@ -43,10 +43,30 @@ page 58004 "365 Beneficiary Card"
                 {
                     ToolTip = 'Specifies the value of the Email field.', Comment = '%';
                 }
+                field("Amount Received"; Rec."Amount Received")
+                {
+                    ToolTip = 'Specifies the value of the Amount Received field.', Comment = '%';
+                    DrillDownPageId = "365 Scholarship Ledger Entry";
+                }
             }
             part(Control1; "365 Beneficiary Line")
             {
                 ApplicationArea = All;
+                SubPageLink = "Beneficiary No." = field("No.");
+            }
+        }
+    }
+    actions
+    {
+        area(Processing)
+        {
+            action("Sholarship ledger Entries")
+            {
+                RunObject = page "365 Scholarship Ledger Entry";
+                RunPageLink = "Beneficiary No." = field("No.");
+                Image = LedgerEntries;
+                Promoted = true;
+                PromotedCategory = Process;
             }
         }
     }

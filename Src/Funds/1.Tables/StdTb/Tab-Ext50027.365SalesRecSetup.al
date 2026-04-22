@@ -31,5 +31,11 @@ tableextension 50027 "365 Sales & Rec. Setup" extends "Sales & Receivables Setup
             TableRelation = "No. Series".Code;
             DataClassification = ToBeClassified;
         }
+        field(50004; "Activity No."; Code[20])
+        {
+            Caption = 'Activity No.';
+            TableRelation = "No. Series".Code;
+            DataClassification = ToBeClassified;
+        }
     }
 }

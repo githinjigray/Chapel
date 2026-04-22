@@ -7,14 +7,14 @@ tableextension 50012 "Sales Header EXT" extends "Sales Header"
             Caption = 'Shortcut Dimension 3 Code';
             DataClassification = ToBeClassified;
             CaptionClass = '1,2,3';
-            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(3), "Dimension Value Type" = const(Standard), Blocked = const(false));
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(3), "Dimension Value Type" = const(Standard), Blocked = const(false), "Dimension Value 2" = field("Shortcut Dimension 2 Code"));
         }
         field(70001; "Shortcut Dimension 4 Code"; Code[20])
         {
             Caption = 'Shortcut Dimension 4 Code';
             DataClassification = ToBeClassified;
             CaptionClass = '1,2,4';
-            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false));
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false), "Dimension Value 3" = field("Shortcut Dimension 3 Code"));
         }
         field(70002; "Shortcut Dimension 5 Code"; Code[20])
         {

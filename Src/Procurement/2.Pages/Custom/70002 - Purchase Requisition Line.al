@@ -99,7 +99,7 @@ page 70002 "Purchase Requisition Line"
                 {
                     ApplicationArea = All;
                 }
-                
+
                 field("Global Dimension 1 Code"; rec."Global Dimension 1 Code")
                 {
                     ToolTip = 'Specifies the code for Shortcut Dimension 1, which is one of two global dimension codes that you set up in the General Ledger Setup window.';
@@ -117,6 +117,11 @@ page 70002 "Purchase Requisition Line"
                 {
                     ApplicationArea = All;
                 }
+                field("Vendor Name"; Rec."Vendor Name")
+                {
+                    ToolTip = 'Specifies the value of the Vendor Name field.', Comment = '%';
+                }
+
                 // field("Shortcut Dimension 5 Code"; rec."Shortcut Dimension 5 Code")
                 // {
                 //     ApplicationArea = All;

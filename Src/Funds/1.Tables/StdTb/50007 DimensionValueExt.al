@@ -41,5 +41,23 @@ tableextension 50007 DimensionValueExt extends "Dimension Value"
             DataClassification = ToBeClassified;
             Caption = 'Region';
         }
+        field(70007; "Dimension Value 1"; Code[50])
+        {
+            Caption = 'Dimension Value 1';
+            DataClassification = ToBeClassified;
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(1), "Dimension Value Type" = const(Standard));
+        }
+        field(70008; "Dimension Value 2"; Code[50])
+        {
+            Caption = 'Dimension Value 2';
+            DataClassification = ToBeClassified;
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(2), "Dimension Value Type" = const(Standard));
+        }
+        field(70009; "Dimension Value 3"; Code[50])
+        {
+            Caption = 'Dimension Value 3';
+            DataClassification = ToBeClassified;
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(3), "Dimension Value Type" = const(Standard));
+        }
     }
 }

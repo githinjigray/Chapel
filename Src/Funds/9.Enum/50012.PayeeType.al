@@ -26,4 +26,8 @@ enum 50012 "Payee Type"
     {
         Caption = 'Pre-Payment';
     }
+    value(6; Beneficiary)
+    {
+        Caption = 'Beneficiary';
+    }
 }

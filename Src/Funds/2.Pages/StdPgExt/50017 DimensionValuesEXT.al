@@ -4,33 +4,21 @@ pageextension 50017 "Dimension Values EXT" extends "Dimension Values"
     {
         addafter(Totaling)
         {
-            field("Global Dimension 1 Code"; rec."Global Dimension 1 Code")
+
+            field("Dimension Value 1"; Rec."Dimension Value 1")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the VAT Registration No. field.', Comment = '%';
             }
-            field("Sequence No"; rec."Sequence No")
+            field("Dimension Value 2"; Rec."Dimension Value 2")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the VAT Registration No. field.', Comment = '%';
             }
-            field(Description; rec.Description)
+            field("Dimension Value 3"; Rec."Dimension Value 3")
             {
-                ApplicationArea = all;
-            }
-            field("E-Mail"; rec."E-Mail")
-            {
-                ApplicationArea = all;
-            }
-            field("LPO Corr. E-Mail"; Rec."LPO Corr. E-Mail")
-            {
-                ApplicationArea = all;
-            }
-            field("Invoice Corr. E-Mail"; rec."Invoice Corr. E-Mail")
-            {
-                ApplicationArea = all;
-            }
-            field(Region; Rec.Region)
-            {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the VAT Registration No. field.', Comment = '%';
             }
         }
     }

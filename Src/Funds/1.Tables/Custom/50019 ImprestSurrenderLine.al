@@ -383,7 +383,7 @@ table 50019 "Imprest Surrender Line"
             Caption = 'Shortcut Dimension 4 Code';
             DataClassification = ToBeClassified;
             CaptionClass = '1,2,4';
-            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false));
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false), "Dimension Value 3" = field("Shortcut Dimension 3 Code"));
         }
         field(33; "Shortcut Dimension 5 Code"; Code[20])
         {

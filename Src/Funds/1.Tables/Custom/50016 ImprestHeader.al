@@ -18,7 +18,7 @@ table 50016 "Imprest Header"
             OptionCaption = ' , ,Payment,Invoice,Credit Memo,Finance Charge Memo,Reminder,Refund,Receipt,Funds Transfer,Imprest,Imprest Surrender';
         }
         field(3; "Document Date"; Date)
-        { 
+        {
             Caption = 'Document Date';
             DataClassification = ToBeClassified;
             Editable = false;
@@ -225,7 +225,7 @@ table 50016 "Imprest Header"
             Caption = 'Shortcut Dimension 4 Code';
             DataClassification = ToBeClassified;
             CaptionClass = '1,2,4';
-            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false));
+            TableRelation = "Dimension Value"."code" where("Global Dimension No." = const(4), "Dimension Value Type" = const(Standard), Blocked = const(false), "Dimension Value 3" = field("Shortcut Dimension 3 Code"));
         }
         field(32; "Shortcut Dimension 5 Code"; Code[20])
         {

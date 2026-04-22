@@ -663,6 +663,16 @@ page 50078 "Funds Mgt. Role Center"
                     RunObject = Page "365 Shcolarships";
                     ApplicationArea = All;
                 }
+                action("Beneficiary Activities")
+                {
+                    RunObject = Page "Beneficiary Activity List";
+                    ApplicationArea = All;
+                }
+                action("Scholarships Ledger Entries")
+                {
+                    RunObject = Page "365 Scholarship Ledger Entry";
+                    ApplicationArea = All;
+                }
 
             }
             group("Approved Funds Transactions")
