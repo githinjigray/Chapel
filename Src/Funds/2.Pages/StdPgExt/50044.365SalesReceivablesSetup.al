@@ -34,7 +34,16 @@ pageextension 50044 "365 Sales & Receivables Setup" extends "Sales & Receivables
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Activity No. field.', Comment = '%';
             }
+            field("School No."; Rec."School No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the School No. field.', Comment = '%';
+            }
+            field("Requisition No."; Rec."Requisition No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Requisition No. field.', Comment = '%';
+            }
         }
-
     }
 }

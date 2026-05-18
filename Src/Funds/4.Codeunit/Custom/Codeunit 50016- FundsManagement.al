@@ -442,6 +442,40 @@ codeunit 50016 "Funds Management"
         END;
     end;
 
+
+    procedure ValidateScholarshipRequisitionNo(No: Code[20])
+    var
+        ScholarshipRequisition: Record "Scholarship Requisition";
+        scholarshipReqLine: Record "Scholarship Requisition Line";
+        ScholarshipPaymentLine: Record "Payment Line";
+        OldScholarshipPaymentLine: Record "Payment Line";
+        ScholarshipPaymenthdr: Record "Payment Header";
+    begin
+        OldScholarshipPaymentLine.RESET;
+        OldScholarshipPaymentLine.SETRANGE(OldScholarshipPaymentLine."Document No.", No);
+        IF OldScholarshipPaymentLine.FINDSET THEN
+            OldScholarshipPaymentLine.DELETEALL;
+
+        if ScholarshipPaymenthdr.get(No) then begin
+            scholarshipReqLine.RESET;
+            scholarshipReqLine.SETRANGE(scholarshipReqLine."Document No.", ScholarshipPaymenthdr."Scholarship Requisition No.");
+            IF scholarshipReqLine.FindSet() THEN BEGIN
+                repeat
+                    ScholarshipPaymentLine.Init();
+                    ScholarshipPaymentLine."Line No." := 0;
+                    ScholarshipPaymentLine."Payee Type" := ScholarshipPaymentLine."Payee Type"::Beneficiary;
+                    ScholarshipPaymentLine."Document No." := ScholarshipPaymenthdr."No.";
+                    ScholarshipPaymentLine."SC Line No." := scholarshipReqLine."Line No.";
+                    ScholarshipPaymentLine."Payee No." := scholarshipReqLine."Beneficiary No.";
+                    ScholarshipPaymentLine.Validate(ScholarshipPaymentLine."Payee No.");
+                    ScholarshipPaymentLine."Total Amount" := scholarshipReqLine.Amount;
+                    ScholarshipPaymentLine.Validate(ScholarshipPaymentLine."Total Amount");
+                    ScholarshipPaymentLine.Insert();
+                until scholarshipReqLine.Next() = 0;
+            END;
+        end;
+    end;
+
     procedure ReopenImprestSurrender(VAR "Imprest Surrender Header": Record "Imprest Surrender Header")
     begin
 

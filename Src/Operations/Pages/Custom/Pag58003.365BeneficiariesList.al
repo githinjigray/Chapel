@@ -30,6 +30,10 @@ page 58003 "365 Beneficiaries List"
                     ToolTip = 'Specifies the value of the Gender field.', Comment = '%';
                     ApplicationArea = all;
                 }
+                field("School Name"; Rec."School Name")
+                {
+                    ToolTip = 'Specifies the value of the School Name field.', Comment = '%';
+                }
                 field("Date of Birth"; Rec."Date of Birth")
                 {
                     ToolTip = 'Specifies the value of the Date of Birth field.', Comment = '%';

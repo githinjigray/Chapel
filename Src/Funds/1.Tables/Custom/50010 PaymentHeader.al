@@ -582,6 +582,28 @@ table 50010 "Payment Header"
         field(72; "Scholarship Payment"; Boolean)
         {
             DataClassification = ToBeClassified;
+
+        }
+        field(73; "Scholarship Requisition No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            tableRelation = "Scholarship Requisition"."No." where(Status = filter(Approved), "Payment Status" = filter(Unpaid | "Partially-Paid"));
+            trigger OnValidate()
+            var
+                ScholarshipRequisition: Record "Scholarship Requisition";
+            begin
+                if Confirm('Continue with the selected Scholarship Requisition No.?') then begin
+                    if ScholarshipRequisition.Get("Scholarship Requisition No.") then begin
+                        "Payee No." := ScholarshipRequisition."School No.";
+                        "Payee Name" := ScholarshipRequisition."School Name";
+                        Description := ScholarshipRequisition.Description;
+                    end;
+                    FundsManagement.ValidateScholarshipRequisitionNo("No.");
+                end else begin
+
+                end;
+
+            end;
         }
     }
     keys
@@ -605,6 +627,7 @@ table 50010 "Payment Header"
         PaymentLine: Record "Payment Line";
         CurrExchRate: Record "Currency Exchange Rate";
         NoSeriesMgt: Codeunit "No. Series";
+        FundsManagement: Codeunit "Funds Management";
     //Approvetable: Record "Approval Entry";
     //approveCU: Codeunit "Approvals Mgmt.";
 

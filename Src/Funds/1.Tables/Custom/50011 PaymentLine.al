@@ -959,6 +959,11 @@ table 50011 "Payment Line"
             Caption = 'Cheque No.';
             DataClassification = ToBeClassified;
         }
+        field(81; "SC Line No."; Integer)
+        {
+            Caption = 'Line No.';
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

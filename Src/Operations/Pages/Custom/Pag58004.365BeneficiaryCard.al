@@ -27,6 +27,15 @@ page 58004 "365 Beneficiary Card"
                 {
                     ToolTip = 'Specifies the value of the Gender field.', Comment = '%';
                 }
+                field("School No."; Rec."School No.")
+                {
+                    ToolTip = 'Specifies the value of the School No. field.', Comment = '%';
+                }
+                field("School Name"; Rec."School Name")
+                {
+                    ToolTip = 'Specifies the value of the School Name field.', Comment = '%';
+                }
+
                 field("Date of Birth"; Rec."Date of Birth")
                 {
                     ToolTip = 'Specifies the value of the Date of Birth field.', Comment = '%';
@@ -48,6 +57,11 @@ page 58004 "365 Beneficiary Card"
                     ToolTip = 'Specifies the value of the Amount Received field.', Comment = '%';
                     DrillDownPageId = "365 Scholarship Ledger Entry";
                 }
+                field("Mentor Name"; Rec."Mentor Name")
+                {
+                    ToolTip = 'Specifies the value of the Mentor Name field.', Comment = '%';
+                }
+
             }
             part(Control1; "365 Beneficiary Line")
             {

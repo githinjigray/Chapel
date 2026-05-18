@@ -117,8 +117,8 @@ page 70004 "Released Purchase Req. Line"
                 field("Document Date"; Rec."Document Date")
                 {
                     ApplicationArea = All;
-                }                
-                
+                }
+
                 field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
                 {
                     ApplicationArea = All;
@@ -165,6 +165,18 @@ page 70004 "Released Purchase Req. Line"
                 field("Purchase Order No."; Rec."Purchase Order No.")
                 {
                     ApplicationArea = All;
+                }
+                field("Vendor Name"; Rec."Vendor Name")
+                {
+                    ToolTip = 'Specifies the value of the Vendor Name field.', Comment = '%';
+                }
+                field("Vendor No."; Rec."Vendor No.")
+                {
+                    ToolTip = 'Specifies the value of the Vendor No. field.', Comment = '%';
+                }
+                field("Assigned Vendor Name"; Rec."Assigned Vendor Name")
+                {
+                    ToolTip = 'Specifies the value of the Assigned Vendor Name field.', Comment = '%';
                 }
             }
         }

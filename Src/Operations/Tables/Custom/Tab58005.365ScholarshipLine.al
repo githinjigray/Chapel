@@ -35,7 +35,7 @@ table 58005 "365 Scholarship Line"
     }
     keys
     {
-        key(PK; "Line No.")
+        key(PK; "Line No.", "Scholarship No.")
         {
             Clustered = true;
         }

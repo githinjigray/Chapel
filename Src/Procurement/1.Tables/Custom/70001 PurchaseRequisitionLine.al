@@ -499,6 +499,26 @@ table 70001 "Purchase Requisition Line"
             Caption = 'Vendor Name';
             DataClassification = ToBeClassified;
         }
+        field(70056; "Vendor No."; Code[20])
+        {
+            Caption = 'Vendor No.';
+            DataClassification = ToBeClassified;
+            TableRelation = Vendor."No.";
+            trigger OnValidate()
+            begin
+                "Assigned Vendor Name" := '';
+                if "Vendor No." <> '' then begin
+                    Vendor.Get("Vendor No.");
+                    "Assigned Vendor Name" := Vendor.Name;
+                end;
+            end;
+        }
+        field(70057; "Assigned Vendor Name"; Text[250])
+        {
+            Caption = 'Assigned Vendor Name';
+            editable = false;
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {
@@ -514,6 +534,7 @@ table 70001 "Purchase Requisition Line"
         Item: Record Item;
 
         PurchaseRequisitionHeader: Record "Purchase Requisitions";
+        Vendor: Record Vendor;
         AvailableInventory: Integer;
         ItemLedgerEntry: Record "Item Ledger Entry";
         FixedAsset: Record "Fixed Asset";

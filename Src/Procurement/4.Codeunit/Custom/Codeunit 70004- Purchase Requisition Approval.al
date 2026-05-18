@@ -277,11 +277,19 @@ codeunit 70004 "Purchase Requisition Approval"
     local procedure ReleaseDocument(RecRef: RecordRef; var Handled: Boolean)
     var
         PurchaseRequisition: Record "Purchase Requisitions";
+        PurchaseRequisitionLine: Record "Purchase Requisition Line";
     begin
         case RecRef.Number of
             DATABASE::"Purchase Requisitions":
                 begin
                     RecRef.SetTable(PurchaseRequisition);
+                    PurchaseRequisitionLine.Reset();
+                    PurchaseRequisitionLine.SetRange("Document No.", PurchaseRequisition."No.");
+                    if PurchaseRequisitionLine.FindSet() then begin
+                        repeat
+                            PurchaseRequisitionLine.TestField("Vendor No.");
+                        until PurchaseRequisitionLine.Next() = 0;
+                    end;
                     PurchaseRequisition.Validate(Status, PurchaseRequisition.Status::Approved);
                     if PurchaseRequisition.Modify(true) then
                         CreateApprovalEmail(PurchaseRequisition."No.");

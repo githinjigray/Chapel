@@ -686,14 +686,13 @@ codeunit 50000 PaymentPost
             REPEAT
                 PaymentLine.TESTFIELD(PaymentLine."Account No.");
                 PaymentLine.TESTFIELD(PaymentLine.Description);
-                // PaymentLine.TESTFIELD(PaymentLine."Global Dimension 1 Code");
-                //  PaymentLine.TESTFIELD(PaymentLine."Global Dimension 2 Code");
-                // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 3 Code");
-                // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 4 Code");
-                // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 5 Code");
+            // PaymentLine.TESTFIELD(PaymentLine."Global Dimension 1 Code");
+            //  PaymentLine.TESTFIELD(PaymentLine."Global Dimension 2 Code");
+            // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 3 Code");
+            // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 4 Code");
+            // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 5 Code");
 
-                if PaymentHeader."Scholarship Payment" then
-                    PaymentLine.TestField("Cheque No.");
+
             UNTIL PaymentLine.NEXT = 0;
         END ELSE BEGIN
             // ERROR('One or more payment lines are empty');
@@ -760,6 +759,7 @@ codeunit 50000 PaymentPost
     local procedure InsertBeneficiaryledger(DocumentNo: Code[20])
     var
         ScholarshipLedgerEntry: Record "365 Scholarship Ledger Entry";
+        ScholarshipPayment: record "Payment Header";
     begin
         PaymentLine.RESET;
         PaymentLine.SETRANGE(PaymentLine."Document No.", DocumentNo);
@@ -772,6 +772,10 @@ codeunit 50000 PaymentPost
                 ScholarshipLedgerEntry."Beneficiary No." := PaymentLine."Payee No.";
                 ScholarshipLedgerEntry.Amount := PaymentLine."Total Amount";
                 ScholarshipLedgerEntry."Posting Date" := PaymentLine."Posting Date";
+                if ScholarshipPayment.get(PaymentLine."Document No.") then begin
+                    ScholarshipLedgerEntry."Cheque No." := ScholarshipPayment."Reference No.";
+                    ScholarshipLedgerEntry."Posting Date" := ScholarshipPayment."Posting Date";
+                end;
                 ScholarshipLedgerEntry.Insert();
             UNTIL PaymentLine.NEXT = 0;
         END;

@@ -36,6 +36,17 @@ table 58004 "365 Scholarship"
         {
             Caption = 'No. Series';
         }
+        field(9; "Sponsor No."; Code[50])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "365 Sponsor"."No.";
+        }
+        field(10; "Sponsor Name"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Sponsor Name';
+            Editable = false;
+        }
     }
     keys
     {

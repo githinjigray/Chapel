@@ -52,6 +52,28 @@ table 58001 "365  Beneficiary"
             Caption = 'Amount Received';
 
         }
+        field(10; "School Name"; Text[250])
+        {
+            Caption = 'School Name';
+            Editable = false;
+        }
+        field(12; "Mentor Name"; Text[250])
+        {
+            Caption = 'Mentor Name';
+        }
+        field(13; "School No."; Code[50])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Beneficiary School"."No.";
+            trigger OnValidate()
+            var
+                BeneficiarySchool: Record "Beneficiary School";
+            begin
+                "School Name" := '';
+                if BeneficiarySchool.get("School No.") then
+                    "School Name" := BeneficiarySchool."School Name";
+            end;
+        }
     }
     keys
     {

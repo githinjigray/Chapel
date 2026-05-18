@@ -118,6 +118,18 @@ page 70005 "All Purchase Requisition Lines"
                 {
                     ApplicationArea = All;
                 }
+                field("Vendor Name"; Rec."Vendor Name")
+                {
+                    ToolTip = 'Specifies the value of the Vendor Name field.', Comment = '%';
+                }
+                field("Vendor No."; Rec."Vendor No.")
+                {
+                    ToolTip = 'Specifies the value of the Vendor No. field.', Comment = '%';
+                }
+                field("Assigned Vendor Name"; Rec."Assigned Vendor Name")
+                {
+                    ToolTip = 'Specifies the value of the Assigned Vendor Name field.', Comment = '%';
+                }
                 // field("Shortcut Dimension 5 Code"; Rec."Shortcut Dimension 5 Code")
                 // {
                 //     ToolTip = 'Specifies the code for Shortcut Dimension 5, which is one of six shortcut dimension codes that you set up in the General Ledger Setup window.';

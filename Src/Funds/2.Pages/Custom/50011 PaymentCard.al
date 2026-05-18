@@ -195,6 +195,15 @@ page 50011 "Payment Card"
                 field("Scholarship Payment"; Rec."Scholarship Payment")
                 {
                     ToolTip = 'Specifies the value of the Scholarship Payment field.', Comment = '%';
+                    trigger OnValidate()
+                    begin
+                        ScholarshipVisible := true;
+                    end;
+                }
+                field("Scholarship Requisition No."; Rec."Scholarship Requisition No.")
+                {
+                    ToolTip = 'Specifies the value of the Scholarship Requisition No. field.', Comment = '%';
+                    Editable = ScholarshipVisible;
                 }
             }
             part(PaymentLIne; "Payment Line")
@@ -548,6 +557,7 @@ page 50011 "Payment Card"
         ShowWorkflowStatus: Boolean;
         CustomerOffsetVisible: Boolean;
         ReferenceVisible: Boolean;
+        ScholarshipVisible: boolean;
         JTemplate: code[20];
         ApprovalEntries: Record "Approval Entry";
         JBatch: code[20];
@@ -586,6 +596,11 @@ page 50011 "Payment Card"
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
         WorkflowWebhookMgt: Codeunit "Workflow Webhook Management";
     begin
+        if rec."Scholarship Payment" then begin
+            ScholarshipVisible := true;
+        end else begin
+            ScholarshipVisible := false;
+        end;
         //HasIncomingDocument := "Incoming Document Entry No." <> 0;
         CreateIncomingDocumentEnabled := (not HasIncomingDocument) and (Rec."No." <> '');
 

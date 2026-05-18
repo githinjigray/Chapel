@@ -163,7 +163,7 @@ page 70056 "Approval Entries-Modified"
                 Image = View;
                 action("Record")
                 {
-                    ApplicationArea = Suite;
+                    ApplicationArea = all;
                     Caption = 'Record';
                     Enabled = ShowRecCommentsEnabled;
                     Image = Document;
@@ -230,10 +230,9 @@ page 70056 "Approval Entries-Modified"
         {
             action("&Delegate")
             {
-                AccessByPermission = TableData "Approval Entry" = M;
-                ApplicationArea = Suite;
+                //AccessByPermission = TableData "Approval Entry" = M;
+                ApplicationArea = all;
                 Caption = '&Delegate';
-                Enabled = DelegateEnable;
                 Image = Delegate;
                 Promoted = true;
                 PromotedCategory = Process;
