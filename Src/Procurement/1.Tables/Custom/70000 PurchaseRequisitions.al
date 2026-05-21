@@ -223,6 +223,8 @@ table 70000 "Purchase Requisitions"
             begin
                 Employee.get("Employee No.");
                 "Employee Name" := Employee."First Name" + ' ' + Employee."Last Name";
+                "Global Dimension 1 Code" := Employee."Global Dimension 1 Code";
+                "Global Dimension 2 Code" := Employee."Global Dimension 2 Code";
                 //"Responsibility Center" := Employee."Responsibility Center";
             end;
         }

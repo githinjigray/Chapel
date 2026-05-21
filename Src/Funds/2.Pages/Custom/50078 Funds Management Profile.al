@@ -1,4 +1,4 @@
-namespace Microsoft.Finance.RoleCenters;
+namespace Chapel.Chapel;
 
 using Microsoft.Bank.BankAccount;
 using Microsoft.Bank.Deposit;
@@ -81,12 +81,12 @@ page 50078 "Funds Mgt. Role Center"
             {
                 ApplicationArea = Basic, Suite;
             }
-            part(Control99; "Finance Performance")
+            part(Control99; Microsoft.Finance.RoleCenters."Finance Performance")
             {
                 ApplicationArea = Basic, Suite;
                 Visible = false;
             }
-            part(Control1902304208; "Accountant Activities")
+            part(Control1902304208; Microsoft.Finance.RoleCenters."Accountant Activities")
             {
                 ApplicationArea = Basic, Suite;
             }

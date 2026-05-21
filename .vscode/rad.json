@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[]}
+﻿{"Added":[{"Kind":18,"Name":"Funds Management Role Center","Namespace":"Chapel.Chapel"}],"Modified":[{"Id":70000,"Kind":26,"Name":"Procurement Permissi","Namespace":""},{"Id":50078,"Kind":12,"Name":"Funds Mgt. Role Center","Namespace":"Microsoft.Finance.RoleCenters"}],"Removed":[{"Kind":18,"Name":"Funds Management Role Center","Namespace":"Microsoft.Finance.RoleCenters"}]}
