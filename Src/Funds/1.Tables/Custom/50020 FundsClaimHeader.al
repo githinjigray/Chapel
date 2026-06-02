@@ -50,17 +50,17 @@ table 50020 "Funds Claim Header"
 
             trigger OnValidate()
             begin
-                "Bank Account Name" := '';
-                "Currency Code" := '';
-                VALIDATE("Currency Code");
+                // "Bank Account Name" := '';
+                // "Currency Code" := '';
+                // VALIDATE("Currency Code");
 
-                BankAccount.RESET;
-                BankAccount.SETRANGE(BankAccount."No.", "Bank Account No.");
-                IF BankAccount.FINDFIRST THEN BEGIN
-                    "Bank Account Name" := BankAccount.Name;
-                    "Currency Code" := BankAccount."Currency Code";
-                    VALIDATE("Currency Code");
-                END;
+                // BankAccount.RESET;
+                // BankAccount.SETRANGE(BankAccount."No.", "Bank Account No.");
+                // IF BankAccount.FINDFIRST THEN BEGIN
+                //     "Bank Account Name" := BankAccount.Name;
+                //     "Currency Code" := BankAccount."Currency Code";
+                //     VALIDATE("Currency Code");
+                // END;
             end;
         }
         field(8; "Bank Account Name"; Text[100])
@@ -89,11 +89,11 @@ table 50020 "Funds Claim Header"
 
             trigger OnValidate()
             begin
-                BankAccountLedgerEntry.RESET;
-                BankAccountLedgerEntry.SETRANGE(BankAccountLedgerEntry."External Document No.", "Reference No.");
-                IF BankAccountLedgerEntry.FINDFIRST THEN BEGIN
-                    //ERROR(ErrorUsedReferenceNumber,BankAccountLedgerEntry."Document No.");
-                END;
+                // BankAccountLedgerEntry.RESET;
+                // BankAccountLedgerEntry.SETRANGE(BankAccountLedgerEntry."External Document No.", "Reference No.");
+                // IF BankAccountLedgerEntry.FINDFIRST THEN BEGIN
+                //     //ERROR(ErrorUsedReferenceNumber,BankAccountLedgerEntry."Document No.");
+                // END;
             end;
         }
         field(12; "Payee Type"; Option)
@@ -115,6 +115,9 @@ table 50020 "Funds Claim Header"
                 Employee.SETRANGE(Employee."No.", "Payee No.");
                 IF Employee.FINDFIRST THEN BEGIN
                     "Payee Name" := Employee."First Name" + ' ' + Employee."Middle Name" + ' ' + Employee."Last Name";
+                    "Global Dimension 1 Code" := Employee."Global Dimension 1 Code";
+                    "Global Dimension 2 Code" := Employee."Global Dimension 2 Code";
+
                     FundsClaimLine.RESET;
                     FundsClaimLine.SETRANGE(FundsClaimLine."Document No.", "No.");
                     FundsClaimLine.SETRANGE(FundsClaimLine."Account Type", FundsClaimLine."Account Type"::Employee);
@@ -151,7 +154,7 @@ table 50020 "Funds Claim Header"
             TableRelation = Currency;
             trigger OnValidate()
             begin
-                TESTFIELD("Bank Account No.");
+                //  TESTFIELD("Bank Account No.");
                 TESTFIELD("Posting Date");
                 IF "Currency Code" <> '' THEN BEGIN
                     if "Posting Date" <> 0D then

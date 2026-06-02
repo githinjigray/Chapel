@@ -196,12 +196,21 @@ codeunit 50005 ImprestSurrenderPost
     end;
 
     procedure CheckImprestSurrenderMandatoryFields(DocumentNo: Code[20])
+    var
+        ImpsurHeader: Record "Imprest Surrender Header";
     begin
         ImprestSurrenderHeader.get(DocumentNo);
         ImprestSurrenderHeader.TESTFIELD("Posting Date");
         ImprestSurrenderHeader.TESTFIELD("Employee No.");
         ImprestSurrenderHeader.TESTFIELD("Imprest No.");
         ImprestSurrenderHeader.TESTFIELD(Description);
+
+
+        ImpsurHeader.Reset();
+        ImpsurHeader.SetRange("Imprest No.", ImprestSurrenderHeader."Imprest No.");
+        ImpsurHeader.SetRange(posted, false);
+        if ImpsurHeader.FindFirst() then
+            ERROR('The related Imprest document %1 is not yet posted', ImpsurHeader."Imprest No.");
 
         //IF Posting THEN 
         //ImprestSurrenderHeader.TESTFIELD(Status,ImprestSurrenderHeader.Status::Approved);

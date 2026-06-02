@@ -27,6 +27,8 @@ table 50019 "Imprest Surrender Line"
         field(4; "Imprest Code"; Code[50])
         {
             Caption = 'Imprest Code';
+            TableRelation = "Funds Transaction Code"."Transaction Code"
+            WHERE("Transaction Type" = CONST(Imprest));
             DataClassification = ToBeClassified;
 
             trigger OnValidate()
@@ -41,6 +43,7 @@ table 50019 "Imprest Surrender Line"
                 IF FundsTransactionCodes.FINDFIRST THEN BEGIN
                     "Account Type" := FundsTransactionCodes."Account Type";
                     "Account No." := FundsTransactionCodes."Account No.";
+                    Rec.validate("Account No.");
                     "Posting Group" := FundsTransactionCodes."Posting Group";
                     "Imprest Code Description" := FundsTransactionCodes.Description;
                 END;
@@ -193,6 +196,7 @@ table 50019 "Imprest Surrender Line"
         {
             Caption = 'Amount Advanced (LCY)';
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(17; "Actual Spent"; Decimal)
         {
@@ -213,7 +217,7 @@ table 50019 "Imprest Surrender Line"
 
                 IF "Amount Advanced" <> 0 THEN BEGIN
                     IF "Actual Spent" > "Amount Advanced" THEN
-                        Overpayment := "Actual Spent" - "Amount Advanced"
+                        Error('Actual Spent cannot exceed Amount Advanced.')
                     ELSE
                         Overpayment := 0;
                 END;
@@ -227,6 +231,7 @@ table 50019 "Imprest Surrender Line"
         {
             Caption = 'Actual Spent(LCY)';
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(19; Difference; Decimal)
         {
