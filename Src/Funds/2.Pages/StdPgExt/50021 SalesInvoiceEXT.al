@@ -11,14 +11,7 @@ pageextension 50021 "Sales Invoice EXT" extends "Sales Invoice"
         }
         addbefore("Posting Date")
         {
-            field("Date Of Flight"; Rec."Date Of Flight")
-            {
-                ApplicationArea = all;
-                ToolTip = 'Date Of Flight';
-                ShowMandatory = true;
-                Visible = false;
 
-            }
         }
 
         addafter("Shortcut Dimension 2 Code")

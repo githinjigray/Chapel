@@ -6,6 +6,7 @@ page 50041 "Funds Claim Card"
     SourceTableView = where(Posted = const(false));
     PromotedActionCategoriesML = ENU = 'New,Process,Reports,Details,Approvals,Attachments,Category7_caption,Approvals,Category9_caption,Category10_caption,Category11_caption,Category12_caption,Category13_caption,Category14_caption,Category15_caption,Category16_caption,Category17_caption,Category18_caption,Category19_caption,Category20_caption';
     ApplicationArea = All;
+    Permissions = TableData "Approval Entry" = RIMD;
     layout
     {
         area(content)
@@ -202,8 +203,27 @@ page 50041 "Funds Claim Card"
                 ApplicationArea = all;
             }
         }
+        area(factboxes)
+        {
+            systempart(Control52; Links)
+            {
+                ApplicationArea = RecordLinks;
+            }
 
+            part(ApprovalFactBox; "Approval FactBox")
+            {
+                ApplicationArea = Advanced;
+            }
+            part(IncomingDocAttachFactBox; "Incoming Doc. Attach. FactBox")
+            {
+                ApplicationArea = Advanced;
+                ShowFilter = false;
+                Visible = false;
+            }
+
+        }
     }
+
     actions
     {
         area(Processing)
@@ -318,26 +338,25 @@ page 50041 "Funds Claim Card"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Image = ReOpen;
-
                 trigger OnAction()
                 begin
-                    Rec.TESTFIELD(Status, Rec.Status::Approved);
-                    UserSetup.RESET;
-                    UserSetup.SETRANGE(UserSetup."User ID", USERID);
-                    IF UserSetup.FINDFIRST THEN BEGIN
-                        IF UserSetup."Re-open Payments" THEN
-                            FundsManagement.ReOpenFundsClaim(Rec);
-                        ApprovalEntries.Reset();
-                        ApprovalEntries.SetRange("Document No.", Rec."No.");
-                        if ApprovalEntries.FindSet() then begin
-                            repeat
-                                ApprovalEntries.Status := ApprovalEntries.Status::Canceled;
-                                ApprovalEntries.Modify();
-                            until ApprovalEntries.Next() = 0;
-                        end;
-                    END;
+                    // Rec.TESTFIELD(Status, Rec.Status::Approved);
+                    // UserSetup.RESET;
+                    // UserSetup.SETRANGE(UserSetup."User ID", USERID);
+                    // IF UserSetup.FINDFIRST THEN BEGIN
+                    //     IF UserSetup."Re-open Payments" THEN
+                    FundsManagement.ReOpenFundsClaim(Rec);
+                    ApprovalEntries.Reset();
+                    ApprovalEntries.SetRange("Document No.", Rec."No.");
+                    if ApprovalEntries.FindSet() then begin
+                        repeat
+                            ApprovalEntries.Status := ApprovalEntries.Status::Canceled;
+                            ApprovalEntries.Modify();
+                        until ApprovalEntries.Next() = 0;
+                    end;
+                END;
 
-                end;
+                // end;
             }
         }
         area(Reporting)

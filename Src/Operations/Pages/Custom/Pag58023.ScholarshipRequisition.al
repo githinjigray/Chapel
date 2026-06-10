@@ -7,7 +7,7 @@ using Microsoft.EServices.EDocument;
 page 58023 "Scholarship Requisition"
 {
     ApplicationArea = All;
-    Caption = 'Scholarship Requisition';
+    Caption = 'LOGOS Requisition';
     PageType = Card;
     SourceTable = "Scholarship Requisition";
 

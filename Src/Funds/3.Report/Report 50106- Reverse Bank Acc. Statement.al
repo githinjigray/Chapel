@@ -4,10 +4,10 @@ report 50106 "Reverse Bank Acc. Statement"
     //   Object created
 
     Caption = 'Reverse Bank Account Statement';
-    Permissions = TableData "Bank Account" = rimd,
-                  TableData "Bank Account Ledger Entry" = rimd,
-                  TableData "Bank Acc. Reconciliation" = rimd,
+    Permissions =                   TableData "Bank Acc. Reconciliation" = rimd,
                   TableData "Bank Acc. Reconciliation Line" = rimd,
+TableData "Bank Account" = rimd,
+                  TableData "Bank Account Ledger Entry" = rimd,
                   TableData "Bank Account Statement" = rimd,
                   TableData "Bank Account Statement Line" = rimd;
     ProcessingOnly = true;

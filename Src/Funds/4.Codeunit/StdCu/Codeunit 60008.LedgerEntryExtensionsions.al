@@ -133,6 +133,21 @@ codeunit 60008 "Ledger Entry Extensionsions"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Page, Page::"Payment Reconciliation Journal", OnAfterValidateShortcutDimCode, '', false, false)]
+    local procedure "Payment Reconciliation Journal_OnAfterValidateShortcutDimCode"(var BankAccReconciliationLine: Record "Bank Acc. Reconciliation Line"; var ShortcutDimCode: array[8] of Code[20]; DimIndex: Integer)
+    Var
+        DimensionValues: record "Dimension Value";
+    begin
+
+
+        DimensionValues.Reset();
+        dimensionValues.SetRange("Global Dimension No.", 4);
+        DimensionValues.SetRange(Code, ShortcutDimCode[4]);
+        if DimensionValues.FindFirst() then begin
+            BankAccReconciliationLine.ValidateShortcutDimCode(3, DimensionValues."Dimension Value 3");
+        end;
+    end;
+
     var
         ApprovalCommentLine: Record "Approval Comment Line";
         ApprovalMgt: Codeunit "Approvals Mgmt.";

@@ -4,8 +4,12 @@ report 70007 "Mark Documents Approved"
     Caption = 'Mark Documents Approved';
     UsageCategory = Administration;
     ProcessingOnly = true;
-    Permissions = TableData "Approval Entry" = rm, TableData "Payment Header" = rm,
-                 TableData "Imprest Surrender Header" = rm, TableData "Imprest Header" = rm, TableData "Funds Claim Header" = rm, TableData "Purchase Header" = rm;
+    Permissions = TableData "Approval Entry" = rm,
+TableData "Funds Claim Header" = rm,
+TableData "Imprest Header" = rm,
+                 TableData "Imprest Surrender Header" = rm,
+TableData "Payment Header" = rm,
+TableData "Purchase Header" = rm;
     dataset
     {
         dataitem(PaymentHeader; "Payment Header")

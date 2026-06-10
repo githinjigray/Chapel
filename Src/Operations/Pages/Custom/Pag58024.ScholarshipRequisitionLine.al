@@ -22,6 +22,15 @@ page 58024 "Scholarship Requisition Line"
                 {
                     ToolTip = 'Specifies the value of the Beneficiray Name field.', Comment = '%';
                 }
+                field("Sponsor No."; Rec."Sponsor No.")
+                {
+                    ToolTip = 'Specifies the value of the Sponsor No. field.', Comment = '%';
+                }
+                field("Sponsor Name"; Rec."Sponsor Name")
+                {
+                    ToolTip = 'Specifies the value of the Sponsor Name field.', Comment = '%';
+                }
+
                 field(Amount; Rec.Amount)
                 {
                     ToolTip = 'Specifies the value of the Amount field.', Comment = '%';

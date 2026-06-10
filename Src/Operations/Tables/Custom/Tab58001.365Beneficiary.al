@@ -74,6 +74,24 @@ table 58001 "365  Beneficiary"
                     "School Name" := BeneficiarySchool."School Name";
             end;
         }
+        field(14; "Sponsor No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "365 Sponsor"."No.";
+            trigger OnValidate()
+            var
+                Sponsor: Record "365 Sponsor";
+            begin
+                "Sponsor Name" := '';
+                if Sponsor.get("Sponsor No.") then
+                    "Sponsor Name" := Sponsor."Name";
+            end;
+        }
+        field(15; "Sponsor Name"; Text[250])
+        {
+            Caption = 'Sponsor Name';
+            Editable = false;
+        }
     }
     keys
     {

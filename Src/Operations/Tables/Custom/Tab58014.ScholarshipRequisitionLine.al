@@ -24,8 +24,11 @@ table 58014 "Scholarship Requisition Line"
                 BeneficiaryRec: Record "365  Beneficiary";
             begin
                 "Beneficiray Name" := '';
-                if BeneficiaryRec.Get(Rec."Beneficiary No.") then
-                    Rec."Beneficiray Name" := BeneficiaryRec.Name
+                if BeneficiaryRec.Get(Rec."Beneficiary No.") then begin
+                    Rec."Beneficiray Name" := BeneficiaryRec.Name;
+                    Rec."Sponsor No." := BeneficiaryRec."Sponsor No.";
+                    Rec."Sponsor Name" := BeneficiaryRec."Sponsor Name";
+                end;
             end;
         }
         field(4; "Beneficiray Name"; Text[250])
@@ -52,6 +55,24 @@ table 58014 "Scholarship Requisition Line"
         field(22; "PV Line No."; Integer)
         {
             Caption = 'PV Line No.';
+        }
+        field(23; "Sponsor No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "365 Sponsor"."No.";
+            trigger OnValidate()
+            var
+                Sponsor: Record "365 Sponsor";
+            begin
+                "Sponsor Name" := '';
+                if Sponsor.get("Sponsor No.") then
+                    "Sponsor Name" := Sponsor."Name";
+            end;
+        }
+        field(24; "Sponsor Name"; Text[250])
+        {
+            Caption = 'Sponsor Name';
+            Editable = false;
         }
     }
     keys

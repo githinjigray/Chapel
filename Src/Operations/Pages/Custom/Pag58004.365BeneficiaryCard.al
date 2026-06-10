@@ -61,6 +61,14 @@ page 58004 "365 Beneficiary Card"
                 {
                     ToolTip = 'Specifies the value of the Mentor Name field.', Comment = '%';
                 }
+                field("Sponsor No."; Rec."Sponsor No.")
+                {
+                    ToolTip = 'Specifies the value of the Sponsor No. field.', Comment = '%';
+                }
+                field("Sponsor Name"; Rec."Sponsor Name")
+                {
+                    ToolTip = 'Specifies the value of the Sponsor Name field.', Comment = '%';
+                }
 
             }
             part(Control1; "365 Beneficiary Line")

@@ -5,7 +5,8 @@ report 70001 "Dummy Report 1"
     UsageCategory = ReportsAndAnalysis;
     ProcessingOnly = true;
     UseRequestPage = false;
-    Permissions = TableData "Bank Account Ledger Entry" = rm, tabledata "Cust. Ledger Entry" = rm;
+    Permissions = TableData "Bank Account Ledger Entry" = rm,
+tabledata "Cust. Ledger Entry" = rm;
     dataset
     {
         dataitem("Bank Account Ledger Entry"; "Bank Account Ledger Entry")

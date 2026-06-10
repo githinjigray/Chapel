@@ -546,7 +546,8 @@ table 70001 "Purchase Requisition Line"
         PurchaseRequisitionHeader.Reset();
         PurchaseRequisitionHeader.SetRange("No.", "Document No.");
         if PurchaseRequisitionHeader.FindFirst then begin
-
+            "Currency Code" := purchaseRequisitionHeader."Currency Code";
+            "Currency Factor" := purchaseRequisitionHeader."Currency Factor";
             "Global Dimension 1 Code" := PurchaseRequisitionHeader."Global Dimension 1 Code";
             "Global Dimension 2 Code" := PurchaseRequisitionHeader."Global Dimension 2 Code";
             "Shortcut Dimension 3 Code" := PurchaseRequisitionHeader."Shortcut Dimension 3 Code";

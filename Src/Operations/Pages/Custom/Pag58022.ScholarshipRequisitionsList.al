@@ -3,7 +3,7 @@ namespace Chapel.Chapel;
 page 58022 "Scholarship Requisitions List"
 {
     ApplicationArea = All;
-    Caption = 'Scholarship Requisitions List';
+    Caption = 'LOGOS Requisitions List';
     PageType = List;
     SourceTable = "Scholarship Requisition";
     UsageCategory = Lists;

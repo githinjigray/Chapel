@@ -209,9 +209,10 @@ codeunit 50005 ImprestSurrenderPost
         ImpsurHeader.Reset();
         ImpsurHeader.SetRange("Imprest No.", ImprestSurrenderHeader."Imprest No.");
         ImpsurHeader.SetRange(posted, false);
-        if ImpsurHeader.FindFirst() then
-            ERROR('The related Imprest document %1 is not yet posted', ImpsurHeader."Imprest No.");
-
+        if ImpsurHeader.FindFirst() then begin
+            if ImpsurHeader."No." <> imprestSurrenderHeader."No." then
+                ERROR('The Petty cash request document %1 is still under processing on Petty CashRecoup No. %2', ImpsurHeader."Imprest No.", ImpsurHeader."No.");
+        end;
         //IF Posting THEN 
         //ImprestSurrenderHeader.TESTFIELD(Status,ImprestSurrenderHeader.Status::Approved);
 

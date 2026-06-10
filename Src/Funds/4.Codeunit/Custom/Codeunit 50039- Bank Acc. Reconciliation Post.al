@@ -1,9 +1,9 @@
 codeunit 50039 "Bank Acc.Recon Post2"
 {
     Permissions = TableData "Bank Account Ledger Entry" = rm,
-                  TableData "Check Ledger Entry" = rm,
                   TableData "Bank Account Statement" = ri,
                   TableData "Bank Account Statement Line" = ri,
+                  TableData "Check Ledger Entry" = rm,
                   TableData "Posted Payment Recon. Hdr" = ri;
     TableNo = "Bank Acc. Reconciliation";
 

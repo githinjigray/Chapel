@@ -678,7 +678,7 @@ page 50078 "Funds Mgt. Role Center"
                     RunObject = Page "365 Scholarship Ledger Entry";
                     ApplicationArea = All;
                 }
-                action("Scholarship Requisition")
+                action("LOGOS Requisition")
                 {
                     RunObject = Page "Scholarship Requisitions List";
                     ApplicationArea = All;
