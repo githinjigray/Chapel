@@ -159,6 +159,19 @@ table 70000 "Purchase Requisitions"
             DataClassification = ToBeClassified;
             TableRelation = "Responsibility Center";
         }
+        field(60; "Selected Vendor"; Code[20])
+        {
+            Caption = 'Selected Vendor';
+            DataClassification = ToBeClassified;
+            TableRelation = "Vendor";
+        }
+        field(61; "Invoice No. Assigned"; Code[20])
+        {
+            Caption = 'Invoice No. Assigned';
+            DataClassification = ToBeClassified;
+            TableRelation = "Vendor";
+        }
+
         field(70; Status; Option)
         {
             Caption = 'Status';

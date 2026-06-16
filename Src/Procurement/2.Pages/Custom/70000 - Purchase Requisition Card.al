@@ -223,6 +223,23 @@ page 70000 "Purchase Requisition Card"
                     DocumentAttachmentDetailsL.RunModal();
                 end;
             }
+            action("Create Purchase Invoice")
+            {
+                Caption = 'Create Purchase Invoice';
+                Image = AddAction;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+
+                trigger OnAction()
+                var
+                    ProcurementManagement: Codeunit "Procurement Management";
+                begin
+                    Rec.TestField(Status, Rec.Status::Approved);
+                    ProcurementManagement.CreateRequisitionInvoice(Rec."No.");
+                    Message('Purchase Invoice created from Purchase Requisition %1', Rec."No.");
+                end;
+            }
             action(ReOpen)
             {
                 Caption = 'ReOpen';

@@ -7,6 +7,7 @@ page 50011 "Payment Card"
     DeleteAllowed = false;
     PromotedActionCategoriesML = ENU = 'New,Process,Reports,Details,Approvals,Attachements,Category7_caption,Approvals,Category9_caption,Category10_caption,Category11_caption,Category12_caption,Category13_caption,Category14_caption,Category15_caption,Category16_caption,Category17_caption,Category18_caption,Category19_caption,Category20_caption';
     ApplicationArea = All;
+    Permissions = TableData "Approval Entry" = RIM;
     layout
     {
         area(content)
@@ -470,9 +471,11 @@ page 50011 "Payment Card"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Image = ReOpen;
+                ToolTip = 'Reopen the document for editing. This action will be available only for documents in Approved or Pending Approval status.';
 
                 trigger OnAction()
                 begin
+                    Rec.TestField(Status, Rec.Status::Approved);
                     IF CONFIRM('Re-Open Document?') THEN BEGIN
                         rec.Status := rec.status::Open;
                         rec.modify;

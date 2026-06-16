@@ -47,6 +47,7 @@ table 58013 "Scholarship Requisition"
 
                 BeneficiaryRec.Reset();
                 BeneficiaryRec.SetRange("School No.", "School No.");
+                BeneficiaryRec.SetRange("Externally Sponsored", false);
                 if BeneficiaryRec.FindSet() then begin
                     repeat
                         RequisitionlineRec.Init();

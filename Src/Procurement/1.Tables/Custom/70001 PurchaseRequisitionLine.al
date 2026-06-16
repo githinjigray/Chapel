@@ -510,6 +510,11 @@ table 70001 "Purchase Requisition Line"
                 if "Vendor No." <> '' then begin
                     Vendor.Get("Vendor No.");
                     "Assigned Vendor Name" := Vendor.Name;
+
+                    if PurchaseRequisitionHeader.Get("Document No.") then begin
+                        PurchaseRequisitionHeader."Selected Vendor" := "Vendor No.";
+                        PurchaseRequisitionHeader.Modify();
+                    end;
                 end;
             end;
         }

@@ -154,6 +154,6 @@ codeunit 60008 "Ledger Entry Extensionsions"
         WorkflowResponses: Codeunit "Workflow Response Handling";
         PurchaseHeaders: Record "Purchase Header";
         ProcurementManagement: Codeunit "Procurement Management";
-        RejectionComments: TextConst ENU = 'Kindly give reasons for rejcting approval of this record under comments section';
+        RejectionComments: TextConst ENU = 'Kindly give reasons for rejecting approval of this record under comments section';
 }
 

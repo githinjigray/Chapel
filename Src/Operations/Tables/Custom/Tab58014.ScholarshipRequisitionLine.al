@@ -28,6 +28,7 @@ table 58014 "Scholarship Requisition Line"
                     Rec."Beneficiray Name" := BeneficiaryRec.Name;
                     Rec."Sponsor No." := BeneficiaryRec."Sponsor No.";
                     Rec."Sponsor Name" := BeneficiaryRec."Sponsor Name";
+                    Rec."Doc Name" := BeneficiaryRec.Name;
                 end;
             end;
         }
@@ -72,6 +73,35 @@ table 58014 "Scholarship Requisition Line"
         field(24; "Sponsor Name"; Text[250])
         {
             Caption = 'Sponsor Name';
+            Editable = false;
+        }
+        field(30; "Doc Content"; BLOB)
+        {
+            Caption = 'Document Content';
+            DataClassification = CustomerContent;
+        }
+        field(31; "Has Document"; Boolean)
+        {
+            Caption = 'Uploaded';
+            DataClassification = SystemMetadata;
+            Editable = false;
+        }
+        field(32; "Uploaded At"; DateTime)
+        {
+            Caption = 'Uploaded At';
+            DataClassification = SystemMetadata;
+            Editable = false;
+        }
+        field(33; "Uploaded By"; Code[50])
+        {
+            Caption = 'Uploaded By';
+            DataClassification = SystemMetadata;
+            Editable = false;
+        }
+        field(34; "Doc Name"; Text[250])
+        {
+            Caption = 'File Name';
+            DataClassification = CustomerContent;
             Editable = false;
         }
     }

@@ -1713,6 +1713,211 @@ codeunit 70006 "Procurement Management"
         end;
     end;
 
+    procedure CreateRequisitionInvoice("BidNo.": Code[20])
+    var
+        PurchReqHeader: Record "Purchase Requisitions";
+        PurchReqLine: Record "Purchase Requisition Line";
+        PurchaseHeaderBID: Record "Purchase Header";
+        PurchaseLineBID: Record "Purchase Line";
+        PurchaseHeader2: Record "Purchase Header";
+        PurchaseLine2: Record "Purchase Line";
+        PurchaseOrderCard: Page "Purchase Invoice";
+        "LPONo.": Code[20];
+        CreateLPONumber: Label 'Are you sure you want to create an Invoice from the Requisition card?';
+        GeneralSetup: Record "Purchases & Payables Setup";
+        "NoSeriesMgt.": Codeunit "No. Series";
+        NoPurchaseLineBIDs: Label 'BID No.not approved';
+        LinesNos: Integer;
+        PurchaseLineBID2: Record "Purchase Line";
+        PHeader: Record "Purchase Header";
+        PurchaseLineBIDext: Record "Purchase Line";
+    begin
+        //Modify exisiting LPO
+        PurchReqHeader.Reset;
+        PurchReqHeader.SetRange(PurchReqHeader."No.", "BidNo.");
+        if PurchReqHeader.FindFirst then begin
+            PurchaseHeader2.Reset;
+            PurchaseHeader2.SetRange(PurchaseHeader2."Expense Period", "BidNo.");
+            if PurchaseHeader2.FindFirst then begin
+                if PurchaseHeader2.Status = PurchaseHeader2.Status::Open then begin
+                    PurchReqHeader.TestField("Selected Vendor");
+                    PurchaseLineBIDext.Reset();
+                    PurchaseLineBIDext.SetRange(PurchaseLineBIDext."Document No.", PurchaseHeader2."No.");
+                    if PurchaseLineBIDext.FindSet() then
+                        PurchaseLineBIDext.DeleteAll();
+
+                    PurchaseHeaderBID.Reset;
+                    PurchaseHeaderBID.SetRange(PurchaseHeaderBID."No.", PurchaseHeader2."No.");
+                    if PurchaseHeaderBID.FindFirst() then begin
+
+                        PurchaseHeaderBID."Buy-from Vendor No." := PurchReqHeader."Selected Vendor";
+                        PurchaseHeaderBID."Vendor Invoice No." := PurchReqHeader."Reference Document No.";
+                        PurchaseHeaderBID."Vendor Shipment No." := PurchReqHeader."Reference Document No.";
+                        PurchaseHeaderBID.Validate(PurchaseHeaderBID."Buy-from Vendor No.");
+                        PurchaseHeaderBID."Posting Description" := CopyStr(PurchReqHeader.Description, 1, 100);
+                        PurchaseHeaderBID.Validate(PurchaseHeaderBID."Shortcut Dimension 1 Code", purchReqHeader."Global Dimension 1 Code");
+                        PurchaseHeaderBID.Validate(PurchaseHeaderBID."Shortcut Dimension 2 Code", purchReqHeader."Global Dimension 2 Code");
+                        PurchaseHeaderBID.ValidateShortcutDimCode(3, purchReqHeader."Shortcut Dimension 3 Code");
+                        PurchaseHeaderBID.ValidateShortcutDimCode(4, purchReqHeader."Shortcut Dimension 4 Code");
+                        PurchaseHeaderBID."PRF No." := PurchReqHeader."No.";
+
+                        PurchReqLine.Reset();
+                        PurchReqLine.SetRange(PurchReqLine."Document No.", PurchReqHeader."No.");
+                        if PurchReqLine.FindFirst() then
+                            PurchaseHeaderBID."PRF No." := PurchReqLine."Document No.";
+                        if PurchaseHeaderBID.Modify() then begin
+                            PHeader.Reset;
+                            PHeader.SetRange(PHeader."No.", PurchaseHeader2."No.");
+                            if PHeader.FindFirst then begin
+                                // PHeader.Validate(PHeader."Shortcut Dimension 1 Code");
+                                // PHeader.Validate(PHeader."Shortcut Dimension 2 Code");
+                                // PHeader.Validate(PHeader."Shortcut Dimension 3 Code");
+                                // PHeader.Validate(PHeader."Shortcut Dimension 4 Code");
+                                // PHeader.Modify;
+                            end;
+                            PurchReqLine.Reset;
+                            PurchReqLine.SetRange(PurchReqLine."Document No.", "BidNo.");
+                            PurchReqLine.SetRange(PurchReqLine."Vendor No.", PurchReqHeader."Selected Vendor");
+                            if PurchReqLine.FindSet then begin
+                                repeat
+                                    PurchaseLineBID2.Reset;
+                                    PurchaseLineBID2.SetRange(PurchaseLineBID2."Document No.", PurchaseHeader2."No.");
+                                    if PurchaseLineBID2.FindLast then
+                                        LinesNos := PurchaseLineBID2."Line No.";
+
+                                    PurchaseLineBID.Init;
+                                    PurchaseLineBID."Line No." := LinesNos + 1;
+                                    PurchaseLineBID."Document No." := PurchaseHeader2."No.";
+                                    PurchaseLineBID."Document Type" := PurchaseLineBID."Document Type"::Invoice;
+                                    PurchaseLineBID.Validate(PurchaseLineBID."Document No.");
+                                    PurchaseLineBID.Type := PurchReqLine.Type;
+                                    PurchaseLineBID."No." := PurchReqLine."No.";
+                                    PurchaseLineBID.Validate(PurchaseLineBID."No.");
+                                    PurchaseLineBID.Description := CopyStr(PurchReqLine.Description, 1, 100);
+                                    PurchaseLineBID.Quantity := PurchReqLine.Quantity;
+                                    PurchaseLineBID.Validate(PurchaseLineBID.Quantity);
+                                    PurchaseLineBID."Location Code" := PurchReqLine."Location Code";
+                                    PurchaseLineBID.Validate(PurchaseLineBID."Location Code");
+                                    PurchaseLineBID."Direct Unit Cost" := PurchReqLine."Estimated Unit Cost";
+                                    PurchaseLineBID.Validate(PurchaseLineBID."Direct Unit Cost");
+                                    if PurchReqLine.Type = PurchReqLine.Type::"G/L Account" then begin
+                                        PurchaseLineBID."Gen. Bus. Posting Group" := 'LOCAL';
+                                        PurchaseLineBID."Gen. Prod. Posting Group" := 'GENERAL';
+                                    end;
+                                    //PurchaseLineBID."VAT Prod. Posting Group" := PurchReqLine."VAT Prod. Posting Group";
+                                    //PurchaseLineBID.Validate(PurchaseLineBID."VAT Prod. Posting Group");
+                                    // PurchaseLineBID.Validate("Shortcut Dimension 1 Code", PurchReqHeader."Global Dimension 1 Code");
+                                    // PurchaseLineBID.Validate("Shortcut Dimension 2 Code", PurchReqHeader."Global Dimension 2 Code");
+                                    // PurchaseLineBID.ValidateShortcutDimCode(3, PurchReqHeader."Shortcut Dimension 3 Code");
+                                    // PurchaseLineBID.ValidateShortcutDimCode(4, PurchReqHeader."Shortcut Dimension 4 Code");
+                                    // PurchaseLineBID.ValidateShortcutDimCode(5, PurchReqHeader."Shortcut Dimension 5 Code");
+                                    // PurchaseLineBID.ValidateShortcutDimCode(6, PurchReqHeader."Shortcut Dimension 6 Code");
+                                    PurchaseLineBID.Insert;
+                                until PurchReqLine.Next = 0;
+                            end;
+                        end;
+                    end;
+                    PurchaseHeader2.Reset;
+                    PurchaseHeader2.SetRange("No.", PurchaseHeader2."No.");
+                    PurchaseOrderCard.SetTableView(PurchaseHeader2);
+                    PurchaseOrderCard.Run;
+                end;
+            end else begin
+                //Create New LPO
+                "LPONo." := '';
+
+                if Confirm(CreateLPONumber) then begin
+
+                    GeneralSetup.Get;
+                    GeneralSetup.TestField(GeneralSetup."Order Nos.");
+
+                    "LPONo." := "NoSeriesMgt.".GetNextNo(GeneralSetup."Invoice Nos.", 0D, true);
+
+                    PurchaseHeaderBID.Reset;
+                    PurchaseHeaderBID."No." := "LPONo.";
+                    PurchaseHeaderBID.Validate(PurchaseHeaderBID."No.");
+                    PurchaseHeaderBID."Document Type" := PurchaseHeaderBID."Document Type"::Invoice;
+                    PurchaseHeaderBID."Posting No. Series" := 'P_INV+';
+                    PurchaseHeaderBID."Receiving No. Series" := 'P_RCT+';
+                    PurchaseHeaderBID."Document Date" := Today;
+                    PurchaseHeaderBID."Posting Date" := Today;
+                    PurchaseHeaderBID."Vendor Invoice No." := PurchReqHeader."Reference Document No.";
+                    PurchaseHeaderBID."Vendor Shipment No." := PurchReqHeader."Reference Document No.";
+                    PurchaseHeaderBID."Buy-from Vendor No." := PurchReqHeader."Selected Vendor";
+                    PurchaseHeaderBID.Validate(PurchaseHeaderBID."Buy-from Vendor No.");
+                    PurchaseHeaderBID."Expense Period" := PurchReqHeader."No.";
+                    PurchaseHeaderBID."PRF No." := PurchReqHeader."No.";
+                    PurchaseHeaderBID."Posting Description" := CopyStr(PurchReqHeader.Description, 1, 100);
+                    PurchaseHeaderBID."User ID" := UserId;
+                    if PurchaseHeaderBID.Insert then begin
+                        PHeader.Reset;
+                        PHeader.SetRange(PHeader."No.", "LPONo.");
+                        if PHeader.FindFirst then begin
+                            PHeader.Validate("Shortcut Dimension 1 Code", PurchReqHeader."Global Dimension 1 Code");
+                            PHeader.Validate("Shortcut Dimension 2 Code", PurchReqHeader."Global Dimension 2 Code");
+                            PHeader.ValidateShortcutDimCode(3, PurchReqHeader."Shortcut Dimension 3 Code");
+                            PHeader.ValidateShortcutDimCode(4, PurchReqHeader."Shortcut Dimension 4 Code");
+                            PHeader.ValidateShortcutDimCode(5, PurchReqHeader."Shortcut Dimension 5 Code");
+                            PHeader.ValidateShortcutDimCode(6, PurchReqHeader."Shortcut Dimension 6 Code");
+                            PHeader.Modify;
+                        end;
+                        PurchReqLine.Reset;
+                        PurchReqLine.SetRange(PurchReqLine."Document No.", "BidNo.");
+                        PurchReqLine.SetRange(PurchReqLine."Vendor No.", PurchReqHeader."Selected Vendor");
+                        if PurchReqLine.FindSet then begin
+                            repeat
+                                PurchaseLineBID2.Reset;
+                                PurchaseLineBID2.SetRange(PurchaseLineBID2."Document No.", "LPONo.");
+                                if PurchaseLineBID2.FindLast then
+                                    LinesNos := PurchaseLineBID2."Line No.";
+
+                                PurchaseLineBID.Init;
+                                PurchaseLineBID."Line No." := LinesNos + 1;
+                                PurchaseLineBID."Document No." := "LPONo.";
+                                PurchaseLineBID."Document Type" := PurchaseLineBID."Document Type"::invoice;
+                                PurchaseLineBID.Validate(PurchaseLineBID."Document No.");
+                                PurchaseLineBID.Type := PurchReqLine.Type;
+                                PurchaseLineBID."No." := PurchReqLine."No.";
+                                PurchaseLineBID.Validate(PurchaseLineBID."No.");
+                                PurchaseLineBID.Description := CopyStr(PurchReqLine.Description, 1, 100);
+                                PurchaseLineBID.Quantity := PurchReqLine.Quantity;
+                                PurchaseLineBID.Validate(PurchaseLineBID.Quantity);
+                                PurchaseLineBID."Location Code" := PurchReqLine."Location Code";
+                                PurchaseLineBID.Validate(PurchaseLineBID."Location Code");
+                                PurchaseLineBID."Direct Unit Cost" := PurchReqLine."Estimated Unit Cost";
+                                PurchaseLineBID.Validate(PurchaseLineBID."Direct Unit Cost");
+                                if PurchReqLine.Type = PurchReqLine.Type::"G/L Account" then begin
+                                    PurchaseLineBID."Gen. Bus. Posting Group" := 'LOCAL';
+                                    PurchaseLineBID."Gen. Prod. Posting Group" := 'GENERAL';
+                                end;
+                                //PurchaseLineBID."VAT Prod. Posting Group" := PurchReqLine."VAT Prod. Posting Group";
+                                //PurchaseLineBID.Validate(PurchaseLineBID."VAT Prod. Posting Group");
+                                // PurchaseLineBID.Validate("Shortcut Dimension 1 Code", PurchReqHeader."Global Dimension 1 Code");
+                                // PurchaseLineBID.Validate("Shortcut Dimension 2 Code", PurchReqHeader."Global Dimension 2 Code");
+                                // PurchaseLineBID.ValidateShortcutDimCode(3, PurchReqHeader."Shortcut Dimension 3 Code");
+                                // PurchaseLineBID.ValidateShortcutDimCode(4, PurchReqHeader."Shortcut Dimension 4 Code");
+                                // PurchaseLineBID.ValidateShortcutDimCode(5, PurchReqHeader."Shortcut Dimension 5 Code");
+                                // PurchaseLineBID.ValidateShortcutDimCode(6, PurchReqHeader."Shortcut Dimension 6 Code");
+                                PurchaseLineBID.Insert;
+                            until PurchReqLine.Next = 0;
+                        end;
+                    end;
+                    Message('ORDER no.' + "LPONo." + ' successfully created for BID no.' + PurchReqHeader."No.");
+
+                    PurchReqHeader."Invoice No. Assigned" := "LPONo.";
+                    PurchReqHeader.Modify;
+
+                    PurchaseHeader2.Reset;
+                    PurchaseHeader2.SetRange("No.", PurchaseHeaderBID."No.");
+                    PurchaseOrderCard.SetTableView(PurchaseHeader2);
+                    PurchaseOrderCard.Run;
+                end;
+            end;
+        end else begin
+            Message(NoPurchaseLineBIDs);
+        end;
+    end;
+
     procedure CreatePurchaseRequisitionEmailAssigned("RequisitionNo.": Code[20])
     var
         PurchaseRequisitions: Record "Purchase Requisitions";

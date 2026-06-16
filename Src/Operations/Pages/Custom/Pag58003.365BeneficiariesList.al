@@ -33,6 +33,7 @@ page 58003 "365 Beneficiaries List"
                 field("School Name"; Rec."School Name")
                 {
                     ToolTip = 'Specifies the value of the School Name field.', Comment = '%';
+                    ApplicationArea = all;
                 }
                 field("Date of Birth"; Rec."Date of Birth")
                 {
@@ -58,6 +59,11 @@ page 58003 "365 Beneficiaries List"
                 {
                     ToolTip = 'Specifies the value of the Amount Received field.', Comment = '%';
                     DrillDownPageId = "365 Scholarship Ledger Entry";
+                }
+                field("Externally Sponsored"; Rec."Externally Sponsored")
+                {
+                    ToolTip = 'Specifies the value of the Externally Sponsored field.', Comment = '%';
+                    ApplicationArea = all;
                 }
             }
         }

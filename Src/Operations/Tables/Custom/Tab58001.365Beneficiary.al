@@ -92,6 +92,10 @@ table 58001 "365  Beneficiary"
             Caption = 'Sponsor Name';
             Editable = false;
         }
+        field(16; "Externally Sponsored"; Boolean)
+        {
+            Caption = 'Externally Sponsored';
+        }
     }
     keys
     {
