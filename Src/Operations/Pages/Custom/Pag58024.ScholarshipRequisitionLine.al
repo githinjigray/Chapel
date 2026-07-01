@@ -30,10 +30,18 @@ page 58024 "Scholarship Requisition Line"
                 {
                     ToolTip = 'Specifies the value of the Sponsor Name field.', Comment = '%';
                 }
+                field("Current Class/Grade"; Rec."Current Class/Grade")
+                {
+                    ToolTip = 'Specifies the value of the Current Class/Grade field.', Comment = '%';
+                }
 
                 field(Amount; Rec.Amount)
                 {
                     ToolTip = 'Specifies the value of the Amount field.', Comment = '%';
+                }
+                field("Cheque No."; Rec."Cheque No.")
+                {
+                    ToolTip = 'Specifies the value of the Cheque No. field.', Comment = '%';
                 }
                 field("Doc Name"; Rec."Doc Name")
                 {

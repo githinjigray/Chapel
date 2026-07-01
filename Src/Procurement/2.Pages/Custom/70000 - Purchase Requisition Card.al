@@ -235,7 +235,8 @@ page 70000 "Purchase Requisition Card"
                 var
                     ProcurementManagement: Codeunit "Procurement Management";
                 begin
-                    Rec.TestField(Status, Rec.Status::Approved);
+                    if (Rec.Status <> Rec.Status::Approved) and (rec."Invoice No. Assigned" = '') then
+                        Error('Purchase Requisition %1 is not approved yet', Rec."No.");
                     ProcurementManagement.CreateRequisitionInvoice(Rec."No.");
                     Message('Purchase Invoice created from Purchase Requisition %1', Rec."No.");
                 end;

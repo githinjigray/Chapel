@@ -1749,7 +1749,8 @@ codeunit 70006 "Procurement Management"
                     PurchaseHeaderBID.Reset;
                     PurchaseHeaderBID.SetRange(PurchaseHeaderBID."No.", PurchaseHeader2."No.");
                     if PurchaseHeaderBID.FindFirst() then begin
-
+                        PurchaseHeaderBID."Posting Date" := PurchReqHeader."Requested Receipt Date";
+                        PurchaseHeaderBID.Validate(PurchaseHeaderBID."Posting Date");
                         PurchaseHeaderBID."Buy-from Vendor No." := PurchReqHeader."Selected Vendor";
                         PurchaseHeaderBID."Vendor Invoice No." := PurchReqHeader."Reference Document No.";
                         PurchaseHeaderBID."Vendor Shipment No." := PurchReqHeader."Reference Document No.";
@@ -1806,12 +1807,12 @@ codeunit 70006 "Procurement Management"
                                     end;
                                     //PurchaseLineBID."VAT Prod. Posting Group" := PurchReqLine."VAT Prod. Posting Group";
                                     //PurchaseLineBID.Validate(PurchaseLineBID."VAT Prod. Posting Group");
-                                    // PurchaseLineBID.Validate("Shortcut Dimension 1 Code", PurchReqHeader."Global Dimension 1 Code");
-                                    // PurchaseLineBID.Validate("Shortcut Dimension 2 Code", PurchReqHeader."Global Dimension 2 Code");
-                                    // PurchaseLineBID.ValidateShortcutDimCode(3, PurchReqHeader."Shortcut Dimension 3 Code");
-                                    // PurchaseLineBID.ValidateShortcutDimCode(4, PurchReqHeader."Shortcut Dimension 4 Code");
-                                    // PurchaseLineBID.ValidateShortcutDimCode(5, PurchReqHeader."Shortcut Dimension 5 Code");
-                                    // PurchaseLineBID.ValidateShortcutDimCode(6, PurchReqHeader."Shortcut Dimension 6 Code");
+                                    PurchaseLineBID.Validate("Shortcut Dimension 1 Code", PurchReqLine."Global Dimension 1 Code");
+                                    PurchaseLineBID.Validate("Shortcut Dimension 2 Code", PurchReqLine."Global Dimension 2 Code");
+                                    PurchaseLineBID.ValidateShortcutDimCode(3, PurchReqLine."Shortcut Dimension 3 Code");
+                                    PurchaseLineBID.ValidateShortcutDimCode(4, PurchReqLine."Shortcut Dimension 4 Code");
+                                    // PurchaseLineBID.ValidateShortcutDimCode(5, PurchReqLine."Shortcut Dimension 5 Code");
+                                    // PurchaseLineBID.ValidateShortcutDimCode(6, PurchReqLine."Shortcut Dimension 6 Code");
                                     PurchaseLineBID.Insert;
                                 until PurchReqLine.Next = 0;
                             end;
@@ -1839,8 +1840,9 @@ codeunit 70006 "Procurement Management"
                     PurchaseHeaderBID."Document Type" := PurchaseHeaderBID."Document Type"::Invoice;
                     PurchaseHeaderBID."Posting No. Series" := 'P_INV+';
                     PurchaseHeaderBID."Receiving No. Series" := 'P_RCT+';
-                    PurchaseHeaderBID."Document Date" := Today;
-                    PurchaseHeaderBID."Posting Date" := Today;
+                    PurchaseHeaderBID."Document Date" := PurchReqHeader."Document Date";
+                    PurchaseHeaderBID."Posting Date" := PurchReqHeader."Requested Receipt Date";
+                    PurchaseHeaderBID.Validate(PurchaseHeaderBID."Posting Date");
                     PurchaseHeaderBID."Vendor Invoice No." := PurchReqHeader."Reference Document No.";
                     PurchaseHeaderBID."Vendor Shipment No." := PurchReqHeader."Reference Document No.";
                     PurchaseHeaderBID."Buy-from Vendor No." := PurchReqHeader."Selected Vendor";
@@ -1892,19 +1894,20 @@ codeunit 70006 "Procurement Management"
                                 end;
                                 //PurchaseLineBID."VAT Prod. Posting Group" := PurchReqLine."VAT Prod. Posting Group";
                                 //PurchaseLineBID.Validate(PurchaseLineBID."VAT Prod. Posting Group");
-                                // PurchaseLineBID.Validate("Shortcut Dimension 1 Code", PurchReqHeader."Global Dimension 1 Code");
-                                // PurchaseLineBID.Validate("Shortcut Dimension 2 Code", PurchReqHeader."Global Dimension 2 Code");
-                                // PurchaseLineBID.ValidateShortcutDimCode(3, PurchReqHeader."Shortcut Dimension 3 Code");
-                                // PurchaseLineBID.ValidateShortcutDimCode(4, PurchReqHeader."Shortcut Dimension 4 Code");
-                                // PurchaseLineBID.ValidateShortcutDimCode(5, PurchReqHeader."Shortcut Dimension 5 Code");
-                                // PurchaseLineBID.ValidateShortcutDimCode(6, PurchReqHeader."Shortcut Dimension 6 Code");
+                                PurchaseLineBID.Validate("Shortcut Dimension 1 Code", PurchReqLine."Global Dimension 1 Code");
+                                PurchaseLineBID.Validate("Shortcut Dimension 2 Code", PurchReqLine."Global Dimension 2 Code");
+                                PurchaseLineBID.ValidateShortcutDimCode(3, PurchReqLine."Shortcut Dimension 3 Code");
+                                PurchaseLineBID.ValidateShortcutDimCode(4, PurchReqLine."Shortcut Dimension 4 Code");
+                                // PurchaseLineBID.ValidateShortcutDimCode(5, PurchReqLine."Shortcut Dimension 5 Code");
+                                // PurchaseLineBID.ValidateShortcutDimCode(6, PurchReqLine."Shortcut Dimension 6 Code");
                                 PurchaseLineBID.Insert;
                             until PurchReqLine.Next = 0;
                         end;
                     end;
-                    Message('ORDER no.' + "LPONo." + ' successfully created for BID no.' + PurchReqHeader."No.");
+                    Message('INVOICE no.' + "LPONo." + ' successfully created for BID no.' + PurchReqHeader."No.");
 
                     PurchReqHeader."Invoice No. Assigned" := "LPONo.";
+                    PurchReqHeader.Status := PurchReqHeader.Status::Closed;
                     PurchReqHeader.Modify;
 
                     PurchaseHeader2.Reset;

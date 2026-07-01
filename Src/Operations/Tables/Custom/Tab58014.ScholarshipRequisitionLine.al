@@ -28,6 +28,7 @@ table 58014 "Scholarship Requisition Line"
                     Rec."Beneficiray Name" := BeneficiaryRec.Name;
                     Rec."Sponsor No." := BeneficiaryRec."Sponsor No.";
                     Rec."Sponsor Name" := BeneficiaryRec."Sponsor Name";
+                    Rec."Current Class/Grade" := BeneficiaryRec."Current Class/Grade";
                     Rec."Doc Name" := BeneficiaryRec.Name;
                 end;
             end;
@@ -103,6 +104,14 @@ table 58014 "Scholarship Requisition Line"
             Caption = 'File Name';
             DataClassification = CustomerContent;
             Editable = false;
+        }
+        field(35; "Current Class/Grade"; Text[100])
+        {
+            Caption = 'Current Class/Grade';
+        }
+        field(36; "Cheque No."; Text[100])
+        {
+            Caption = 'Cheque No.';
         }
     }
     keys

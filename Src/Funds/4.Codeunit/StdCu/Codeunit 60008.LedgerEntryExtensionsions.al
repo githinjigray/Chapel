@@ -148,6 +148,59 @@ codeunit 60008 "Ledger Entry Extensionsions"
         end;
     end;
 
+    internal procedure GetRelatedDocumentInfo(var ApprovalEntry: Record "Approval Entry"; var EmployeeID: Text[250]; var EmployeeName: Text[250]; var Dimension1Code: Text[20]; var RequestDescription: Text[250])
+    var
+        ImprestHeader: Record "Imprest Header";
+        PurchaseRequisition: Record "Purchase Requisitions";
+        ImprestSurrender: Record "Imprest Surrender Header";
+        FundsClaim: Record "Funds Claim Header";
+        FirstSourceNo: Code[20];
+    begin
+
+        EmployeeID := '';
+        EmployeeName := '';
+        Dimension1Code := '';
+        RequestDescription := '';
+
+        ImprestHeader.Reset();
+        ImprestHeader.SetRange("No.", ApprovalEntry."Document No.");
+        if ImprestHeader.FindFirst() then begin
+            EmployeeID := ImprestHeader."Employee No.";
+            EmployeeName := ImprestHeader."Employee Name";
+            Dimension1Code := ImprestHeader."Global Dimension 1 Code";
+            RequestDescription := ImprestHeader.Description;
+        end;
+
+        FundsClaim.Reset();
+        FundsClaim.SetRange("No.", ApprovalEntry."Document No.");
+        if FundsClaim.FindFirst() then begin
+            EmployeeID := FundsClaim."Payee No.";
+            EmployeeName := FundsClaim."Payee Name";
+            Dimension1Code := FundsClaim."Global Dimension 1 Code";
+            RequestDescription := FundsClaim.Description;
+        end;
+
+        PurchaseRequisition.Reset();
+        PurchaseRequisition.SetRange("No.", ApprovalEntry."Document No.");
+        if PurchaseRequisition.FindFirst() then begin
+            EmployeeID := PurchaseRequisition."Employee No.";
+            EmployeeName := PurchaseRequisition."Employee Name";
+            Dimension1Code := PurchaseRequisition."Global Dimension 1 Code";
+            RequestDescription := PurchaseRequisition.Description;
+        end;
+
+
+        ImprestSurrender.Reset();
+        ImprestSurrender.SetRange("No.", ApprovalEntry."Document No.");
+        if ImprestSurrender.FindFirst() then begin
+            EmployeeID := ImprestSurrender."Employee No.";
+            EmployeeName := ImprestSurrender."Employee Name";
+            Dimension1Code := ImprestSurrender."Global Dimension 1 Code";
+            RequestDescription := ImprestSurrender.Description;
+        end;
+    end;
+
+
     var
         ApprovalCommentLine: Record "Approval Comment Line";
         ApprovalMgt: Codeunit "Approvals Mgmt.";

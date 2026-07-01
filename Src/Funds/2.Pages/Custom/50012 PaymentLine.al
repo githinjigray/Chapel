@@ -26,6 +26,11 @@ page 50012 "Payment Line"
                     ToolTip = 'Specifies the value of the Applies-to Doc. Type field.';
                     ApplicationArea = All;
                 }
+                field("Invoice No."; Rec."Invoice No.")
+                {
+                    ToolTip = 'Specifies the value of the Invoice Amount field.', Comment = '%';
+                    ApplicationArea = All;
+                }
                 field("Applies-to Doc. No."; Rec."Applies-to Doc. No.")
                 {
                     ToolTip = 'Specifies the value of the Applies-to Doc. No. field.';

@@ -964,6 +964,46 @@ table 50011 "Payment Line"
             Caption = 'Line No.';
             DataClassification = ToBeClassified;
         }
+        field(82; "Invoice No."; Code[50])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Invoice No.';
+            TableRelation = "Purch. Inv. Header"."No." where("Buy-from Vendor No." = field("Payee No."), "Remaining Amount" = filter(<> 0));
+            trigger OnValidate()
+            var
+                DimensionSetEntry: Record "Dimension Set Entry";
+                GeneralLedgerSetup: Record "General Ledger Setup";
+            begin
+                GeneralLedgerSetup.Get;
+                "Applies-to Doc. No." := "Invoice No.";
+
+                PurchInvHeader.RESET;
+                PurchInvHeader.SETRANGE(PurchInvHeader."No.", "Invoice No.");
+                IF PurchInvHeader.FINDFIRST THEN BEGIN
+                    PurchInvHeader.CALCFIELDS(Amount, "Amount Including VAT", "Remaining Amount");
+                    "Total Amount" := PurchInvHeader."Remaining Amount";
+                    Validate("Total Amount");
+                    "Vendor Invoice No." := PurchInvHeader."Vendor Invoice No.";
+                    "Global Dimension 1 Code" := PurchInvHeader."Shortcut Dimension 1 Code";
+                    // Validate("Global Dimension 1 Code");
+                    "Global Dimension 2 Code" := PurchInvHeader."Shortcut Dimension 2 Code";
+                    //Validate("Global Dimension 2 Code");
+
+                    DimensionSetEntry.Reset();
+                    DimensionSetEntry.SetRange("Dimension Set ID", PurchInvHeader."Dimension Set ID");
+                    if DimensionSetEntry.FindSet() then begin
+                        repeat
+                            if DimensionSetEntry."Dimension Code" = GeneralLedgerSetup."Shortcut Dimension 3 Code" then
+                                "Shortcut Dimension 3 Code" := DimensionSetEntry."Dimension Value Code";
+                            // Validate("Shortcut Dimension 3 Code");
+                            if DimensionSetEntry."Dimension Code" = GeneralLedgerSetup."Shortcut Dimension 4 Code" then
+                                "Shortcut Dimension 4 Code" := DimensionSetEntry."Dimension Value Code";
+                        //Validate("Shortcut Dimension 4 Code");
+                        until DimensionSetEntry.Next() = 0;
+                    end;
+                END;
+            end;
+        }
     }
     keys
     {
