@@ -230,26 +230,27 @@ page 50011 "Payment Card"
     {
         area(Processing)
         {
-            // action(DocAttach)
-            // {
-            //     ApplicationArea = All;
-            //     Caption = 'Attachments';
-            //     Visible = false;
-            //     Image = Attach;
-            //     Promoted = true;
-            //     PromotedCategory = Process;
-            //     ToolTip = 'Add a file as an attachment. You can attach images as well as documents.';
+            action(ValidateDimension)
+            {
+                ApplicationArea = All;
+                Caption = 'Validate Dimensions', comment = 'ENU="Validate Dimensions"';
+                Visible = false;
+                Image = Attach;
+                Promoted = true;
+                PromotedCategory = Process;
 
-            //     trigger OnAction()
-            //     var
-            //         DocumentAttachmentDetails: Page "Document Attachment Details";
-            //         RecRef: RecordRef;
-            //     begin
-            //         RecRef.GetTable(Rec);
-            //         DocumentAttachmentDetails.OpenForRecRef(RecRef);
-            //         DocumentAttachmentDetails.RunModal();
-            //     end;
-            // }
+                trigger OnAction()
+                var
+                    DocumentAttachmentDetails: Page "Document Attachment Details";
+                    RecRef: RecordRef;
+                begin
+                    // RecRef.GetTable(Rec);
+                    // DocumentAttachmentDetails.OpenForRecRef(RecRef);
+                    // DocumentAttachmentDetails.RunModal();
+
+                    PostPayment.VlidateDimensions(Rec."No.");
+                end;
+            }
 
 
             group(Posting)

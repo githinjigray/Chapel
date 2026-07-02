@@ -1,5 +1,10 @@
 codeunit 50000 PaymentPost
 {
+    procedure VlidateDimensions(DocumentNo: Code[20])
+    begin
+
+    end;
+
     procedure PostPayment(var DocumentNo: Code[20]; var JournalTemplate: Code[50]; var JournalBatch: code[50]; var Preview: Boolean)
     begin
         PaymentHeader.Get(DocumentNo);
