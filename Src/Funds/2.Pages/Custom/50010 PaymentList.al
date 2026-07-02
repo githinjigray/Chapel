@@ -472,7 +472,29 @@ page 50010 "Payment List"
                     END;
                 end;
             }
+            action("Print Remittance")
+            {
+                ApplicationArea = All;
+                Caption = 'Print Remittance', comment = 'ENU=Print Remittance';
+                Promoted = true;
+                PromotedCategory = Report;
+                PromotedIsBig = true;
+                Image = PrintDocument;
 
+                trigger OnAction()
+                var
+                    PaymentLines: Record "Payment Line";
+                begin
+                    if (Rec.Status = Rec.Status::Open) or (Rec.Status = Rec.Status::"Pending Approval") then
+                        Error('Document Not yet approved for printing remittance. Please approve the document first.');
+
+                    PaymentLines.RESET;
+                    PaymentLines.SETRANGE(PaymentLines."Document No.", Rec."No.");
+                    IF PaymentLines.FINDFIRST THEN BEGIN
+                        REPORT.RUNMODAL(REPORT::"Bank Remittance", TRUE, FALSE, PaymentLines);
+                    END;
+                end;
+            }
         }
 
     }

@@ -683,6 +683,11 @@ page 50078 "Funds Mgt. Role Center"
                     RunObject = Page "Scholarship Requisitions List";
                     ApplicationArea = All;
                 }
+                action("Bank Remittance Export")
+                {
+                    RunObject = report "Bank Remittance";
+                    ApplicationArea = All;
+                }
 
             }
             group("Approved Funds Transactions")

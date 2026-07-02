@@ -15,6 +15,7 @@ table 50011 "Payment Line"
         {
             Caption = 'Document No.';
             DataClassification = ToBeClassified;
+            TableRelation = "Payment Header"."No.";
         }
         field(3; "Document Type"; Option)
         {
@@ -1003,6 +1004,13 @@ table 50011 "Payment Line"
                     end;
                 END;
             end;
+        }
+        field(83; "Paying Bank"; Code[50])
+        {
+            Editable = false;
+            TableRelation = "Bank Account"."No.";
+            FieldClass = FlowField;
+            CalcFormula = Lookup("Payment Header"."Bank Account No." WHERE("No." = FIELD("Document No.")));
         }
     }
     keys
