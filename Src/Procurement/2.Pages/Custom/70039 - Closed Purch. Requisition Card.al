@@ -173,7 +173,7 @@ page 70039 "Closed Purch. Requisition Card"
                 begin
                     if Confirm('Are you sure you want to Re-archive document?') then begin
                         Rec.Status := Rec.Status::Approved;
-
+                        Rec.Archived := false;
                         if Rec.Modify then begin
                             PurchaseRequisitionLine.Reset;
                             PurchaseRequisitionLine.SetRange("Document No.", Rec."No.");
@@ -212,14 +212,16 @@ page 70039 "Closed Purch. Requisition Card"
                     PromotedCategory = Category8;
                     PromotedIsBig = true;
                     PromotedOnly = true;
+                    RunObject = page "Approval Entries-Modified";
+                    RunPageLink = "Document No." = field("No.");
                     ToolTip = 'View a list of the records that are waiting to be approved. For example, you can see who requested the record to be approved, when it was sent, and when it is due to be approved.';
 
                     trigger OnAction()
                     var
-                        WorkflowsEntriesBuffer: Record "Workflows Entries Buffer";
-                        DocType: Option Quote,"Order",Invoice,"Credit Memo","Blanket Order","Return Order"," ",Payment,Receipt,Imprest,"Imprest Surrender","Funds Refund","Purchase Requisition";
+                        WorkflowsEntriesBufferL: Record "Workflows Entries Buffer";
+                        DocTypeL: Option Quote,"Order",Invoice,"Credit Memo","Blanket Order","Return Order"," ",Payment,Receipt,Imprest,"Imprest Surrender","Funds Refund","Purchase Requisition";
                     begin
-                        //  WorkflowsEntriesBuffer.RunWorkflowEntriesPage(RecordId,DATABASE::"Purchase Requisitions",DocType::" ","No.");
+                        //WorkflowsEntriesBuffer.RunWorkflowEntriesPage(RecordId, DATABASE::"Purchase Requisitions", DocType::" ", "No.");
                     end;
                 }
                 action("Budget Committment Lines")

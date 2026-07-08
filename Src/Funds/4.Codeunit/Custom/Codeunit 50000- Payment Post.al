@@ -1,8 +1,42 @@
 codeunit 50000 PaymentPost
 {
     procedure VlidateDimensions(DocumentNo: Code[20])
+    var
+        PurchInvHeader: Record "Purch. Inv. Header";
+        DimensionSetEntry: Record "Dimension Set Entry";
+        PaymentHeader: record "Payment Header";
+        PaymentLine: record "Payment Line";
+        GeneralLedgerSetup: Record "General Ledger Setup";
     begin
+        PaymentHeader.get(DocumentNo);
+        GeneralLedgerSetup.get();
+        PaymentLine.Reset();
+        PaymentLine.SetRange("Document No.", DocumentNo);
+        if PaymentLine.FindSet() then begin
+            repeat
+                PurchInvHeader.RESET;
+                PurchInvHeader.SETRANGE(PurchInvHeader."No.", PaymentLine."Invoice No.");
+                IF PurchInvHeader.FINDFIRST THEN BEGIN
+                    if PaymentLine."Global Dimension 1 Code" = '' then
+                        PaymentLine."Global Dimension 1 Code" := PurchInvHeader."Shortcut Dimension 1 Code";
+                    if PaymentLine."Global Dimension 1 Code" = '' then
+                        PaymentLine."Global Dimension 2 Code" := PurchInvHeader."Shortcut Dimension 2 Code";
 
+                    DimensionSetEntry.Reset();
+                    DimensionSetEntry.SetRange("Dimension Set ID", PurchInvHeader."Dimension Set ID");
+                    if DimensionSetEntry.FindSet() then begin
+                        repeat
+                            if (DimensionSetEntry."Dimension Code" = GeneralLedgerSetup."Shortcut Dimension 3 Code") and
+                             (PaymentLine."Shortcut Dimension 3 Code" = '') then
+                                PaymentLine."Shortcut Dimension 3 Code" := DimensionSetEntry."Dimension Value Code";
+                            if (DimensionSetEntry."Dimension Code" = GeneralLedgerSetup."Shortcut Dimension 4 Code") and
+                             (PaymentLine."Shortcut Dimension 4 Code" = '') then
+                                PaymentLine."Shortcut Dimension 4 Code" := DimensionSetEntry."Dimension Value Code";
+                        until DimensionSetEntry.Next() = 0;
+                    end;
+                END;
+            until PaymentLine.Next() = 0;
+        end;
     end;
 
     procedure PostPayment(var DocumentNo: Code[20]; var JournalTemplate: Code[50]; var JournalBatch: code[50]; var Preview: Boolean)

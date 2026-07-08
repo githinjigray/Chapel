@@ -388,6 +388,7 @@ page 50035 "Imprest Surrender List"
         }
 
     }
+
     var
         FundsUserSetup: Record "Funds User Setup";
         ImprestSurrenderHeader: Record "Imprest Surrender Header";
@@ -403,4 +404,20 @@ page 50035 "Imprest Surrender List"
         ErrorUsedReferenceNumber: TextConst ENU = 'The Reference Number has been used for Imprest Surrender No:%1';
         PaymentTxt: TextConst ENU = 'Imprest Surrender';
         Error202: TextConst ENU = 'You do not Have permision to Reopen this document. Contact the system Administrator';
+
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    var
+        ImprestSurrender: Record "Imprest Surrender Header";
+    begin
+        // ImprestSurrender.RESET;
+        // ImprestSurrender.SETRANGE(Status, ImprestSurrender.Status::Open);
+        // IF ImprestSurrender.FindSet() THEN BEGIN
+        //     repeat
+        //         if ImprestSurrender."No." <> Rec."No." then
+        //             ERROR(Txt_002);
+        //     until ImprestSurrender.Next() = 0;
+        // END;
+
+    end;
 }

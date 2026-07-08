@@ -58,15 +58,29 @@ table 50018 "Imprest Surrender Header"
             Posted = CONST(true), Reversed = CONST(false), "Surrender status" = FILTER("Not Surrendered" | "Partially Surrendered"));
 
             trigger OnValidate()
-
+            Var
+                ImprSurrenderHeader: Record "Imprest Surrender Header";
+                Text001: Label 'Imprest No. %1 has has an existing surrendered in Imprest Surrender No. %2 not yet posted';
             begin
                 TESTFIELD("Employee No.");
+
+                ImprSurrenderHeader.Reset();
+                ImprSurrenderHeader.SetRange("Imprest No.", Rec."Imprest No.");
+                if ImprSurrenderHeader.FindSet() then begin
+                    repeat
+                        if (ImprSurrenderHeader.Status = ImprSurrenderHeader.Status::Posted) and
+                        (ImprSurrenderHeader."Imprest No." <> Rec."Imprest No.") then
+                            ERROR(Text001, Rec."Imprest No.", ImprSurrenderHeader."No.");
+                    until ImprSurrenderHeader.Next() = 0;
+                end;
+
                 //Reset Imprest Surrender
                 ImprestSurrenderLine.RESET;
                 ImprestSurrenderLine.SETRANGE(ImprestSurrenderLine."Document No.", "No.");
                 IF ImprestSurrenderLine.FINDSET THEN BEGIN
                     ImprestSurrenderLine.DELETEALL;
                 END;
+
 
                 "Imprest Date" := 0D;
                 "Global Dimension 1 Code" := '';
@@ -499,8 +513,10 @@ table 50018 "Imprest Surrender Header"
         ImprestSurrenderHeader: Record "Imprest Surrender Header";
         ImprestSurrenderLine: Record "Imprest Surrender Line";
         CurrExchRate: Record "Currency Exchange Rate";
+        ExistSurrenderHeader: record "Imprest Surrender Header";
 
     trigger OnInsert()
+
     begin
         IF "No." = '' THEN BEGIN
             FundsSetup.GET;
@@ -509,6 +525,7 @@ table 50018 "Imprest Surrender Header"
             if NoSeriesMgt.AreRelated(FundsSetup."Imprest Surrender Nos.", xRec."No. Series") then
                 "No. Series" := xRec."No. Series";
             "No." := NoSeriesMgt.GetNextNo("No. Series");
+
         END;
         "Document Type" := "Document Type"::"Imprest Surrender";
         "Document Date" := TODAY;
@@ -525,5 +542,6 @@ table 50018 "Imprest Surrender Header"
         IF ImprestSurrenderLine.FINDSET THEN
             ImprestSurrenderLine.DELETEALL;
     end;
+
 
 }

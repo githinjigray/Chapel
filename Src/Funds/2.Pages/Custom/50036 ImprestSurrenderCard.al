@@ -477,4 +477,5 @@ page 50036 "Imprest Surrender Card"
         else
             DocumentEditable := true;
     end;
+
 }

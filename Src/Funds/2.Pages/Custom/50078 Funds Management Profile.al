@@ -854,6 +854,11 @@ page 50078 "Funds Mgt. Role Center"
                     RunObject = Page "All Purchase Requisition Lines";
                     ApplicationArea = All;
                 }
+                action("Purchase Invoices List")
+                {
+                    RunObject = Page "Purchase Invoices";
+                    ApplicationArea = All;
+                }
             }
             group(Journals)
             {

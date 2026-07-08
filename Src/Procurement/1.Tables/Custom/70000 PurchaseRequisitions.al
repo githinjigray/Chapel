@@ -295,6 +295,11 @@ table 70000 "Purchase Requisitions"
             Caption = 'Job No.';
             Editable = false;
         }
+        field(210; Archived; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Archived';
+        }
     }
     keys
     {

@@ -403,7 +403,11 @@ table 50016 "Imprest Header"
             Caption = 'HR Employee No.';
             DataClassification = ToBeClassified;
         }
-
+        field(62; Archived; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Archived';
+        }
     }
     keys
     {

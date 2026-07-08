@@ -325,6 +325,30 @@ page 50034 "Posted Imprest Card"
                     END;
                 end;
             }
+            action(Unarchive)
+            {
+                Caption = 'Unarchive';
+                Image = ReOpen;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ToolTip = 'Reopen the document to change it after it has been approved. Approved documents have the Released status and must be opened before they can be changed.';
+
+                trigger OnAction()
+                begin
+                    if Confirm('Are you sure you want to Re-archive document?') then begin
+                        Rec.Status := Rec.Status::Approved;
+                        Rec.Archived := false;
+                        rec.Posted := false;
+                        if Rec.Modify then begin
+
+
+                        end;
+                    end;
+                    CurrPage.Close;
+                end;
+
+            }
         }
         area(Reporting)
         {

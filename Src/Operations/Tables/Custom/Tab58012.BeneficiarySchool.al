@@ -13,6 +13,16 @@ table 58012 "Beneficiary School"
         field(2; "School Name"; Text[250])
         {
             Caption = 'School Name';
+            trigger onValidate()
+            var
+                BeneficiaryRec: Record "365  Beneficiary";
+            BEGIN
+                beneficiaryRec.Reset();
+                beneficiaryRec.SetRange("School No.", "No.");
+                if beneficiaryRec.FindSet() then begin
+                    beneficiaryRec.Validate("School Name", "School Name");
+                end;
+            END;
         }
         field(3; Address; Text[250])
         {

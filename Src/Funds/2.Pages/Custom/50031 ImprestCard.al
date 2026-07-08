@@ -280,6 +280,29 @@ page 50031 "Imprest Card"
 
                 end;
             }
+            action("Archive Imprest")
+            {
+                Caption = 'Archive Imprest';
+                Image = ApplyTemplate;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+
+                trigger OnAction()
+                var
+                    Text009: Label 'Are you sure you want to ARCHIVE the imprest?';
+                begin
+                    if Confirm(Text009) then begin
+                        Rec.Status := Rec.Status::Posted;
+                        Rec.Archived := true;
+                        Rec.Posted := true;
+
+                        if Rec.Modify then begin
+                        end;
+                    end;
+                    CurrPage.Close;
+                end;
+            }
         }
         area(Reporting)
         {

@@ -35,13 +35,13 @@ report 50515 "Bank Remittance"
             column(PostingGroup_PaymentLine; "Posting Group")
             {
             }
-            column(Description_PaymentLine; Description)
+            column(Description_PaymentLine; DescriptionPayment)
             {
             }
             column(ReferenceNo_PaymentLine; "Reference No.")
             {
             }
-            column(PostingDate_PaymentLine; "Posting Date")
+            column(PostingDate_PaymentLine; PostingDate)
             {
             }
             column(CurrencyCode_PaymentLine; "Currency Code")
@@ -234,7 +234,7 @@ report 50515 "Bank Remittance"
                 RecipientBankCode := '';
                 recipientBankBranchCode := '';
                 phoneDetails := '';
-
+                PostingDate := today;
 
                 if vendorList.Get("Payee No.") then begin
                     RecipientBankCode := vendorList."Bank Code";
@@ -258,6 +258,22 @@ report 50515 "Bank Remittance"
                     phoneDetails := EmployeeList."Phone No.";
                 end;
 
+                DescriptionPayment := '';
+                purchInvoiceHeader.Reset();
+                purchInvoiceHeader.SetRange("No.", "Payment Line"."Invoice No.");
+                if purchInvoiceHeader.FindFirst() then begin
+                    DescriptionPayment := purchInvoiceHeader."Posting Description";
+                end;
+
+                ImprestHeader.Reset();
+                ImprestHeader.SetRange("No.", "Payment Line"."Payee No.");
+                if ImprestHeader.FindFirst() then begin
+                    DescriptionPayment := ImprestHeader.Description;
+                end;
+
+                if DescriptionPayment = '' then begin
+                    DescriptionPayment := "Payment Line".Description;
+                end;
             end;
         }
     }
@@ -323,5 +339,9 @@ report 50515 "Bank Remittance"
         CustomerList: record "Customer";
         RecipientBankCode: code[20];
         RecipientBankBranchCode: code[20];
+        PostingDate: Date;
+        DescriptionPayment: text[250];
+        purchInvoiceHeader: Record "Purch. Inv. Header";
+        ImprestHeader: record "Imprest Header";
 }
 

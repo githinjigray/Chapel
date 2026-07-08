@@ -66,7 +66,7 @@ codeunit 60008 "Ledger Entry Extensionsions"
     begin
         ApprovalCommentLine.RESET;
         ApprovalCommentLine.SETRANGE(ApprovalCommentLine."Document No.", ApprovalEntry."Document No.");
-        ApprovalCommentLine.SETRANGE(ApprovalCommentLine."User ID", USERID);
+        // ApprovalCommentLine.SETRANGE(ApprovalCommentLine."User ID", USERID);
         IF NOT ApprovalCommentLine.FINDFIRST THEN
             ERROR(RejectionComments);
 

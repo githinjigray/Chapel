@@ -439,11 +439,14 @@ page 70000 "Purchase Requisition Card"
                     PromotedIsBig = true;
 
                     trigger OnAction()
+                    var
+                        Text009: Label 'Are you sure you want to ARCHIVE the requisition?';
                     begin
                         if Confirm(Text009) then begin
-                            rec.Status := rec.Status::Closed;
+                            Rec.Status := Rec.Status::Closed;
+                            Rec.Archived := true;
 
-                            if rec.Modify then begin
+                            if Rec.Modify then begin
                                 PurchaseRequisitionLineG.Reset;
                                 PurchaseRequisitionLineG.SetRange(PurchaseRequisitionLineG."Document No.", Rec."No.");
                                 if PurchaseRequisitionLineG.FindSet then begin
@@ -688,7 +691,7 @@ page 70000 "Purchase Requisition Card"
         PurchLineG: Record "Purchase Requisition Line";
         PurchaseRequisitionApprovalG: Codeunit "Purchase Requisition Approval";
         PurchaseRequisitionLineG: Record "Purchase Requisition Line";
-        Text009: Label 'Are you sure you want to ARCHIVE the requisition?';
+
 
     local procedure SetControlAppearance()
     var
