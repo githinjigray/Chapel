@@ -70,6 +70,23 @@ pageextension 58000 "365 Payment Recon. Journal" extends "Payment Reconciliation
                                         bankAccReconciliationLine.TransferRemainingAmountToAccount();
                                 end;
                             end;
+                            if BankAccReconciliationLine."Account No." = '' then begin
+                                CommonMpesaCodes.Reset();
+                                CommonMpesaCodes.SetRange(code, bankAccReconciliationLine."Transaction Text");
+                                if CommonMpesaCodes.FindFirst() then begin
+                                    bankAccReconciliationLine.validate("Account Type", CommonMpesaCodes."Account Type");
+                                    bankAccReconciliationLine.Validate("Account No.", CommonMpesaCodes."Account No.");
+                                    if commonMpesaCodes."Global Dimension 2 Code" <> '' then
+                                        bankAccReconciliationLine.Validate("Shortcut Dimension 2 Code", CommonMpesaCodes."Global Dimension 2 Code");
+                                    bankAccReconciliationLine.ValidateShortcutDimCode(3, CommonMpesaCodes."Shortcut Dimension 3 Code");
+                                    bankAccReconciliationLine.ValidateShortcutDimCode(4, CommonMpesaCodes."Shortcut Dimension 4 Code");
+
+                                    if bankAccReconciliationLine.Modify() then begin
+                                        if bankAccReconciliationLine.Difference <> 0 then
+                                            bankAccReconciliationLine.TransferRemainingAmountToAccount();
+                                    end;
+                                end;
+                            end;
 
                         until bankAccReconciliationLine.Next() = 0;
                     end;

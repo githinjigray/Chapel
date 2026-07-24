@@ -28,7 +28,7 @@ tableextension 50004 "Vendors Ext" extends Vendor
         {
             Caption = 'Bank Branch Code';
             DataClassification = ToBeClassified;
-            TableRelation = "Bank Branch"."Bank Branch Code";
+            TableRelation = "Bank Branch"."Bank Branch Code" where("Bank Code" = field("Bank Code"));
             trigger OnValidate()
             begin
                 "Bank Branch Name" := '';
