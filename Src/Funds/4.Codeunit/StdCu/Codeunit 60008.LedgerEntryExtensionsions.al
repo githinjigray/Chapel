@@ -148,7 +148,7 @@ codeunit 60008 "Ledger Entry Extensionsions"
         end;
     end;
 
-    internal procedure GetRelatedDocumentInfo(var ApprovalEntry: Record "Approval Entry"; var EmployeeID: Text[250]; var EmployeeName: Text[250]; var Dimension1Code: Text[20]; var RequestDescription: Text[250])
+    procedure GetRelatedDocumentInfo(var ApprovalEntry: Record "Approval Entry"; var EmployeeID: Text[250]; var EmployeeName: Text[250]; var Dimension1Code: Text[20]; var RequestDescription: Text[250])
     var
         ImprestHeader: Record "Imprest Header";
         PurchaseRequisition: Record "Purchase Requisitions";
