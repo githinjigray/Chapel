@@ -257,6 +257,12 @@ report 50515 "Bank Remittance"
                     //recipientBankBranchCode := EmployeeList."Bank Branch Code";
                     phoneDetails := EmployeeList."Phone No.";
                 end;
+                
+                if "Payment Line"."Payee Type" = "Payment Line"."Payee Type"::Medical then begin
+                    Fundsclaim.Get("Payment Line"."Payee No.");
+                    if EmployeeList.Get(Fundsclaim."Payee No.") then
+                        phoneDetails := EmployeeList."Phone No.";
+                end;
 
                 DescriptionPayment := '';
                 purchInvoiceHeader.Reset();
@@ -325,6 +331,7 @@ report 50515 "Bank Remittance"
     }
 
     var
+        Fundsclaim: Record "Funds Claim Header";
         StartDate: Date;
         EndDate: Date;
         PAYEENAME: Text;

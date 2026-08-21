@@ -596,6 +596,7 @@ table 50011 "Payment Line"
 
             trigger OnValidate()
             begin
+                FundsGeneralSetup.get;
                 IF "Payee Type" = "Payee Type"::Imprest THEN BEGIN
                     ImprestHeader.RESET;
                     ImprestHeader.SETRANGE(ImprestHeader."No.", "Payee No.");
@@ -687,9 +688,12 @@ table 50011 "Payment Line"
 
                         FundsClaimHeader.CALCFIELDS(FundsClaimHeader.Amount);
                         FundsClaimHeader.CALCFIELDS(FundsClaimHeader."Amount(LCY)");
-                        "Account Type" := "Account Type"::Customer;
-                        "Account No." := FundsClaimHeader."Payee No.";
-                        VALIDATE("Account No.");
+                        "Account Type" := "Account Type"::"G/L Account";
+                        FundsGeneralSetup.TestField("Funds Claim Account");
+                        "Account No." := FundsGeneralSetup."Funds Claim Account";
+                        "Account Name" := FundsClaimHeader."Payee Name";
+
+                        //VALIDATE("Account No.");
                         Description := FundsClaimHeader.Description;
                         if FundsClaimHeader."Currency Code" = 'KSH SHS' then
                             "Currency Code" := ''

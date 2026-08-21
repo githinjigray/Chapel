@@ -110,6 +110,11 @@ tableextension 70611 "365 General Ledger Setup" extends "General Ledger Setup"
             Caption = 'Stores Email';
             DataClassification = ToBeClassified;
             ExtendedDatatype = EMail;
-        }        
+        }
+        field(70021; "Max Allowed Imprest Balance"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            caption = 'Maximum Allowed Imprest Balance';
+        }
     }
 }

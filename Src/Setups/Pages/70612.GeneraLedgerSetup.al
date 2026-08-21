@@ -2,6 +2,16 @@ pageextension 70612 "Company Information Ext2" extends "General Ledger Setup"
 {
     layout
     {
+        addlast(General)
+        {
+
+            field("Max Allowed Imprest Balance"; Rec."Max Allowed Imprest Balance")
+            {
+                ApplicationArea = All;
+                ShowMandatory = true;
+                ToolTip = 'Specifies the value of the Maximum Allowed Imprest Balance field.', Comment = '%';
+            }
+        }
         addafter("App. Dimension Posting")
         {
             group("Data Directory Path Configurations")

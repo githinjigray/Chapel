@@ -104,7 +104,7 @@ table 50038 "Funds General Setup"
         {
             Caption = 'Funds Claim Account';
             DataClassification = ToBeClassified;
-            TableRelation = "No. Series".Code;
+            TableRelation = "G/L Account"."No.";
         }
         field(18; "Payment Rounding Type"; Option)
         {

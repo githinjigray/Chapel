@@ -149,6 +149,8 @@ table 50016 "Imprest Header"
             TableRelation = Employee."No.";
             trigger OnValidate()
             begin
+                GeneLedgerSetup.GET;
+
                 "Employee Name" := '';
                 "Employee Posting Group" := '';
                 Customer.Reset();
@@ -167,6 +169,12 @@ table 50016 "Imprest Header"
                     // "Shortcut Dimension 5 Code" := Customer."Shortcut Dimension 5 Code";
                     // "Shortcut Dimension 6 Code" := Customer."Shortcut Dimension 6 Code";
                     // "Responsibility Center" := Customer."Responsibility Center";
+                end;
+
+                if Customers.get("Employee No.") then begin
+                    Customers.CalcFields("Balance (LCY)");
+                    if Customers."Balance (LCY)" > GeneLedgerSetup."Max Allowed Imprest Balance" then
+                        ERROR('Kindly clear the outstanding balance of %1 before creating new petty cash request. Incase Re-coup has been submitted, contact Finance Team', Customers."Balance (LCY)");
                 end;
             end;
         }
@@ -430,6 +438,7 @@ table 50016 "Imprest Header"
         GLAccount: Record "G/L Account";
         BankAccount: Record "Bank Account";
         Customer: Record Employee;
+        Customers: Record Customer;
         Vendor: Record Vendor;
         FixedAsset: Record "Fixed Asset";
         ImprestHeader: Record "Imprest Header";
@@ -438,6 +447,7 @@ table 50016 "Imprest Header"
         Pheader: page "Purchase Order";
         HumanResourcesSetup: Record "Human Resources Setup";
         Employee: Record Employee;
+        GeneLedgerSetup: Record "General Ledger Setup";
 
         ErrorUsedReferenceNo: TextConst ENU = 'The Reference Number has been used in Document No:%1';
 
