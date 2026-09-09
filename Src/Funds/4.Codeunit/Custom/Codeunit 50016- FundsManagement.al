@@ -450,7 +450,9 @@ codeunit 50016 "Funds Management"
         ScholarshipPaymentLine: Record "Payment Line";
         OldScholarshipPaymentLine: Record "Payment Line";
         ScholarshipPaymenthdr: Record "Payment Header";
+        EndowmentGeneralSetup: Record "Endowment General Setup";
     begin
+        EndowmentGeneralSetup.Get();
         OldScholarshipPaymentLine.RESET;
         OldScholarshipPaymentLine.SETRANGE(OldScholarshipPaymentLine."Document No.", No);
         IF OldScholarshipPaymentLine.FINDSET THEN
@@ -468,8 +470,18 @@ codeunit 50016 "Funds Management"
                     ScholarshipPaymentLine."SC Line No." := scholarshipReqLine."Line No.";
                     ScholarshipPaymentLine."Payee No." := scholarshipReqLine."Beneficiary No.";
                     ScholarshipPaymentLine.Validate(ScholarshipPaymentLine."Payee No.");
+                    ScholarshipPaymentLine."Account No." := EndowmentGeneralSetup."Scholarship Account No.";
+                    ScholarshipPaymentLine.Validate("Account No.");
                     ScholarshipPaymentLine."Total Amount" := scholarshipReqLine.Amount;
                     ScholarshipPaymentLine.Validate(ScholarshipPaymentLine."Total Amount");
+                    ScholarshipPaymentLine."Global Dimension 1 Code" := endowmentGeneralSetup."Global Dimension 1 Code";
+                    ScholarshipPaymentLine.Validate(ScholarshipPaymentLine."Global Dimension 1 Code");
+                    ScholarshipPaymentLine."Global Dimension 2 Code" := endowmentGeneralSetup."Global Dimension 2 Code";
+                    ScholarshipPaymentLine.Validate(ScholarshipPaymentLine."Global Dimension 2 Code");
+                    scholarshipPaymentLine."Shortcut Dimension 3 Code" := endowmentGeneralSetup."Shortcut Dimension 3 Code";
+                    scholarshipPaymentLine.Validate(ScholarshipPaymentLine."Shortcut Dimension 3 Code");
+                    scholarshipPaymentLine."Shortcut Dimension 4 Code" := endowmentGeneralSetup."Shortcut Dimension 4 Code";
+                    scholarshipPaymentLine.Validate(ScholarshipPaymentLine."Shortcut Dimension 4 Code");
                     ScholarshipPaymentLine.Insert();
                 until scholarshipReqLine.Next() = 0;
             END;

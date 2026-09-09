@@ -591,12 +591,19 @@ table 50010 "Payment Header"
             trigger OnValidate()
             var
                 ScholarshipRequisition: Record "Scholarship Requisition";
+                EndowmentGeneralSetup: Record "Endowment General Setup";
             begin
                 if Confirm('Continue with the selected Scholarship Requisition No.?') then begin
                     if ScholarshipRequisition.Get("Scholarship Requisition No.") then begin
                         "Payee No." := ScholarshipRequisition."School No.";
                         "Payee Name" := ScholarshipRequisition."School Name";
                         Description := ScholarshipRequisition.Description;
+
+                        EndowmentGeneralSetup.Get();
+                        "Global Dimension 1 Code" := endowmentGeneralSetup."Global Dimension 1 Code";
+                        "Global Dimension 2 Code" := endowmentGeneralSetup."Global Dimension 2 Code";
+                        "Shortcut Dimension 3 Code" := endowmentGeneralSetup."Shortcut Dimension 3 Code";
+                        "Shortcut Dimension 4 Code" := endowmentGeneralSetup."Shortcut Dimension 4 Code";
                     end;
                     FundsManagement.ValidateScholarshipRequisitionNo("No.");
                 end else begin

@@ -167,9 +167,9 @@ codeunit 50005 ImprestSurrenderPost
                         ImprestHeader.SETRANGE(ImprestHeader."No.", ImprestSurrenderHeader2."Imprest No.");
                         IF ImprestHeader.FINDSET THEN BEGIN
                             ImprestHeader.CALCFIELDS(Amount);
-                            ImprestSurrenderHeader2.CALCFIELDS(Amount);
+                            ImprestSurrenderHeader2.CALCFIELDS("Actual Spent");
 
-                            IF (ImprestHeader.Amount = ImprestSurrenderHeader.Amount) OR (ImprestSurrenderHeader.Amount > ImprestHeader.Amount) THEN BEGIN
+                            IF (ImprestHeader.Amount <= ImprestSurrenderHeader2."Actual Spent") THEN BEGIN
                                 ImprestHeader.Surrendered := TRUE;
                                 ImprestHeader."Surrender status" := ImprestHeader."Surrender status"::"Fully surrendered";
                                 ImprestHeader.MODIFY;

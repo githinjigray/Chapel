@@ -458,6 +458,8 @@ codeunit 50000 PaymentPost
                 GenJnlLine.Description2 := UPPERCASE(COPYSTR(PaymentHeader."Payee Name", 1, 249));
                 GenJnlLine.VALIDATE(Description);
                 GenJnlLine."Applies-to Doc. Type" := PaymentLine."Applies-to Doc. Type";
+                if (paymentline."Account Type" = paymentline."Account Type"::Vendor) and (paymentline."Applies-to Doc. No." <> '') then
+                    GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
                 GenJnlLine."Applies-to Doc. No." := PaymentLine."Applies-to Doc. No.";
                 GenJnlLine.VALIDATE("Applies-to Doc. No.");
                 GenJnlLine."Applies-to ID" := PaymentLine."Applies-to ID";
