@@ -55,7 +55,7 @@ table 50018 "Imprest Surrender Header"
             DataClassification = ToBeClassified;
             TableRelation = "Imprest Header"."No."
             WHERE("Employee No." = FIELD("Employee No."),
-            Posted = CONST(true), Reversed = CONST(false), "Surrender status" = FILTER("Not Surrendered" | "Partially Surrendered"));
+            Posted = CONST(true), Reversed = CONST(false), "Status After Surrender" = FILTER("Not Surrendered" | "Partially Surrendered"));
 
             trigger OnValidate()
             Var

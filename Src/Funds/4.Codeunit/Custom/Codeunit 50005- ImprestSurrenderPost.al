@@ -172,9 +172,11 @@ codeunit 50005 ImprestSurrenderPost
                             IF (ImprestHeader.Amount <= ImprestSurrenderHeader2."Actual Spent") THEN BEGIN
                                 ImprestHeader.Surrendered := TRUE;
                                 ImprestHeader."Surrender status" := ImprestHeader."Surrender status"::"Fully surrendered";
+                                ImprestHeader."Status After Surrender" := ImprestHeader."Status After Surrender"::"Fully surrendered";
                                 ImprestHeader.MODIFY;
                             END ELSE BEGIN
-                                ImprestHeader."Surrender status" := ImprestHeader."Surrender status"::"Partially Surrendered";
+                                ImprestHeader."Surrender status" := ImprestHeader."Surrender status"::"Not Surrendered";
+                                ImprestHeader."Status After Surrender" := ImprestHeader."Status After Surrender"::"Partially Surrendered";
                                 ImprestHeader.MODIFY;
                             END;
                         END;

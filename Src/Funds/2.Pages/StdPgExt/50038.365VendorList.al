@@ -17,5 +17,5 @@ pageextension 50038 "365 Vendor List" extends "Vendor List"
                 ToolTip = 'Specifies the code for the global dimension that is linked to the record or entry for analysis purposes. Two global dimensions, typically for the company''s most important activities, are available on all cards, documents, reports, and lists.';
             }
         }
-    }
+    }    
 }

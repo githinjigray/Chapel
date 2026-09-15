@@ -111,6 +111,6 @@ tableextension 70612 "User Setup Extension2" extends "User Setup"
         {
             DataClassification = ToBeClassified;
             Caption = 'Re-Open Reconciliation';
-        }
+        }               
     }
 }

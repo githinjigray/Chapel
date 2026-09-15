@@ -166,12 +166,24 @@ tableextension 50004 "Vendors Ext" extends Vendor
     var
         BankCodes: Record "Bank Code";
         BankBranches: Record "Bank Branch";
+        UserSetup: Record "User Setup";
 
     trigger OnAfterInsert()
     begin
 
         "Created By" := UserId;
         "Vendor Creation Date" := Today;
+    end;
 
+    trigger onbeforeinsert()
+    begin
+        if UserSetup.Get(userid) then begin
+            if not userSetup."Create Vendor" then
+                Error('You are not allowed to create new vendors. Please contact your system administrator.');
+        end;
+
+        if not UserSetup.Get(userid) then begin
+            Error('You are not allowed to create new vendors. Please contact your system administrator.');
+        end;
     end;
 }

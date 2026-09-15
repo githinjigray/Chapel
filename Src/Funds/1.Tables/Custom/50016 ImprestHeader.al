@@ -416,6 +416,12 @@ table 50016 "Imprest Header"
             DataClassification = ToBeClassified;
             Caption = 'Archived';
         }
+        field(67; "Status After Surrender"; Option)
+        {
+            Caption = 'Status After Surrender';
+            OptionMembers = "Not Surrendered","Partially Surrendered","Fully surrendered";
+            OptionCaption = 'Not Surrendered,Partially Surrendered,Fully surrendered';
+        }
     }
     keys
     {
