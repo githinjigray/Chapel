@@ -113,6 +113,7 @@ page 58023 "Scholarship Requisition"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Image = SendApprovalRequest;
+                Enabled = not OpenApprovalEntriesExist and CanRequestApprovalForFlow;
 
                 trigger OnAction()
                 begin
@@ -135,6 +136,7 @@ page 58023 "Scholarship Requisition"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Image = CancelApprovalRequest;
+                Enabled = CanCancelApprovalForRecord or CanCancelApprovalForFlow;
 
                 trigger OnAction()
                 begin
@@ -142,7 +144,77 @@ page 58023 "Scholarship Requisition"
                     WorkflowWebhookMgt.FindAndCancel(Rec.RECORDID);
                 end;
             }
+
+            action(Approve)
+
+            {
+                ApplicationArea = All;
+                Caption = 'Approve';
+                Image = Approve;
+                ToolTip = 'Approve the requested changes.';
+                Visible = OpenApprovalEntriesExistForCurrUser;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    ApprovalsMgmt.ApproveRecordApprovalRequest(Rec.RecordId);
+                end;
+            }
+            action(Reject)
+            {
+                ApplicationArea = All;
+                Caption = 'Reject';
+                Image = Reject;
+                ToolTip = 'Reject the approval request.';
+                Visible = OpenApprovalEntriesExistForCurrUser;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    ApprovalsMgmt.RejectRecordApprovalRequest(Rec.RecordId);
+                end;
+            }
+            action(Delegate)
+            {
+                ApplicationArea = All;
+                Caption = 'Delegate';
+                Image = Delegate;
+                ToolTip = 'Delegate the approval to a substitute approver.';
+                Visible = OpenApprovalEntriesExistForCurrUser;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    ApprovalsMgmt.DelegateRecordApprovalRequest(Rec.RecordId);
+                end;
+            }
+            action(Comment)
+            {
+                ApplicationArea = All;
+                Caption = 'Comments';
+                Image = ViewComments;
+                ToolTip = 'View or add comments for the record.';
+                Visible = OpenApprovalEntriesExistForCurrUser;
+
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    ApprovalsMgmt.GetApprovalComment(Rec);
+                end;
+            }
+
         }
+
     }
     var
         ScholarshipApprovalManager: Codeunit "Scholarship Req. Approval";

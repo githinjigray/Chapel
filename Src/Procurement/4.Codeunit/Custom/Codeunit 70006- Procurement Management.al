@@ -1796,7 +1796,7 @@ codeunit 70006 "Procurement Management"
                                     PurchaseLineBID.Type := PurchReqLine.Type;
                                     PurchaseLineBID."No." := PurchReqLine."No.";
                                     PurchaseLineBID.Validate(PurchaseLineBID."No.");
-                                    PurchaseLineBID.Description := CopyStr(PurchReqLine.Description, 1, 100);
+                                    PurchaseLineBID.Description := CopyStr(PurchReqLine."Requisition Code" + '-' + PurchReqLine.Description, 1, 100);
                                     PurchaseLineBID.Quantity := PurchReqLine.Quantity;
                                     PurchaseLineBID.Validate(PurchaseLineBID.Quantity);
                                     PurchaseLineBID."Location Code" := PurchReqLine."Location Code";

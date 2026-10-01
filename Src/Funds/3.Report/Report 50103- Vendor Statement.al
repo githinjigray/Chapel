@@ -167,6 +167,8 @@ report 50103 "Vendor Statement"
 
                     if JournalVoucherHeader.Get("Vendor Ledger Entry"."Document No.") then
                         EXTDOCNo := JournalVoucherHeader."JV No.";
+                    if EXTDOCNo = '' then
+                        EXTDOCNo := "Vendor Ledger Entry"."External Document No.";
 
                     "Vendor Ledger Entry".CalcFields("Vendor Ledger Entry"."Amount (LCY)");
                     "Vendor Ledger Entry".CalcFields("Vendor Ledger Entry"."Debit Amount (LCY)");
