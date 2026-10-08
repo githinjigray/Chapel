@@ -439,7 +439,7 @@ codeunit 50000 PaymentPost
                 GenJnlLine."Currency Code" := PaymentHeader."Currency Code";
                 GenJnlLine.VALIDATE("Currency Code");
                 GenJnlLine."Currency Factor" := PaymentHeader."Currency Factor";
-                GenJnlLine.Amount := PaymentLine."Total Amount";  //Debit Amount
+                GenJnlLine.Amount := PaymentLine."Net Amount";  //Debit Amount
                 GenJnlLine.VALIDATE(GenJnlLine.Amount);
                 GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"Bank Account";
                 GenJnlLine."Bal. Account No." := PaymentHeader."Bank Account No.";
@@ -550,11 +550,16 @@ codeunit 50000 PaymentPost
                         GenJnlLine.Description := UPPERCASE(COPYSTR('W/TAX:' + FORMAT(PaymentLine."Document No.") + '::' + FORMAT(PaymentLine."Account Name"), 1, 249));
                         GenJnlLine.Description2 := UPPERCASE(COPYSTR(PaymentHeader."Payee Name", 1, 249));
                         GenJnlLine."Applies-to Doc. Type" := PaymentLine."Applies-to Doc. Type";
+                        if (paymentline."Account Type" = paymentline."Account Type"::Vendor) and (paymentline."Applies-to Doc. No." <> '') then
+                            GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
                         GenJnlLine."Applies-to Doc. No." := PaymentLine."Applies-to Doc. No.";
                         GenJnlLine.VALIDATE("Applies-to Doc. No.");
                         GenJnlLine."Applies-to ID" := PaymentLine."Applies-to ID";
+                        GenJnlLine."Applies-to Doc. No." := PaymentLine."Applies-to Doc. No.";
+                        GenJnlLine.VALIDATE("Applies-to Doc. No.");
                         GenJnlLine."Employee Transaction Type" := PaymentLine."Employee Transaction Type";
-
+                        IF GenJnlLine.Amount <> 0 THEN
+                            GenJnlLine.INSERT;
                     END;
                 END;
                 //****************************************End Add W/TAX Amounts************************************************************//
@@ -641,9 +646,14 @@ codeunit 50000 PaymentPost
                         GenJnlLine.Description := UPPERCASE(COPYSTR('W/VAT:' + FORMAT(PaymentLine."Document No.") + '::' + FORMAT(PaymentLine."Account Name"), 1, 249));
                         GenJnlLine.Description2 := UPPERCASE(COPYSTR(PaymentHeader."Payee Name", 1, 249));
                         GenJnlLine."Applies-to Doc. Type" := PaymentLine."Applies-to Doc. Type";
+                        if (paymentline."Account Type" = paymentline."Account Type"::Vendor) and (paymentline."Applies-to Doc. No." <> '') then
+                            GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
                         GenJnlLine."Applies-to Doc. No." := PaymentLine."Applies-to Doc. No.";
                         GenJnlLine.VALIDATE("Applies-to Doc. No.");
                         GenJnlLine."Applies-to ID" := PaymentLine."Applies-to ID";
+                        GenJnlLine."Applies-to Doc. No." := PaymentLine."Applies-to Doc. No.";
+                        GenJnlLine.VALIDATE("Applies-to Doc. No.");
+                        //GenJnlLine."Applies-to ID" := PaymentLine."Applies-to ID";
                         GenJnlLine."Employee Transaction Type" := PaymentLine."Employee Transaction Type";
                         IF GenJnlLine.Amount <> 0 THEN
                             GenJnlLine.INSERT;
@@ -711,10 +721,10 @@ codeunit 50000 PaymentPost
         END;
         PaymentHeader.TESTFIELD(PaymentHeader."Bank Account No.");
         PaymentHeader.TESTFIELD(PaymentHeader.Description);
-        //PaymentHeader.TESTFIELD(PaymentHeader."Global Dimension 1 Code");
-        //PaymentHeader.TESTFIELD(PaymentHeader."Global Dimension 2 Code");
-        //PaymentHeader.TESTFIELD(PaymentHeader."Shortcut Dimension 3 Code");
-        //PaymentHeader.TESTFIELD(PaymentHeader."Shortcut Dimension 4 Code");
+        // PaymentHeader.TESTFIELD(PaymentHeader."Global Dimension 1 Code");
+        // PaymentHeader.TESTFIELD(PaymentHeader."Global Dimension 2 Code");
+        // PaymentHeader.TESTFIELD(PaymentHeader."Shortcut Dimension 3 Code");
+        // PaymentHeader.TESTFIELD(PaymentHeader."Shortcut Dimension 4 Code");
         // PaymentHeader.TESTFIELD(PaymentHeader."Shortcut Dimension 5 Code");
         if Posting = true then BEGIN
             PaymentHeader.TESTFIELD(PaymentHeader.Status, PaymentHeader.Status::Approved);
@@ -728,7 +738,7 @@ codeunit 50000 PaymentPost
                 PaymentLine.TESTFIELD(PaymentLine."Account No.");
                 PaymentLine.TESTFIELD(PaymentLine.Description);
             // PaymentLine.TESTFIELD(PaymentLine."Global Dimension 1 Code");
-            //  PaymentLine.TESTFIELD(PaymentLine."Global Dimension 2 Code");
+            // PaymentLine.TESTFIELD(PaymentLine."Global Dimension 2 Code");
             // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 3 Code");
             // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 4 Code");
             // PaymentLine.TESTFIELD(PaymentLine."Shortcut Dimension 5 Code");

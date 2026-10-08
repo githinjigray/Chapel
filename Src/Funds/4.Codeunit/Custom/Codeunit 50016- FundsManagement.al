@@ -519,6 +519,51 @@ codeunit 50016 "Funds Management"
 
     end;
 
+    Procedure ValidateInvoiceDimensions(DocumentNo: Code[20])
+    var
+        PurchInvHeader: Record "Purch. Inv. Header";
+        DimensionSetEntry: Record "Dimension Set Entry";
+        GeneralLedgerSetup: Record "General Ledger Setup";
+        "Payment Line": Record "Payment Line";
+        PaymentHeader: Record "Payment Header";
+    begin
+        GeneralLedgerSetup.Get();
+        if PaymentHeader.Get(DocumentNo) then begin
+            "Payment Line".Reset();
+            "Payment Line".SetRange("Document No.", PaymentHeader."No.");
+            if "Payment Line".FindSet() then begin
+                repeat
+                    PurchInvHeader.RESET;
+                    PurchInvHeader.SETRANGE(PurchInvHeader."No.", "Payment Line"."Invoice No.");
+                    IF PurchInvHeader.FINDFIRST THEN BEGIN
+                        PurchInvHeader.CALCFIELDS(Amount, "Amount Including VAT", "Remaining Amount");
+                        "Payment Line"."Total Amount" := PurchInvHeader."Remaining Amount";
+                        "Payment Line".Validate("Total Amount");
+                        "Payment Line"."Vendor Invoice No." := PurchInvHeader."Vendor Invoice No.";
+                        "Payment Line"."Global Dimension 1 Code" := PurchInvHeader."Shortcut Dimension 1 Code";
+                        // Validate("Global Dimension 1 Code");
+                        "Payment Line"."Global Dimension 2 Code" := PurchInvHeader."Shortcut Dimension 2 Code";
+                        //Validate("Global Dimension 2 Code");
+
+                        DimensionSetEntry.Reset();
+                        DimensionSetEntry.SetRange("Dimension Set ID", PurchInvHeader."Dimension Set ID");
+                        if DimensionSetEntry.FindSet() then begin
+                            repeat
+                                if DimensionSetEntry."Dimension Code" = GeneralLedgerSetup."Shortcut Dimension 3 Code" then
+                                    "Payment Line"."Shortcut Dimension 3 Code" := DimensionSetEntry."Dimension Value Code";
+                                // Validate("Shortcut Dimension 3 Code");
+                                if DimensionSetEntry."Dimension Code" = GeneralLedgerSetup."Shortcut Dimension 4 Code" then
+                                    "Payment Line"."Shortcut Dimension 4 Code" := DimensionSetEntry."Dimension Value Code";
+                            //Validate("Shortcut Dimension 4 Code");
+                            until DimensionSetEntry.Next() = 0;
+                        end;
+                        "Payment Line".modify();
+                    END;
+                until "Payment Line".Next() = 0;
+            end;
+        end;
+    end;
+
     var
         recon: Record "Bank Acc. Reconciliation";
 }

@@ -493,6 +493,20 @@ page 50011 "Payment Card"
                     end;
                 end;
             }
+            action(ValidateDimensions)
+            {
+                ApplicationArea = All;
+                Caption = 'Validate Invoice Dimensions', comment = 'ENU="Validate Dimensions"';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = VendorPaymentJournal;
+
+                trigger OnAction()
+                begin
+                    FundsManagement.ValidateInvoiceDimensions(Rec."No.");
+                end;
+            }
         }
         area(Reporting)
         {
@@ -571,6 +585,7 @@ page 50011 "Payment Card"
         WorkflowWebhookMgt: Codeunit "Workflow Webhook Management";
         PaymentApprovalManager: Codeunit "Payments Approval Manager";
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+        FundsManagement: codeunit "Funds Management";
         PageEditable: Boolean;
         ActionsVisible: Boolean;
         ReferenceEditable: Boolean;
