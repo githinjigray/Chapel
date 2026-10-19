@@ -7,5 +7,10 @@ tableextension 50008 "365 G/L Account" extends "G/L Account"
             Caption = 'Account Location';
             DataClassification = ToBeClassified;
         }
+        field(50010; "Withholding Account"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            caption = 'Withholding Account';
+        }
     }
 }

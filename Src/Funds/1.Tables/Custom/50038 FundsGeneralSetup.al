@@ -196,6 +196,12 @@ table 50038 "Funds General Setup"
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account"."No.";
         }
+        field(33; "Check Dup. Invoice Payment"; Boolean)
+        {
+            Caption = 'Check Duplicate Invoice Payment';
+            DataClassification = ToBeClassified;
+            TableRelation = "G/L Account"."No.";
+        }
     }
     keys
     {

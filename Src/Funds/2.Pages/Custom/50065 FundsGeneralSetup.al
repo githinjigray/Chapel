@@ -177,6 +177,11 @@ page 50065 "Funds General Setup"
                     ToolTip = 'Specifies the value of the Discount Account No. field.';
                     ApplicationArea = All;
                 }
+                field("Check Dup. Invoice Payment"; Rec."Check Dup. Invoice Payment")
+                {
+                    ToolTip = 'Specifies the value of the Check Duplicate Invoice Payment field.', Comment = '%';
+                }
+
             }
         }
     }

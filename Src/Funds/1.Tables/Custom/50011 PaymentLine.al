@@ -524,6 +524,7 @@ table 50011 "Payment Line"
                 IF VendLedgEntry.FINDFIRST THEN BEGIN
                     VendLedgEntry.CALCFIELDS(VendLedgEntry.Amount);
                     "Invoice Amount" := VendLedgEntry.Amount;
+                    Description := VendLedgEntry.Description;
                     MODIFY;
                 END;
             end;
@@ -653,6 +654,7 @@ table 50011 "Payment Line"
                     "Account No." := "Payee No.";
                     VALIDATE("Account No.");
                 END;
+
                 IF "Payee Type" = "Payee Type"::Beneficiary THEN BEGIN
                     "Account Type" := "Account Type"::"G/L Account";
                     EndowmentGeneralSetup.Reset();
@@ -733,6 +735,11 @@ table 50011 "Payment Line"
                     "Account Type" := "Account Type"::"G/L Account";
                     "Account No." := "Payee No.";
                     VALIDATE("Account No.");
+                    if (GLAccount.Get("Payee No.")) and (GLAccount."Withholding Account") then begin
+                        GLAccount.CalcFields(Balance);
+                        "Total Amount" := GLAccount.Balance;
+                        Validate("Total Amount");
+                    end;
                 END;
             END;
         }
@@ -978,6 +985,7 @@ table 50011 "Payment Line"
             var
                 DimensionSetEntry: Record "Dimension Set Entry";
                 GeneralLedgerSetup: Record "General Ledger Setup";
+                ExistPaymentLine: Record "Payment Line";
             begin
                 GeneralLedgerSetup.Get;
                 "Applies-to Doc. No." := "Invoice No.";
@@ -990,9 +998,9 @@ table 50011 "Payment Line"
                     Validate("Total Amount");
                     "Vendor Invoice No." := PurchInvHeader."Vendor Invoice No.";
                     "Global Dimension 1 Code" := PurchInvHeader."Shortcut Dimension 1 Code";
-                    // Validate("Global Dimension 1 Code");
                     "Global Dimension 2 Code" := PurchInvHeader."Shortcut Dimension 2 Code";
-                    //Validate("Global Dimension 2 Code");
+                    Description := PurchInvHeader."Posting Description";
+
 
                     DimensionSetEntry.Reset();
                     DimensionSetEntry.SetRange("Dimension Set ID", PurchInvHeader."Dimension Set ID");
@@ -1007,6 +1015,18 @@ table 50011 "Payment Line"
                         until DimensionSetEntry.Next() = 0;
                     end;
                 END;
+
+                FundsGeneralSetup.GET;
+                if FundsGeneralSetup."Check Dup. Invoice Payment" then begin
+                    ExistPaymentLine.Reset();
+                    ExistPaymentLine.SetRange("Invoice No.", "Invoice No.");
+                    if ExistPaymentLine.FindSet() then begin
+                        repeat
+                            if ExistPaymentLine."Document No." <> "Document No." then
+                                ERROR(Text006, ExistPaymentLine."Document No.");
+                        until ExistPaymentLine.Next() = 0;
+                    end;
+                end;
             end;
         }
         field(83; "Paying Bank"; Code[50])

@@ -11,5 +11,14 @@ pageextension 50001 "365 G/L Account Card" extends "G/L Account Card"
                 ToolTip = 'Specifies the value of the Account Location field.', Comment = '%';
             }
         }
+        addafter("Reconciliation Account")
+        {
+
+            field("Withholding Account"; Rec."Withholding Account")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Withholding Account field.', Comment = '%';
+            }
+        }
     }
 }

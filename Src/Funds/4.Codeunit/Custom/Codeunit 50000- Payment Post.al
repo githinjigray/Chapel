@@ -454,7 +454,7 @@ codeunit 50000 PaymentPost
                 GenJnlLine.ValidateShortcutDimCode(6, PaymentLine."Shortcut Dimension 6 Code");
                 //GenJnlLine.ValidateShortcutDimCode(7,PaymentLine."Shortcut Dimension 7 Code");
                 // GenJnlLine.ValidateShortcutDimCode(8,PaymentLine."Shortcut Dimension 8 Code");
-                GenJnlLine.Description := UPPERCASE(COPYSTR(PaymentHeader.Description, 1, 249));
+                GenJnlLine.Description := UPPERCASE(COPYSTR(PaymentLine.Description, 1, 249));
                 GenJnlLine.Description2 := UPPERCASE(COPYSTR(PaymentHeader."Payee Name", 1, 249));
                 GenJnlLine.VALIDATE(Description);
                 GenJnlLine."Applies-to Doc. Type" := PaymentLine."Applies-to Doc. Type";

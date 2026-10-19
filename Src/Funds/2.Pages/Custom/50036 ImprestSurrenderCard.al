@@ -109,12 +109,12 @@ page 50036 "Imprest Surrender Card"
                     Editable = false;
                     Visible = false;
                 }
-                field("Actual Advanced"; Rec."Actual Advanced")
-                {
-                    ToolTip = 'Specifies the value of the Actual Advanced field.';
-                    ApplicationArea = All;
-                    Editable = false;
-                }
+                // field("Actual Advanced"; Rec."Actual Advanced")
+                // {
+                //     ToolTip = 'Specifies the value of the Actual Advanced field.';
+                //     ApplicationArea = All;
+                //     Editable = false;
+                // }
                 field(Description; Rec.Description)
                 {
                     ToolTip = 'Specifies the value of the Description field.';
