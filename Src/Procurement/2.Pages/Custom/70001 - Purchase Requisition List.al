@@ -34,6 +34,11 @@ page 70001 "Purchase Requisition List"
                 // {
                 //     ToolTip = 'Budget';
                 // }
+                field("Payment Method"; rec."Payment Method")
+                {
+                    ToolTip = 'Specifies the payment method for the purchase requisition';
+                    ApplicationArea = All;
+                }
                 field(Description; rec.Description)
                 {
                     ToolTip = 'Description';

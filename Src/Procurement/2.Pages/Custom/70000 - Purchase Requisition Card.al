@@ -28,6 +28,11 @@ page 70000 "Purchase Requisition Card"
                     ToolTip = 'Specifies the date when the user expects to receive the items on the purchase requisition';
                     ApplicationArea = All;
                 }
+                field("Payment Method"; rec."Payment Method")
+                {
+                    ToolTip = 'Specifies the payment method for the purchase requisition';
+                    ApplicationArea = All;
+                }
                 field("Employee No."; rec."Employee No.")
                 {
                     ToolTip = 'Specifies the Employee number of the requester';

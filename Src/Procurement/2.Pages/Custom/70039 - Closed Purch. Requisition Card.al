@@ -31,11 +31,10 @@ page 70039 "Closed Purch. Requisition Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the date when the user expects to receive the items on the purchase requisition';
                 }
-                field("Mission Proposal No."; Rec."Mission Proposal No.")
+               field("Payment Method"; rec."Payment Method")
                 {
+                    ToolTip = 'Specifies the payment method for the purchase requisition';
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the Mission Proposal No. field';
-                    Visible = false;
                 }
                 field("Currency Code"; Rec."Currency Code")
                 {

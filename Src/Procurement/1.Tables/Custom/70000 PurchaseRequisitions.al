@@ -300,6 +300,12 @@ table 70000 "Purchase Requisitions"
             DataClassification = ToBeClassified;
             Caption = 'Archived';
         }
+        field(211; "Payment Method"; Option)
+        {
+            DataClassification = ToBeClassified;
+            OptionMembers = Bank,MPESA;
+            OptionCaption = 'Bank,MPESA';
+        }
     }
     keys
     {

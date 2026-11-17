@@ -102,6 +102,7 @@ table 50018 "Imprest Surrender Header"
                         "Actual Advanced" := ImprestHeader.Amount;
                         "Imprest Date" := ImprestHeader."Posting Date";
                         "Currency Code" := ImprestHeader."Currency Code";
+                        VALIDATE("Currency Code");
                         Description := ImprestHeader.Description;
                         "Global Dimension 1 Code" := ImprestHeader."Global Dimension 1 Code";
                         "Global Dimension 2 Code" := ImprestHeader."Global Dimension 2 Code";

@@ -35,6 +35,11 @@ page 70003 "Closed Purchase Req. List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the date when the purchase requisition was created';
                 }
+                field("Payment Method"; rec."Payment Method")
+                {
+                    ToolTip = 'Specifies the payment method for the purchase requisition';
+                    ApplicationArea = All;
+                }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
